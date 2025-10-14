@@ -1,0 +1,56 @@
+import {Navigate} from 'react-router-dom';
+import Login from "../components/login";
+import Register from "../components/register";
+import HomeOne from "../components/homes/home";
+import HomeTwo from "../components/homes/home-2";
+import About from "../components/about";
+import Courses from "../components/courses";
+import CoursesTwo from "../components/courses-2";
+import CourseDetails from "../components/course-details";
+import GridBlog from "../components/grid-blog";
+import StandardBlog from "../components/standard-blog";
+import BlogDetails from "../components/blog-details";
+import Cart from "../components/cart";
+import Checkout from "../components/checkout";
+import Instructors from "../components/instructors";
+import Contact from "../components/contact";
+import Error from "../components/error";
+import Dashboard from "../components/dashboard";
+import Users from "../components/users";
+import Statistic from "../components/statistic";
+import Lessons from "../components/lessons";
+
+const authProtectedRoutes = [
+    {path: "/dashboard", element: <Dashboard/>, title: "Dashboard"},
+    {path: "/users", element: <Users/>, title: "Users"},
+    {path: "/lessons", element: <Lessons/>, title: "Lessons"},
+    {path: "/statistic", element: <Statistic/>, title: "Statistics"},
+
+    // {path: "/home-1", element: <HomeOne/>},
+    // {path: "/home-2", element: <HomeTwo/>, title: "Home 2"},
+    // {path: "/about", element: <About/>, title: "About"},
+    // {path: "/courses", element: <Courses/>, title: "Courses"},
+    // {path: "/courses-2", element: <CoursesTwo/>, title: "Courses 2"},
+    // {path: "/course-details", element: <CourseDetails/>, title: "Course Details"},
+    // {path: "/grid-blog", element: <GridBlog/>, title: "Grid Blog"},
+    // {path: "/standard-blog", element: <StandardBlog/>, title: "Standard Blog"},
+    // {path: "/blog-details", element: <BlogDetails/>, title: "Blog Details"},
+    // {path: "/cart", element: <Cart/>, title: "Cart"},
+    // {path: "/checkout", element: <Checkout/>, title: "Checkout"},
+    // {path: "/instructors", element: <Instructors/>, title: "Instructors"},
+    // {path: "/contact", element: <Contact/>, title: "Contact"},
+    {path: "*", element: <Error/>},
+    {
+        path: '/',
+        exact: true,
+        component: <Navigate to="/dashboard"/>,
+    },
+    {path: '*', component: <Navigate to="/dashboard"/>},
+];
+
+const publicRoutes = [
+    {path: "/login", element: <Login/>},
+    {path: "/register", element: <Register/>},
+];
+
+export {authProtectedRoutes, publicRoutes};
