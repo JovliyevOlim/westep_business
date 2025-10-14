@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import HeaderOne from "../../layouts/headers/HeaderOne";
 import Breadcrumb from "../common/Breadcrumb";
 import FooterOne from "../../layouts/footers/FooterOne";
 import ScrollToTop from "../common/ScrollToTop";
@@ -11,7 +10,6 @@ export default function Error() {
   return (
     <>
       <Preloader />
-      <HeaderOne />
       <Breadcrumb title="Error" subtitle="Error" />
       <section className="page_not_found">
         <div className="container">

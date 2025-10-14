@@ -4,7 +4,25 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="030065c9-1b7b-4017-9393-d5623c771771" name="Changes" comment="" />
+    <list default="true" id="030065c9-1b7b-4017-9393-d5623c771771" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/auth/authApi.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/auth/authApi.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/about/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/about/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/blog-details/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/blog-details/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/checkout/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/checkout/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/common/Table.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/Table.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/contact/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/contact/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/course-details/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/course-details/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/courses/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/courses/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/error/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/error/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/grid-blog/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/grid-blog/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/homes/home/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/homes/home/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/sidebar/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/sidebar/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/standard-blog/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/standard-blog/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/route/ProtectedRoute.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/route/ProtectedRoute.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/route/allRoutes.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/route/allRoutes.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tsconfig.app.tsbuildinfo" beforeDir="false" afterPath="$PROJECT_DIR$/tsconfig.app.tsbuildinfo" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -69,11 +87,22 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1760375481399</updated>
-      <workItem from="1760375482510" duration="23709000" />
+      <workItem from="1760375482510" duration="24290000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/components/checkout/index.tsx</url>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

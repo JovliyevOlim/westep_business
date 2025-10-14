@@ -33,7 +33,7 @@ const columns = [{accessorKey: 'name', header: 'Name'}, {accessorKey: 'price', h
 },
 
     {
-        accessorKey: 'total', header: '', cell: (item) => <i className="ti-trash remove-icon"></i>,
+        accessorKey: 'total', header: '', cell: () => <i className="ti-trash remove-icon"></i>,
     }
 ]
 

@@ -6,10 +6,10 @@ const user: any = {
 
 }
 
-export const login = async (body: { email: string; password: string }) => {
-    // const {data} = await apiClient.post("/auth/login", body);
-    // localStorage.setItem("accessToken", data.accessToken);
-    // localStorage.setItem("refreshToken", data.refreshToken);
+export const login = async (body: { name: string; password: string }) => {
+    const {data} = await apiClient.post("/auth/login", body);
+    localStorage.setItem("accessToken", data.accessToken);
+    localStorage.setItem("refreshToken", data.refreshToken);
 
     return user;
 };

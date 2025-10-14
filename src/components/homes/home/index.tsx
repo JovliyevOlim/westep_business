@@ -11,7 +11,6 @@ import VideoHomeOne from './VideoHomeOne'
 import ReviewHomeOne from './ReviewHomeOne'
 import BrandHomeOne from './BrandHomeOne'
 import BlogHomeOne from './BlogHomeOne'
-import HeaderOne from '../../../layouts/headers/HeaderOne'
 import FooterOne from '../../../layouts/footers/FooterOne'
 import ScrollToTop from '../../common/ScrollToTop'
 import ScrollTop from '../../common/ScrollTop'
@@ -23,7 +22,6 @@ export default function HomeOne() {
   return (
     <>
       <Preloader />
-      <HeaderOne />
       <HeroHomeOne />
       <FeatureHomeOne />
       <AboutHomeOne />
