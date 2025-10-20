@@ -11,10 +11,7 @@ export default function Register() {
     const location = useLocation();
     const navigate = useNavigate();
     const {phone} = location.state;
-
     const [isPending, setIsPending] = useState<boolean>(false);
-
-    console.log(phone)
 
     const formik = useFormik({
         initialValues: {
