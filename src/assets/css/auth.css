@@ -1,0 +1,47 @@
+.auth-back {
+    background-image: url('../back_auth (1).jpg');
+    background-size: cover;
+    background-position: center 40%;
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    padding: 2rem;
+}
+
+.auth-glass {
+    width: 95%;
+    height: 100%;
+    padding: 2rem;
+    border-radius: 18px;
+    /* shaffof fond (fallback uchun) */
+    background: rgba(202, 227, 255, 0.1);
+
+    /* oynaga o'xshash chegara va soyalar */
+    border: 1px solid rgba(202, 227, 255, 0.1);
+    box-shadow: 0 8px 30px rgba(202, 227, 255, 0.5);
+
+    /* ASOSIY: orqa fonni blur qilish */
+    -webkit-backdrop-filter: blur(8px) saturate(120%);
+    backdrop-filter: blur(8px) saturate(120%);
+
+    /* tekst kontrasti uchun rang */
+    color: #fff;
+
+    /* fallback: agar backdrop-filter mavjud bo'lmasa, pseudo-element bilan blur-ish effekt */
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.auth-glass::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: inherit; /* shu fondan nusxa oladi */
+    filter: blur(6px);
+    opacity: 0.9;
+    z-index: -1;
+    pointer-events: none;
+}

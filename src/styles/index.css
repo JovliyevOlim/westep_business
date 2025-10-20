@@ -4,31 +4,42 @@
  
 
 /* @import "/assets/css/animate.css"; */
-@import "../../public/assets/css/animate.css";
-@import "../../public/assets/css/boxicons.min.css";
-@import "../../public/assets/css/slicknav.css";
-@import "../../public/assets/css/flexslider.css";
-@import "../../public/assets/css/gijgo.min.css";
-@import "../../public/assets/css/line-awesome.css";
-@import "../../public/assets/css/magnific-popup.css";
-@import "../../public/assets/css/niceselect.css";
-@import "../../public/assets/css/preloader.css";
-@import "../../public/assets/css/YouTubePopUp.css";
-@import "../../public/assets/css/YTPlayer.css";
-@import "../../public/assets/css/slick.css";
-@import "../../public/assets/css/boxicons.min.css";
-@import "../../public/assets/css/sidebar.css";
- 
+@import "../assets/css/animate.css";
+@import "../assets/css/boxicons.min.css";
+@import "../assets/css/slicknav.css";
+@import "../assets/css/flexslider.css";
+@import "../assets/css/gijgo.min.css";
+@import "../assets/css/line-awesome.css";
+@import "../assets/css/magnific-popup.css";
+@import "../assets/css/niceselect.css";
+@import "../assets/css/preloader.css";
+@import "../assets/css/YouTubePopUp.css";
+@import "../assets/css/YTPlayer.css";
+@import "../assets/css/slick.css";
+@import "../assets/css/boxicons.min.css";
+@import "../assets/css/sidebar.css";
+@import "../assets/css/input.css";
+@import "../assets/css/auth.css";
+@import "../assets/css/button.css";
+
   
-@import "../../public/assets/css/slick-theme.css";
-@import "../../public/assets/css/slicknav.css";
+@import "../assets/css/slick-theme.css";
+@import "../assets/css/slicknav.css";
 
-@import "../../public/assets/bootstrap/css/bootstrap.css";
-@import "../../public/assets/bootstrap/css/bootstrap.min.css";
-@import "../../public/assets/css/jquery-simple-mobilemenu.css";
+@import "../assets/bootstrap/css/bootstrap.css";
+@import "../assets/bootstrap/css/bootstrap.min.css";
+@import "../assets/css/jquery-simple-mobilemenu.css";
 
  
-@import "../../public/assets/fonts/themify-icons.css";
-@import "../../public/assets/fonts/fontawesome/fontawesome.css";
-@import "../../public/assets/css/style.css";
-@import "../../public/assets/css/responsive.css";
+@import "../assets/fonts/themify-icons.css";
+@import "../assets/fonts/fontawesome/fontawesome.css";
+@import "../assets/css/style.css";
+@import "../assets/css/responsive.css";
+
+
+:root {
+    --auth-button-gray: #ACB5C5;
+    --auth-button-primary: #036CE3;
+    --input-border-radius: 100px;
+    --input-padding: 1rem 2rem;
+}

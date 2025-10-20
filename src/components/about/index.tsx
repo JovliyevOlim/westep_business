@@ -4,9 +4,9 @@ import AboutHomeOne from '../homes/home/AboutHomeOne'
 import CounterHomeOne from '../homes/home/CounterHomeOne'
 import InstructorsHomeOne from '../homes/home/InstructorsHomeOne'
 import FooterOne from '../../layouts/footers/FooterOne'
-import ScrollToTop from '../common/ScrollToTop'
-import ScrollTop from '../common/ScrollTop'
-import Preloader from '../common/Preloader'
+import ScrollToTop from '../../ui/common/ScrollToTop'
+import ScrollTop from '../../ui/common/ScrollTop'
+import Preloader from '../../ui/common/Preloader'
 
 export default function About() {
   return (

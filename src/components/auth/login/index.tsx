@@ -1,13 +1,10 @@
-import Preloader from "../common/Preloader";
-import LoginForm from "./LoginForm";
+import LoginForm from "./LoginForm.tsx";
 
 
 export default function Login() {
     return (
         <>
-            <Preloader/>
             <LoginForm/>
-
         </>
     )
 }

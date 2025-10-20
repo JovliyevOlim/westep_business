@@ -1,4 +1,4 @@
-import Table from "../common/Table.tsx";
+import Table from "../../ui/common/Table.tsx";
 
 function Index() {
     return (

@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
-import Breadcrumb from "../common/Breadcrumb";
+import Breadcrumb from "../../ui/common/Breadcrumb";
 import FooterOne from "../../layouts/footers/FooterOne";
-import ScrollToTop from "../common/ScrollToTop";
-import ScrollTop from "../common/ScrollTop";
-import Preloader from "../common/Preloader";
+import ScrollToTop from "../../ui/common/ScrollToTop";
+import ScrollTop from "../../ui/common/ScrollTop";
+import Preloader from "../../ui/common/Preloader";
 
  
 export default function Error() {

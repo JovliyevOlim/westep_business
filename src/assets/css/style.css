@@ -3032,26 +3032,29 @@ svg#play_icon:hover #triangle {
 	border-color: #0D5FF9;
 	outline: none;
 }
-.form-control{
-	background-color: #F4F5F8;
-	border: 1px solid #F4F5F8;
-	color: #555;
-	font-size: 15px;
+.form-control {
+	background-color: transparent;
+	border: 1px solid var(--auth-button-gray);
+	border-radius: var(--input-border-radius);
+	color: #000000;
+	font-size: 18px;
 	height: calc(2.25rem + 27px);
 	outline: 0;
-	padding: 14px 30px;
+	padding: var(--input-padding);
 	width: 100%;
-	margin-bottom: 30px;
 }
-.form-control option{
+
+.form-control option {
 	font-weight: 400;
 }
-.form-control:focus{
+
+.form-control:focus {
 	outline: none;
 	box-shadow: inherit;
-	border-color: #0D5FF9;
-	background: #fff;
+	border-color: var(--auth-button-primary);
+	background: transparent;
 }
+
 textarea.form-control{
 	height: 160px;
 }

@@ -1,13 +1,17 @@
 import axios from "axios";
+import {getItem, removeItem, setItem} from "../utils/utils.ts";
+
+
+export const baseUrl = "http://185.217.131.134:8080/api"
 
 const apiClient = axios.create({
-    baseURL: "https://api.example.com",
+    baseURL: baseUrl,
     withCredentials: true,
 });
 
 // Access tokenni headerga qo‘shish
 apiClient.interceptors.request.use((config) => {
-    const token = localStorage.getItem("accessToken");
+    const token = getItem<string>("accessToken");
     if (token) config.headers.Authorization = `Bearer ${token}`;
     return config;
 });
@@ -21,20 +25,21 @@ apiClient.interceptors.response.use(
         if (error.response?.status === 401 && !originalRequest._retry) {
             originalRequest._retry = true;
 
-            const refreshToken = localStorage.getItem("refreshToken");
+            const refreshToken = getItem<string>("refreshToken");
             if (!refreshToken) return Promise.reject(error);
 
             try {
-                const { data } = await axios.post("https://api.example.com/auth/refresh", {
-                    refreshToken,
+                const {data} = await axios.post(`${baseUrl}/auth/refresh`, {}, {
+                    params: {refreshToken: refreshToken},
                 });
 
-                localStorage.setItem("accessToken", data.accessToken);
+                setItem<string>("accessToken", data.accessToken);
+                setItem<string>("refreshToken", data.refreshToken);
                 apiClient.defaults.headers.Authorization = `Bearer ${data.accessToken}`;
                 return apiClient(originalRequest);
             } catch (err) {
-                localStorage.removeItem("accessToken");
-                localStorage.removeItem("refreshToken");
+                removeItem("accessToken");
+                removeItem("refreshToken");
                 return Promise.reject(err);
             }
         }

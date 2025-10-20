@@ -1,6 +1,6 @@
  
 import  { useState, useEffect } from "react";
-import UseSticky from "../../hooks/UseSticky";
+import UseSticky from "../../hooks/UseSticky.ts";
  
 
 const ScrollToTop = () => {

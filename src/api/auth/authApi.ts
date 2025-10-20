@@ -1,27 +1,50 @@
 // src/api/authApi.ts
 import apiClient from "../apiClient";
+import {setItem} from "../../utils/utils.ts";
+import {AxiosError} from "axios";
+import {BusinessType} from "../../types/types.ts";
 
-const user: any = {
-    name: "olim"
 
-}
-
-export const login = async (body: { name: string; password: string }) => {
-    const {data} = await apiClient.post("/auth/login", body);
-    localStorage.setItem("accessToken", data.accessToken);
-    localStorage.setItem("refreshToken", data.refreshToken);
-
-    return user;
+export const login = async (body: { phone: string; password: string }) => {
+    try {
+        const {data} = await apiClient.post("/auth/login", {}, {
+            params: {
+                phone: body.phone,
+                password: body.password,
+            }
+        });
+        setItem<string>("accessToken", data?.accessToken)
+        setItem<string>("refreshToken", data?.refreshToken)
+    } catch (error) {
+        console.log(error);
+        const err = error as AxiosError<{ message: string }>;
+        const message = err.response?.data?.message;
+        throw new Error(message);
+    }
 };
 
-export const register = async (body: { name: string; email: string; password: string }) => {
-    const {data} = await apiClient.post("/auth/register", body);
-    return data;
+export const register = async (body: BusinessType) => {
+    try {
+        const {data} = await apiClient.post("/auth/business/register", body);
+        setItem<string>("accessToken", data.accessToken)
+        setItem<string>("refreshToken", data.refreshToken)
+    } catch (error) {
+        const err = error as AxiosError<{ message: string }>;
+        const message = err.response?.data?.message;
+        throw new Error(message);
+    }
 };
 
 export const getCurrentUser = async () => {
-    // const {data} = await apiClient.get("/auth/me");
-    return user;
+    const {data} = await apiClient.get("/user/me");
+    return data;
+};
+
+export const checkPhoneNumber = async (body: { phone: string }) => {
+    const {data} = await apiClient.post("/auth/check-phone", {phone: body.phone});
+    if (data.status === "NOT_FOUND") {
+        throw new Error(data.message);
+    }
 };
 
 export const logout = async () => {

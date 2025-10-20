@@ -1,11 +1,13 @@
 import {Navigate} from 'react-router-dom';
-import Login from "../components/login";
-import Register from "../components/register";
+import Login from "../components/auth/login";
+import Register from "../components/auth/register";
 import Error from "../components/error";
 import Dashboard from "../components/dashboard";
 import Users from "../components/users";
 import Statistic from "../components/statistic";
 import Lessons from "../components/lessons";
+import CreatePassword from "../components/auth/createPassword";
+import Password from "../components/auth/password"
 
 const authProtectedRoutes = [
     {path: "/dashboard", element: <Dashboard/>, title: "Dashboard"},
@@ -38,6 +40,8 @@ const authProtectedRoutes = [
 const publicRoutes = [
     {path: "/login", element: <Login/>},
     {path: "/register", element: <Register/>},
+    {path: "/create-password", element: <CreatePassword/>},
+    {path: "/password", element: <Password/>},
 ];
 
 export {authProtectedRoutes, publicRoutes};

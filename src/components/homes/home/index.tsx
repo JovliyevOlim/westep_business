@@ -12,9 +12,9 @@ import ReviewHomeOne from './ReviewHomeOne'
 import BrandHomeOne from './BrandHomeOne'
 import BlogHomeOne from './BlogHomeOne'
 import FooterOne from '../../../layouts/footers/FooterOne'
-import ScrollToTop from '../../common/ScrollToTop'
-import ScrollTop from '../../common/ScrollTop'
-import Preloader from '../../common/Preloader'
+import ScrollToTop from '../../../ui/common/ScrollToTop'
+import ScrollTop from '../../../ui/common/ScrollTop'
+import Preloader from '../../../ui/common/Preloader'
 
 
 export default function HomeOne() {

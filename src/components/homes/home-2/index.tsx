@@ -15,9 +15,9 @@ import BlogHomeOne from '../home/BlogHomeOne'
 import CtaHomeTwo from './CtaHomeTwo' 
 import HeaderTwo from '../../../layouts/headers/HeaderTwo'
 import FooterOne from '../../../layouts/footers/FooterOne'
-import ScrollToTop from '../../common/ScrollToTop'
-import ScrollTop from '../../common/ScrollTop'
-import Preloader from '../../common/Preloader'
+import ScrollToTop from '../../../ui/common/ScrollToTop'
+import ScrollTop from '../../../ui/common/ScrollTop'
+import Preloader from '../../../ui/common/Preloader'
 
 export default function HomeTwo() {
   return (

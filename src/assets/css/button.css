@@ -1,0 +1,27 @@
+.bt {
+    padding: 8px 35px;
+    border-radius: 30px;
+    font-size: 17px;
+    font-weight: 600;
+    display: inline-block;
+    transition: .5s;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+    width: 100%;
+    height: 54px;
+}
+
+.auth_btn-primary {
+    background-color: var(--auth-button-primary);
+    border: 2px solid var(--auth-button-primary);
+    color: #fff;
+    transition: .5s;
+}
+
+.auth_btn-primary:disabled {
+    background-color: var(--auth-button-gray);
+    border: 2px solid var(--auth-button-gray);
+    color: #fff;
+    transition: .5s;
+}
