@@ -5,9 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="030065c9-1b7b-4017-9393-d5623c771771" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/hooks/UseRequireState.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/auth/createPassword/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/auth/createPassword/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/auth/password/PasswordForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/auth/password/PasswordForm.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/auth/password/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/auth/password/index.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/auth/register/Register.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/auth/register/Register.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tsconfig.app.tsbuildinfo" beforeDir="false" afterPath="$PROJECT_DIR$/tsconfig.app.tsbuildinfo" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -17,9 +20,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="TypeScript File" />
         <option value="CSS File" />
         <option value="TypeScript JSX File" />
+        <option value="TypeScript File" />
       </list>
     </option>
   </component>
@@ -82,7 +85,7 @@
       <updated>1760375481399</updated>
       <workItem from="1760375482510" duration="25440000" />
       <workItem from="1760954620217" duration="142000" />
-      <workItem from="1760954782246" duration="9136000" />
+      <workItem from="1760954782246" duration="10127000" />
     </task>
     <servers />
   </component>

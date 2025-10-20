@@ -9,7 +9,7 @@ import Button from "../../../ui/Button.tsx";
 export default function PasswordForm() {
 
     const location = useLocation();
-    const {phone} = location.state;
+    const phone = location.state?.phone;
     const {mutateAsync, isPending} = useLogin();
 
 

@@ -4,13 +4,18 @@ import * as Yup from "yup";
 import {useState} from "react";
 import Button from "../../../ui/Button.tsx";
 import InputField from "../../../ui/InputField.tsx";
+import {useRequireState} from "../../../hooks/UseRequireState.ts";
 
 
 export default function Register() {
 
+    useRequireState('phone')
+
     const location = useLocation();
     const navigate = useNavigate();
-    const {phone} = location.state;
+
+    const phone = location.state?.phone;
+
     const [isPending, setIsPending] = useState<boolean>(false);
 
     const formik = useFormik({
