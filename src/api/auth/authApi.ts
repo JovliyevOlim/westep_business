@@ -1,6 +1,6 @@
 // src/api/authApi.ts
 import apiClient from "../apiClient";
-import {setItem} from "../../utils/utils.ts";
+import {getItem, setItem} from "../../utils/utils.ts";
 import {AxiosError} from "axios";
 import {BusinessType} from "../../types/types.ts";
 
@@ -48,6 +48,8 @@ export const checkPhoneNumber = async (body: { phone: string }) => {
 };
 
 export const logout = async () => {
+    const refreshToken:string | null = getItem("refreshToken");
+    await apiClient.post("/auth/logout", refreshToken);
     localStorage.removeItem("accessToken");
     localStorage.removeItem("refreshToken");
 };

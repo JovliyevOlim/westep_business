@@ -8,6 +8,7 @@ import Statistic from "../components/statistic";
 import Lessons from "../components/lessons";
 import CreatePassword from "../components/auth/createPassword";
 import Password from "../components/auth/password"
+import Logout from "../components/auth/logout";
 
 const authProtectedRoutes = [
     {path: "/dashboard", element: <Dashboard/>, title: "Dashboard"},
@@ -39,6 +40,7 @@ const authProtectedRoutes = [
 
 const publicRoutes = [
     {path: "/login", element: <Login/>},
+    {path: "/logout", element: <Logout/>},
     {path: "/register", element: <Register/>},
     {path: "/create-password", element: <CreatePassword/>},
     {path: "/password", element: <Password/>},
