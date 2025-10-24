@@ -1,0 +1,57 @@
+// ==============================================
+// 1️⃣ Variables (faqat .scss fayllar uchun)
+// ==============================================
+@use "variables" as *;
+
+// ==============================================
+// 2️⃣ Third-party CSS (faqat @import bilan)
+// ==============================================
+@import "swiper/css/bundle";
+@import "react-modal-video/css/modal-video.css";
+@import "boxicons/css/boxicons.min.css";
+@import "bootstrap/dist/css/bootstrap.min.css";
+@import "gijgo/css/gijgo.css";
+
+// ==============================================
+// 3️⃣ Local Template Styles (hammasi CSS — shuning uchun @import)
+// ==============================================
+@import "css/animate";
+@import "css/slicknav";
+@import "css/flexslider";
+@import "css/line-awesome";
+@import "css/magnific-popup";
+@import "css/niceselect";
+@import "css/preloader";
+@import "css/YouTubePopUp";
+@import "css/YTPlayer";
+@import "css/slick";
+@import "css/sidebar";
+@import "css/input";
+@import "css/auth";
+@import "css/button";
+@import "css/slick-theme";
+@import "css/jquery-simple-mobilemenu";
+
+// ==============================================
+// 4️⃣ Local Fonts
+// ==============================================
+@import "../assets/fonts/themify-icons.css";
+@import "../assets/fonts/fontawesome/fontawesome.css";
+
+// ==============================================
+// 5️⃣ Base Styles
+// ==============================================
+@import "css/style";
+@import "css/responsive";
+
+// ==============================================
+// 6️⃣ Custom Fixes & Overrides (eng oxirida bo‘lishi kerak)
+// ==============================================
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0px 1000px transparent inset !important;
+  -webkit-text-fill-color: inherit !important;
+  transition: background-color 5000s ease-in-out 0s;
+}

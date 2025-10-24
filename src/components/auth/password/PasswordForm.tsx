@@ -3,7 +3,8 @@ import 'react-phone-number-input/style.css';
 import {useFormik} from "formik";
 import * as Yup from "yup";
 import {Link, useLocation} from "react-router-dom";
-import Button from "../../../ui/Button.tsx";
+import Button from "../../../ui/button/Button.tsx";
+import InputField from "../../../ui/InputField.tsx";
 
 
 export default function PasswordForm() {
@@ -48,18 +49,12 @@ export default function PasswordForm() {
                                     <label htmlFor="phone" className="form-label text-dark">
                                         Parolni kiriting!
                                     </label>
-                                    <input type="password" placeholder="Parol" id="password"
-                                           className="form-control m-0" name="password"
-                                           value={formik.values.password}
-                                           onChange={formik.handleChange}
-                                           onBlur={formik.handleBlur}/>
-                                    {formik.errors.password && formik.touched.password ? (
-                                        <p className={'text-start d-flex text-danger m-0'}>{formik.errors.password}</p>
-                                    ) : null}
-
+                                    <InputField type="password" placeholder="Parol"
+                                                name="password"
+                                                formik={formik}/>
                                 </div>
                                 <div className="form-group col-lg-12">
-                                    <Button isPending={isPending}/>
+                                    <Button type='submit' children='Kirish' isPending={isPending}/>
                                 </div>
                                 <p className={'mt-2'}><Link to="/forgot-password">Parolni unutdingizmi?</Link></p>
                             </form>

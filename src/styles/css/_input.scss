@@ -24,9 +24,9 @@
     width: 100%;
     line-height: 1.42857143;
     color: #000000;
-    border-radius: var(--input-border-radius);
+    border-radius: $border-radius;
     background-color: transparent;
-    border: 1px solid var(--auth-button-gray);
+    border: 1px solid $primary;
     font-size: 18px;
     height: calc(2.25rem + 27px);
     outline: 0;
@@ -36,7 +36,7 @@
 }
 
 .PhoneInput--focus {
-    border-color: var(--auth-button-primary);
+    border-color: $primary;
     background: transparent;
     outline: 0;
 }
@@ -172,7 +172,7 @@ input[type="number"]::-webkit-inner-spin-button {
     width: 76px !important;
     height: 70px !important;
     background-color: transparent;
-    border: 1px solid var(--auth-button-gray);
+    border: 1px solid $secondary;
     border-radius: 25px;
     color: #000000;
     font-size: 18px;
@@ -196,7 +196,7 @@ input[type="number"]::-webkit-inner-spin-button {
 
 /* input fokusda yoki to‘ldirilgan bo‘lsa chiziq rangini o‘zgartiradi */
 .otp-input:focus {
-    border-color: #3b82f6; /* ko‘k border */
+    border-color: $primary; /* ko‘k border */
 }
 
 /*.otp-input:focus::after {*/

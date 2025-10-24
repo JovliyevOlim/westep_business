@@ -1,4 +1,4 @@
-.bt {
+.btn{
     padding: 8px 35px;
     border-radius: 30px;
     font-size: 17px;
@@ -12,16 +12,15 @@
     height: 54px;
 }
 
-.auth_btn-primary {
-    background-color: var(--auth-button-primary);
-    border: 2px solid var(--auth-button-primary);
+.btn-primary {
+    border: 2px solid $primary;
     color: #fff;
     transition: .5s;
 }
 
-.auth_btn-primary:disabled {
-    background-color: var(--auth-button-gray);
-    border: 2px solid var(--auth-button-gray);
+.btn-primary:disabled {
+    background-color: $secondary;
+    border: 2px solid $secondary;
     color: #fff;
     transition: .5s;
 }

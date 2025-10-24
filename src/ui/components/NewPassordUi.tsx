@@ -2,16 +2,13 @@ import {useFormik} from "formik";
 import * as Yup from "yup";
 import {useLocation} from "react-router-dom";
 import InputField from "../InputField.tsx";
-import Button from "../Button.tsx";
+import Button from "../button/Button.tsx";
 import {BusinessType} from "../../types/types.ts";
-
-
-
 
 
 interface Props {
     isPending: boolean;
-    mutate: (variables:BusinessType) => void;
+    mutate: (variables: BusinessType) => void;
 }
 
 export default function NewPassword({mutate, isPending}: Props) {
@@ -35,7 +32,8 @@ export default function NewPassword({mutate, isPending}: Props) {
                 .oneOf([Yup.ref("password")], "Parollar bir xil bo‘lishi kerak!"),
         }),
         onSubmit: (values) => {
-            mutate({...location.state, password:
+            mutate({
+                ...location.state, password:
                 values.password
             })
             ;
@@ -55,12 +53,12 @@ export default function NewPassword({mutate, isPending}: Props) {
                             }}
                         >
                             <h4 className="login_register_title">Parol yaratish</h4>
-                            <InputField name="password"  label="" placeholder={'Yangi parol'} type="password"
+                            <InputField name="password" label="" placeholder={'Yangi parol'} type="password"
                                         key='passwords' formik={formik}/>
                             <InputField name="confirmPassword" label="" placeholder={'Parol tasdig’i'} type="password"
                                         key='password' formik={formik}/>
                             <div className="form-group col-lg-12">
-                                <Button isPending={isPending}/>
+                                <Button children={'Davom etish'} type={'submit'} isPending={isPending}/>
                             </div>
                         </form>
 

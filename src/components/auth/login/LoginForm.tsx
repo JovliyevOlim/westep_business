@@ -1,6 +1,6 @@
 import {useFormik} from "formik";
 import * as Yup from "yup";
-import Button from "../../../ui/Button.tsx";
+import Button from "../../../ui/button/Button.tsx";
 import PhoneNumberInput from "../../../ui/PhoneNumberInput.tsx";
 import {useCheckPhoneNumber} from "../../../api/auth/useAuth.ts";
 
@@ -20,6 +20,7 @@ export default function LoginForm() {
                 .length(13, "Telefon raqami xato kiritildi!"),
                     }),
         onSubmit: async (values) => {
+            console.log(values);
             await mutateAsync(values);
         },
     });
@@ -39,7 +40,7 @@ export default function LoginForm() {
                             <p className="login_register_title">Business</p>
                             <PhoneNumberInput name={'phone'} formik={formik} className={''}/>
                             <div className="form-group col-lg-12 mt-5">
-                                <Button isPending={isPending}/>
+                                <Button type='submit' children={'Davom etish'} variant='primary' isPending={isPending}/>
                             </div>
                         </form>
                     </div>

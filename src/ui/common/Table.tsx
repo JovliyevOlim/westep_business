@@ -37,7 +37,7 @@ const columns = [{accessorKey: 'name', header: 'Name'}, {accessorKey: 'price', h
     }
 ]
 
-function Table() {
+function Table(data: any, columns: any) {
 
 
     const [pagination, setPagination] = useState({
@@ -63,7 +63,7 @@ function Table() {
 
     const currentPage = getState().pagination.pageIndex + 1
 
-    console.log(currentPage,'currentPage',currentPage)
+    console.log(currentPage, 'currentPage', currentPage)
 
     return (
         <>
@@ -102,7 +102,7 @@ function Table() {
                                        className={!getCanPreviousPage() ? "disabled" : ""}
                                 ><i className="fa-solid fa-arrow-left-long"></i></a></li>
                                 {getPageOptions().map((item: any, key: number) => (
-                                    <li key={key}  className={getState().pagination.pageIndex === item ? "active" : ""}>
+                                    <li key={key} className={getState().pagination.pageIndex === item ? "active" : ""}>
                                         <a href="#"
 
                                            onClick={() => setPageIndex(item)}

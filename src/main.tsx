@@ -3,7 +3,7 @@ import {createRoot} from 'react-dom/client'
 import {BrowserRouter as Router} from 'react-router-dom';
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 import App from './App.tsx'
-import "./styles/index.css"
+import "./styles/main.scss"
 
 const qc = new QueryClient();
 

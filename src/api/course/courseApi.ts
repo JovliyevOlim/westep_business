@@ -5,7 +5,7 @@ import {AxiosError} from "axios";
 import {BusinessType} from "../../types/types.ts";
 
 
-export const login = async (body: { phone: string; password: string }) => {
+export const addCourse = async (body: { phone: string; password: string }) => {
     try {
         const {data} = await apiClient.post("/auth/login", {}, {
             params: {
@@ -23,37 +23,39 @@ export const login = async (body: { phone: string; password: string }) => {
     }
 };
 
-export const register = async (body: BusinessType) => {
+export const updateCourse = async (body: BusinessType) => {
     try {
-        const response = await apiClient.post("/business/register", body);
-        return response;
+        const {data} = await apiClient.post("/auth/business/register", body);
+        setItem<string>("accessToken", data.accessToken)
+        setItem<string>("refreshToken", data.refreshToken)
     } catch (error) {
-        console.log(error);
         const err = error as AxiosError<{ message: string }>;
         const message = err.response?.data?.message;
         throw new Error(message);
     }
 };
 
-export const getCurrentUser = async () => {
-    const {data} = await apiClient.get("/user/me");
-    return data;
+export const getAllCourses = async () => {
+    try {
+        const {data} = await apiClient.get("/course/get",);
+        return data;
+    } catch (error) {
+        const err = error as AxiosError<{ message: string }>;
+        const message = err.response?.data?.message;
+        throw new Error(message);
+    }
 };
 
-export const checkPhoneNumber = async ({phone}: { phone: string }) => {
-    const {data} = await apiClient.post("/auth/check-phone", {phone});
+export const getCourse = async (body: { phone: string }) => {
+    const {data} = await apiClient.post("/auth/check-phone", {phone: body.phone});
     if (data.status === "NOT_FOUND") {
         throw new Error(data.message);
     }
 };
 
-export const logout = async () => {
-    const refreshToken: string | null = getItem<string>("refreshToken");
-    await apiClient.post("/auth/logout", refreshToken, {
-        headers: {
-            "Content-Type": "text/plain"
-        }
-    });
+export const deleteCourse = async () => {
+    const refreshToken: string | null = getItem("refreshToken");
+    await apiClient.post("/auth/logout", refreshToken);
     localStorage.removeItem("accessToken");
     localStorage.removeItem("refreshToken");
 };

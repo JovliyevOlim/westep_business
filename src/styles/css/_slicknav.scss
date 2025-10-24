@@ -1,0 +1,186 @@
+/*!
+ * SlickNav Responsive Mobile Menu v1.0.10 (SCSS versiyasi)
+ * (c) 2016 Josh Cope
+ * Licensed under MIT
+ */
+
+.slicknav {
+  &_btn {
+    position: relative;
+    display: block;
+    vertical-align: middle;
+    float: right;
+    padding: 0.438em 0.625em;
+    line-height: 1.125em;
+    cursor: pointer;
+    margin: 0;
+    text-decoration: none;
+    top: 0;
+
+    .slicknav_icon-bar + .slicknav_icon-bar {
+      margin-top: 0.188em;
+    }
+  }
+
+  &_parent {
+    ul {
+      background-color: #211e3b !important;
+      padding: 0 !important;
+    }
+
+    &.slicknav_open ul li a {
+      color: #fff !important;
+    }
+  }
+
+  &_menu {
+    zoom: 1;
+    font-size: 16px;
+    box-sizing: border-box;
+    background: transparent;
+    padding: 0;
+
+    * {
+      box-sizing: border-box;
+    }
+
+    .slicknav_menutxt {
+      display: block;
+      line-height: 1.188em;
+      float: left;
+      color: #00d690;
+      font-weight: bold;
+    }
+
+    .slicknav_icon {
+      float: left;
+      width: 1.125em;
+      height: 0.875em;
+      margin: 0.188em 0 0 0.438em;
+
+      &:before {
+        background: transparent;
+        width: 1.125em;
+        height: 0.875em;
+        display: block;
+        content: "";
+        position: absolute;
+      }
+    }
+
+    .slicknav_no-text {
+      margin: 0;
+    }
+
+    .slicknav_icon-bar {
+      display: block;
+      width: 1.125em;
+      height: 0.125em;
+      border-radius: 1px;
+      box-shadow: 0 1px 0 rgba(0, 0, 0, 0.25);
+      background-color: #fff;
+    }
+
+    &:before,
+    &:after {
+      content: " ";
+      display: table;
+    }
+
+    &:after {
+      clear: both;
+    }
+  }
+
+  &_nav {
+    clear: both;
+    color: #fff;
+    margin-top: 20px;
+    padding: 0;
+    font-size: 0.875em;
+    list-style: none;
+    overflow: hidden;
+
+    ul {
+      list-style: none;
+      overflow: hidden;
+      padding: 20px;
+      margin: 0;
+      display: block;
+    }
+
+    li {
+      display: block;
+
+      &.slicknav_parent {
+        ul {
+          background-color: #211e3b !important;
+          padding: 0 !important;
+        }
+
+        &.slicknav_open ul li a {
+          color: #fff !important;
+        }
+      }
+
+      li {
+        padding-left: 15px;
+      }
+    }
+
+    .slicknav_arrow {
+      font-size: 0.8em;
+      margin-left: 0.4em;
+    }
+
+    .slicknav_item {
+      cursor: pointer;
+
+      a {
+        display: inline;
+        padding: 0;
+        margin: 0;
+      }
+    }
+
+    .slicknav_row {
+      display: block;
+      padding: 5px 0;
+      margin: 2px 5px;
+
+      &:hover {
+        color: #fff;
+      }
+    }
+
+    a {
+      display: block;
+      padding: 5px 10px;
+      margin: 2px 5px;
+      text-decoration: none;
+      color: #fff;
+
+      &:hover {
+        color: #222;
+      }
+    }
+
+    .slicknav_txtnode {
+      margin-left: 15px;
+    }
+
+    .slicknav_parent-link a {
+      padding: 0;
+      margin: 0;
+    }
+  }
+
+  &_brand {
+    float: left;
+    color: #fff;
+    font-size: 18px;
+    line-height: 30px;
+    padding: 7px 12px;
+    height: 44px;
+  }
+}

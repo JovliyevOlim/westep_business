@@ -1,6 +1,7 @@
 import {useEffect, useRef} from 'react';
 import {NavLink, useLocation} from 'react-router-dom';
 import {authProtectedRoutes} from '../../route/allRoutes';
+import logo from '../../assets/logo.svg';
 
 interface SidebarProps {
     sidebarOpen: boolean;
@@ -52,9 +53,9 @@ const Sidebar = ({sidebarOpen, setSidebarOpen}: SidebarProps) => {
             }`}
         >
             <div className="pt-4">
-                <div className="site-logo d-flex px-4 justify-content-between align-items-center">
-                    <img src="assets/img/logo.svg" alt="Edumon"/>
-                    <i onClick={() => setSidebarOpen(false)} className="d-md-none fa-solid fa-xmark display-6"></i>
+                <div className="site-logo d-flex px-4 justify-content-start align-items-center">
+                    <img onClick={() => setSidebarOpen(false)} src={logo} alt="westep"/>
+                    {/*<i onClick={() => setSidebarOpen(false)} className="d-md-none me-4 fa-solid fa-xmark display-6"></i>*/}
                 </div>
             </div>
 
@@ -70,12 +71,12 @@ const Sidebar = ({sidebarOpen, setSidebarOpen}: SidebarProps) => {
                                     className={({isActive}) =>
                                         `d-md-flex d-none align-items-center px-3 py-2 rounded ${
                                             isActive || pathname.includes(item?.path)
-                                                ? 'bg-white text-primary'
-                                                : 'text-light'
+                                                ? 'bg-primary text-light'
+                                                : 'text-primary'
                                         }`
                                     }
                                 >
-                                    {item?.title}
+                                    <i className={`${item?.icon} me-2`}></i> {item?.title}
                                 </NavLink>
                                 <NavLink
                                     onClick={() => setSidebarOpen(false)}
@@ -83,12 +84,12 @@ const Sidebar = ({sidebarOpen, setSidebarOpen}: SidebarProps) => {
                                     className={({isActive}) =>
                                         `d-flex d-md-none align-items-center px-3 py-2 rounded ${
                                             isActive || pathname.includes(item?.path)
-                                                ? 'bg-white text-primary'
-                                                : 'text-light'
+                                                ? 'bg-primary text-light'
+                                                : 'text-primary'
                                         }`
                                     }
                                 >
-                                    {item?.title}
+                                    <i className={`${item?.icon} me-2`}></i> {item?.title}
                                 </NavLink>
                             </li>
                         ))}

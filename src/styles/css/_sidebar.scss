@@ -1,0 +1,30 @@
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color:white;
+    color: $primary;
+    overflow: auto;
+    z-index: 999;
+    min-height: 100vh;
+    transition: transform 0.3s ease, width 0.3s ease;
+    border-right: 3px solid $primary;;
+}
+
+.sidebar.open {
+    width: 300px;
+    transform: translateX(0);
+}
+
+.sidebar.closed {
+    width: 0;
+    transform: translateX(-100%);
+}
+
+@media (min-width: 768px) {
+    .sidebar.open {
+        position: static !important;
+        transform: none !important;
+        width: 300px !important;
+    }
+}

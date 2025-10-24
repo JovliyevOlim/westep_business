@@ -6,7 +6,6 @@ import {authProtectedRoutes, publicRoutes} from './allRoutes';
 import AuthProtected from "./AuthProtected.tsx";
 import DefaultLayout from "../layouts/DefaultLayout";
 import AuthLayout from "../layouts/AuthLayout";
-// import DefaultLayout from '../layout/DefaultLayout.tsx';
 // import ProtectedRoute from './ProtectedRoute.tsx';
 
 const Index = () => {
@@ -29,9 +28,9 @@ const Index = () => {
                             path={route.path}
                             element={
                                 <AuthProtected>
-                                    {/*<ProtectedRoute allowedRoles={route?.permission}>*/}
+                                  {/*<ProtectedRoute allowedRoles={route?.permission}>*/}
                                     <DefaultLayout>{route.element}</DefaultLayout>
-                                    {/*</ProtectedRoute>*/}
+                                    {/*// </ProtectedRoute>*/}
                                 </AuthProtected>
                             }
                             key={idx}

@@ -1,5 +1,6 @@
 import {Link} from 'react-router-dom'
 import UserDropdown from "../../ui/components/UserDropdown.tsx";
+import logo from '../../assets/logo.svg'
 
 interface SidebarProps {
     sidebarOpen: boolean;
@@ -21,13 +22,13 @@ export default function HeaderOne({setSidebarOpen, sidebarOpen}: SidebarProps) {
                         <div className="col-5 align-self-center rk_style">
                             <div className="site-logo d-none d-lg-block">
                                 {
-                                    !sidebarOpen && <Link to="/"><img src="assets/img/logo.svg" alt="Edumon"/></Link>
+                                    !sidebarOpen && <Link to="/"><img width={150} height={54} src={logo} alt="logo"/></Link>
 
                                 }
                             </div>
                         </div>
                         <div className="col-5 justify-content-end d-flex">
-                                <UserDropdown/>
+                            <UserDropdown/>
                         </div>
 
                     </div>

@@ -2,7 +2,7 @@ import {Link, useLocation, useNavigate} from "react-router-dom";
 import {useFormik} from "formik";
 import * as Yup from "yup";
 import {useState} from "react";
-import Button from "../../../ui/Button.tsx";
+import Button from "../../../ui/button/Button.tsx";
 import InputField from "../../../ui/InputField.tsx";
 import {useRequireState} from "../../../hooks/UseRequireState.ts";
 
@@ -128,7 +128,7 @@ export default function Register() {
                                 </label>
                             </div>
                             <div className="form-group col-lg-12">
-                                <Button isPending={isPending}/>
+                                <Button type='submit' children='Davom etish' variant={'primary'} isPending={isPending}/>
                             </div>
                             <p className={'text-center text-dark mt-1'}>Akkountingiz bormi? <Link
                                 className={"text-primary"} to="/login">Login</Link></p>

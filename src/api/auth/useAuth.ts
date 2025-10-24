@@ -1,4 +1,4 @@
-// src/hooks/useAuth.ts
+// src/hooks/useCourse.ts
 import {useQuery, useMutation, useQueryClient} from "@tanstack/react-query";
 import {checkPhoneNumber, getCurrentUser, login, logout, register} from "./authApi.ts";
 import {useNavigate} from "react-router-dom";
@@ -9,7 +9,7 @@ export const useUser = () =>
         queryKey: ["currentUser"],
         queryFn: async () => {
             const token = getItem<string>('accessToken');
-            console.log(token,'token');
+            console.log(token, 'token');
             if (!token) throw new Error("No token");
             return await getCurrentUser();
         },
@@ -34,13 +34,10 @@ export const useLogin = () => {
 
 export const useRegister = () => {
     const navigate = useNavigate();
-    const qc = useQueryClient();
     return useMutation({
         mutationFn: register,
-        onSuccess: async () => {
-            const user = await getCurrentUser();
-            qc.setQueryData(["currentUser"], user);
-            navigate("/");
+        onSuccess: () => {
+            navigate("/login");
         },
         onError: (error) => {
             alert(error.message);
@@ -56,9 +53,8 @@ export const useCheckPhoneNumber = () => {
             onSuccess: (_, body: { phone: string }) => {
                 navigate("/password", {state: {phone: body.phone}});
             },
-            onError: (error, body: { phone: string }) => {
-                console.log(error);
-                navigate("/register", {state: {phone: body.phone}}); // success -> password sahifasiga o‘tish
+            onError: (_, body: { phone: string }) => {
+                navigate("/register", {state: {phone: body.phone}});
             },
         });
     }

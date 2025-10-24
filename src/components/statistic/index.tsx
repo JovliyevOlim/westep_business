@@ -4,7 +4,7 @@ function Index() {
     return (
         <div>
             <h2>Statistic</h2>
-            <Table/>
+            {/*<Table/>*/}
         </div>
     );
 }

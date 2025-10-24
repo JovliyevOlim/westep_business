@@ -11,10 +11,10 @@ import Password from "../components/auth/password"
 import Logout from "../components/auth/logout";
 
 const authProtectedRoutes = [
-    {path: "/dashboard", element: <Dashboard/>, title: "Dashboard"},
-    {path: "/users", element: <Users/>, title: "Users"},
-    {path: "/lessons", element: <Lessons/>, title: "Lessons"},
-    {path: "/statistic", element: <Statistic/>, title: "Statistics"},
+    {path: "/dashboard", element: <Dashboard/>, title: "Dashboard", icon: 'ti-user'},
+    {path: "/users", element: <Users/>, title: "Users", icon: 'ti-user'},
+    {path: "/course", element: <Lessons/>, title: "Course", icon: 'ti-user'},
+    {path: "/statistic", element: <Statistic/>, title: "Statistics", icon: 'ti-user'},
 
     // {path: "/home-1", element: <HomeOne/>},
     // {path: "/home-2", element: <HomeTwo/>, title: "Home 2"},

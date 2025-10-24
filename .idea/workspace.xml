@@ -5,14 +5,72 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="030065c9-1b7b-4017-9393-d5623c771771" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/components/auth/logout/index.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/components/UserDropdown.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/api/course/courseApi.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/api/course/useCourse.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/styles/_variables.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/styles/css/_flexslider.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/styles/css/_slicknav.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ui/button/Button.stories.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ui/button/Button.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eslint.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/eslint.config.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/api/auth/authApi.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/auth/authApi.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/auth/useAuth.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/auth/useAuth.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/bootstrap/css/bootstrap.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/bootstrap/css/bootstrap.css.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/bootstrap/css/bootstrap.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/bootstrap/css/bootstrap.min.css.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/css/YTPlayer.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/styles/css/_YTPlayer.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/css/YouTubePopUp.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/styles/css/_YouTubePopUp.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/css/ajax-loader.gif" beforeDir="false" afterPath="$PROJECT_DIR$/src/styles/css/ajax-loader.gif" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/css/animate.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/styles/css/_animate.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/css/auth.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/styles/css/_auth.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/css/boxicons.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/css/boxicons.woff2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/css/button.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/styles/css/_button.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/css/close.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/styles/css/close.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/css/flexslider.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/css/fonts/Pe-icon-7-stroke.eot" beforeDir="false" afterPath="$PROJECT_DIR$/src/styles/css/fonts/Pe-icon-7-stroke.eot" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/css/fonts/Pe-icon-7-stroke.svg" beforeDir="false" afterPath="$PROJECT_DIR$/src/styles/css/fonts/Pe-icon-7-stroke.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/css/fonts/Pe-icon-7-stroke.ttf" beforeDir="false" afterPath="$PROJECT_DIR$/src/styles/css/fonts/Pe-icon-7-stroke.ttf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/css/fonts/Pe-icon-7-stroke.woff" beforeDir="false" afterPath="$PROJECT_DIR$/src/styles/css/fonts/Pe-icon-7-stroke.woff" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/css/fonts/slick.eot" beforeDir="false" afterPath="$PROJECT_DIR$/src/styles/css/fonts/slick.eot" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/css/fonts/slick.svg" beforeDir="false" afterPath="$PROJECT_DIR$/src/styles/css/fonts/slick.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/css/fonts/slick.ttf" beforeDir="false" afterPath="$PROJECT_DIR$/src/styles/css/fonts/slick.ttf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/css/fonts/slick.woff" beforeDir="false" afterPath="$PROJECT_DIR$/src/styles/css/fonts/slick.woff" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/css/gijgo.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/css/input.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/styles/css/_input.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/css/jquery-simple-mobilemenu.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/styles/css/_jquery-simple-mobilemenu.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/css/line-awesome.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/styles/css/_line-awesome.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/css/magnific-popup.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/styles/css/_magnific-popup.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/css/niceselect.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/styles/css/_niceselect.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/css/preloader.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/styles/css/_preloader.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/css/responsive.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/styles/css/_responsive.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/css/sidebar.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/styles/css/_sidebar.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/css/slick-theme.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/styles/css/_slick-theme.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/css/slick.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/styles/css/_slick.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/css/slicknav.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/styles/css/_style.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/auth/login/LoginForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/auth/login/LoginForm.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/auth/password/PasswordForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/auth/password/PasswordForm.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/auth/register/Register.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/auth/register/Register.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/lessons/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/lessons/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/sidebar/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/sidebar/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/statistic/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/statistic/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/users/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/users/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/layouts/DefaultLayout/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/layouts/DefaultLayout/index.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/layouts/headers/HeaderOne.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/layouts/headers/HeaderOne.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/route/allRoutes.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/route/allRoutes.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/route/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/route/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/styles/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/styles/main.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ui/Button.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ui/common/Table.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/ui/common/Table.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ui/components/NewPassordUi.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/ui/components/NewPassordUi.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ui/components/UserDropdown.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/ui/components/UserDropdown.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,11 +83,16 @@
         <option value="CSS File" />
         <option value="TypeScript File" />
         <option value="TypeScript JSX File" />
+        <option value="SCSS File" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/.storybook/preview.ts" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/node_modules/storybook/dist/core-server/index.cjs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 4
@@ -41,11 +104,12 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Node.js.useAuth.ts.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "main",
-    "last_opened_file_path": "/Users/olimjovliyev/Desktop/westep_business/src/types",
-    "list.type.of.created.stylesheet": "CSS",
+    "last_opened_file_path": "/Users/olimjovliyev/Desktop/westep_business/src/api/course",
+    "list.type.of.created.stylesheet": "SCSS",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -57,17 +121,18 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/api/course" />
       <recent name="$PROJECT_DIR$/src/types" />
       <recent name="$PROJECT_DIR$/src/components/auth" />
       <recent name="$PROJECT_DIR$/src/assets/css" />
       <recent name="$PROJECT_DIR$/src/assets" />
-      <recent name="$PROJECT_DIR$/src/components/common" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/styles" />
+      <recent name="$PROJECT_DIR$/src/ui/button" />
+      <recent name="$PROJECT_DIR$/src/ui/components" />
       <recent name="$PROJECT_DIR$/src/ui" />
       <recent name="$PROJECT_DIR$/src/components/auth" />
-      <recent name="$PROJECT_DIR$/src" />
-      <recent name="$PROJECT_DIR$/.github/workflows" />
     </key>
   </component>
   <component name="SharedIndexes">
@@ -87,7 +152,10 @@
       <updated>1760375481399</updated>
       <workItem from="1760375482510" duration="25440000" />
       <workItem from="1760954620217" duration="142000" />
-      <workItem from="1760954782246" duration="14058000" />
+      <workItem from="1760954782246" duration="15327000" />
+      <workItem from="1761132803372" duration="18000" />
+      <workItem from="1761196886193" duration="10019000" />
+      <workItem from="1761280940920" duration="11173000" />
     </task>
     <servers />
   </component>
@@ -103,14 +171,17 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/layouts/AuthLayout/index.tsx</url>
-          <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="2" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/node_modules/@tanstack/react-query/src/useMutation.ts</url>
           <line>1</line>
-          <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/api/course/useCourse.ts</url>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="4" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

@@ -36,7 +36,7 @@ body.mmactive {
 }
 .sm_menu_outer .mobile_menu li.back a {
   padding: 20px 5px 20px 55px;
-  background: url("../img/back.png") no-repeat scroll 15px center / 2% auto;
+  background: url("../../assets/img/back.png") no-repeat scroll 15px center / 2% auto;
 }
 .sm_menu_outer .mobile_menu a {
 	color: #ffffff;
@@ -90,7 +90,7 @@ body.mmactive {
   display: none;
 }
 #sm_menu_ham span {
-  background-color: #444;
+  background-color: $primary;
   border-radius: 0;
   display: block;
   height: 2px;
