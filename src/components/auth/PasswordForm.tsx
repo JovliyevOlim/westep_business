@@ -21,7 +21,7 @@ function PasswordForm() {
         validationSchema: Yup.object().shape({
             password: Yup.string()
                 .required("Parolni kiriting!")
-                // .min(6, "Parol kamida 6 ta belgidan iborat bo‘lishi kerak!"),
+            // .min(6, "Parol kamida 6 ta belgidan iborat bo‘lishi kerak!"),
         }),
         onSubmit: async (values) => {
             await mutateAsync({
@@ -41,7 +41,7 @@ function PasswordForm() {
                     }}
                     className="bg-transparent"
                 >
-                    <p className="text-2xl font-semibold text-center mb-8">
+                    <p className="text-2xl font-semibold text-gray-900 text-center mb-8">
                         Kirish
                     </p>
                     <div className="grid grid-cols-1 mt-2">
