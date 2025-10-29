@@ -32,6 +32,16 @@ const navItems: NavItem[] = [
         name: "Kurslar",
         path: "/courses",
     },
+    {
+        icon: <TaskIcon/>,
+        name: "Modullar",
+        path: "/modules",
+    },
+    {
+        icon: <TaskIcon/>,
+        name: "Darslar",
+        path: "/lessons",
+    },
     // {
     //     icon: <CalenderIcon/>,
     //     name: "Calendar",

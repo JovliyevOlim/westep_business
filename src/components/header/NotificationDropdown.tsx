@@ -366,7 +366,7 @@ export default function NotificationDropdown() {
               </span>
             </DropdownItem>
           </li>
-          {/* AddCourse more items as needed */}
+          {/* AddLesson more items as needed */}
         </ul>
         <Link
           to="/"

@@ -6,6 +6,7 @@ import {ColumnDef} from "@tanstack/react-table";
 import Actions from "../../components/tables/Actions/Actions.tsx";
 import PageBreadcrumb from "../../components/common/PageBreadCrumb.tsx";
 import {Course} from "../../types/types.ts";
+import Image from "../../components/ui/images/Image.tsx";
 
 export default function Courses() {
     const {data, isPending, isError, error} = useGetCourses()
@@ -15,11 +16,18 @@ export default function Courses() {
         await mutate(id)
     }
 
-    const columns: ColumnDef<Course>[] = [{accessorKey: 'name', header: 'Nomi'},
+    const columns: ColumnDef<Course>[] = [
+        {
+            accessorKey: 'attachmentId', header: 'Rasm',
+            cell: ({row}) => <Image id={row.original?.attachmentId}/>,
+        },
+        {accessorKey: 'name', header: 'Nomi'},
+        {accessorKey: 'description', header: 'Tavsif'},
         {
             id: 'actions',
             header: '',
-            cell: ({row}) => <Actions isPending={isDeletePending} key={row.original.id} deleteFunction={handleDelete}
+            cell: ({row}) => <Actions path={'/courses/update/'}
+                                      isPending={isDeletePending} key={row.original.id} deleteFunction={handleDelete}
                                       id={row.original.id}/>,
         },
     ]

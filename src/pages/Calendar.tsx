@@ -92,7 +92,7 @@ const Calendar: React.FC = () => {
         )
       );
     } else {
-      // AddCourse new event
+      // AddLesson new event
       const newEvent: CalendarEvent = {
         id: Date.now().toString(),
         title: eventTitle,
@@ -139,7 +139,7 @@ const Calendar: React.FC = () => {
             eventContent={renderEventContent}
             customButtons={{
               addEventButton: {
-                text: "AddCourse Event +",
+                text: "AddLesson Event +",
                 click: openModal,
               },
             }}
@@ -153,7 +153,7 @@ const Calendar: React.FC = () => {
           <div className="flex flex-col px-2 overflow-y-auto custom-scrollbar">
             <div>
               <h5 className="mb-2 font-semibold text-gray-800 modal-title text-theme-xl dark:text-white/90 lg:text-2xl">
-                {selectedEvent ? "Edit Event" : "AddCourse Event"}
+                {selectedEvent ? "Edit Event" : "AddLesson Event"}
               </h5>
               <p className="text-sm text-gray-500 dark:text-gray-400">
                 Plan your next big moment: schedule or edit an event to stay on
@@ -258,7 +258,7 @@ const Calendar: React.FC = () => {
                 type="button"
                 className="btn btn-success btn-update-event flex w-full justify-center rounded-lg bg-brand-500 px-4 py-2.5 text-sm font-medium text-white hover:bg-brand-600 sm:w-auto"
               >
-                {selectedEvent ? "Update Changes" : "AddCourse Event"}
+                {selectedEvent ? "Update Changes" : "AddLesson Event"}
               </button>
             </div>
           </div>

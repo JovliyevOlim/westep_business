@@ -23,7 +23,9 @@ export default function CommonTable<T>({data, columns, isPending, error, isError
 
     if (isPending) {
         return (
-            <Spinner/>
+            <div className={'flex justify-center'}>
+                <Spinner/>
+            </div>
         );
     }
     if (isError) return <p>Xatolik: {(error as Error).message}</p>;
@@ -56,40 +58,48 @@ export default function CommonTable<T>({data, columns, isPending, error, isError
 
     return (
         <div
-            className="overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-white/[0.05] dark:bg-white/[0.03]">
+            className="overflow-hidden rounded-xl">
             <div className="max-w-full overflow-x-auto">
-                <Table>
-                    {/* Table Header */}
-                    <TableHeader className="border-b border-gray-100 dark:border-white/[0.05]">
-                        {table.getHeaderGroups().map((hg) => (
-                            <TableRow key={hg.id}>
-                                {hg.headers.map((header) => (
-                                    <TableCell key={header.id} isHeader
-                                               className="px-5 py-3 font-large text-md text-gray-500 text-start text-theme-xs dark:text-gray-400">
-                                        {flexRender(header.column.columnDef.header, header.getContext())}
-                                    </TableCell>
-                                ))}
-                            </TableRow>
-                        ))}
-                    </TableHeader>
+                {
+                    data.length > 0
+                        ?
+                        <>
+                            <Table>
+                                {/* Table Header */}
+                                <TableHeader className="border-b border-gray-100 dark:border-white/[0.05]">
+                                    {table.getHeaderGroups().map((hg) => (
+                                        <TableRow key={hg.id}>
+                                            {hg.headers.map((header) => (
+                                                <TableCell key={header.id} isHeader
+                                                           className="px-5 py-3 font-large text-md text-gray-500 text-start text-theme-xs dark:text-gray-400">
+                                                    {flexRender(header.column.columnDef.header, header.getContext())}
+                                                </TableCell>
+                                            ))}
+                                        </TableRow>
+                                    ))}
+                                </TableHeader>
 
-                    {/* Table Body */}
-                    <TableBody className="divide-y divide-gray-100 dark:divide-white/[0.05]">
-                        {table.getRowModel().rows.map((row) => (
-                            <TableRow key={row.id}>
-                                {row.getVisibleCells().map((cell) => (
-                                    <TableCell key={cell.id} className="px-5 py-4 sm:px-6 text-start">
-                                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                                    </TableCell>
-                                ))}
-                            </TableRow>
-                        ))}                    </TableBody>
-                </Table>
-                <Pagination currentPage={currentPage} nextPage={nextPage} previousPage={previousPage}
-                            getPageOptions={getPageOptions} getCanNextPage={getCanNextPage}
-                            getCanPreviousPage={getCanPreviousPage}
-                            onPageChange={setPageIndex}
-                />
+                                {/* Table Body */}
+                                <TableBody className="divide-y divide-gray-100 dark:divide-white/[0.05]">
+                                    {table.getRowModel().rows.map((row) => (
+                                        <TableRow key={row.id}>
+                                            {row.getVisibleCells().map((cell) => (
+                                                <TableCell key={cell.id} className="px-5 py-4 sm:px-6 text-start">
+                                                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                                                </TableCell>
+                                            ))}
+                                        </TableRow>
+                                    ))}                    </TableBody>
+                            </Table>
+                            <Pagination currentPage={currentPage} nextPage={nextPage} previousPage={previousPage}
+                                        getPageOptions={getPageOptions} getCanNextPage={getCanNextPage}
+                                        getCanPreviousPage={getCanPreviousPage}
+                                        onPageChange={setPageIndex}
+                            />
+                        </> :
+                        <p className={'text-center'}>Ma'lumot topilmadi!</p>
+                }
+
             </div>
         </div>
     );

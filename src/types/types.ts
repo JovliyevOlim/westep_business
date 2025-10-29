@@ -34,4 +34,20 @@ export interface Course extends Common {
     isPublished: boolean,
     publishedAt: string,
     businessId: string
+    attachmentId: string | null
+}
+
+export interface Module extends Common {
+    name: string,
+    description?: string,
+    courseId: string
+    orderIndex: number | null,
+}
+
+export interface Lesson extends Common {
+    name: string,
+    description?: string,
+    moduleId: string,
+    orderIndex: number | null,
+    estimatedDuration: number | null,
 }

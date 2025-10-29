@@ -1,12 +1,13 @@
 import apiClient from "../apiClient.ts";
 import {AxiosError} from "axios";
-import {Course} from "../../types/types.ts";
+import {Module} from "../../types/types.ts";
 
-type addCourse = Pick<Course, "name" | "description" | "businessId" | "id" | "attachmentId">
+type addModule = Pick<Module, "name" | "description" | "courseId" | "id" | "orderIndex">
 
-export const addCourses = async (body: Omit<addCourse, "id">) => {
+export const addModules = async (body: Omit<addModule, "id">) => {
     try {
-        await apiClient.post("/course", body);
+        await apiClient.post("/module", body);
+        return body.courseId;
     } catch (error) {
         const err = error as AxiosError<{ message: string }>;
         const message = err.response?.data?.message;
@@ -14,9 +15,10 @@ export const addCourses = async (body: Omit<addCourse, "id">) => {
     }
 };
 
-export const updateCourse = async (body: addCourse) => {
+export const updateModules = async (body: addModule) => {
     try {
-        await apiClient.put("/course/" + body.id, body);
+        await apiClient.put("/module/" + body.id, body);
+        return body.courseId;
     } catch (error) {
         const err = error as AxiosError<{ message: string }>;
         const message = err.response?.data?.message;
@@ -24,9 +26,10 @@ export const updateCourse = async (body: addCourse) => {
     }
 };
 
-export const deleteCourse = async (id: string) => {
+export const deleteModules = async ({id, courseId}: { id: string, courseId?: string }) => {
     try {
-        await apiClient.delete("/course/" + id);
+        await apiClient.delete("/module/" + id);
+        return courseId;
     } catch (error) {
         const err = error as AxiosError<{ message: string }>;
         const message = err.response?.data?.message;
@@ -35,9 +38,9 @@ export const deleteCourse = async (id: string) => {
 };
 
 
-export const getAllCourses = async () => {
+export const getAllModules = async (courseId: string | undefined) => {
     try {
-        const {data} = await apiClient.get("/course/get");
+        const {data} = await apiClient.get("/module/course/" + courseId);
         return data;
     } catch (error) {
         const err = error as AxiosError<{ message: string }>;
@@ -46,7 +49,7 @@ export const getAllCourses = async () => {
     }
 };
 
-export const getCourseById = async (id: string | undefined) => {
-    const {data} = await apiClient.get("/course/get/" + id);
+export const getModulesById = async (id: string | undefined) => {
+    const {data} = await apiClient.get("/module/" + id);
     return data;
 };

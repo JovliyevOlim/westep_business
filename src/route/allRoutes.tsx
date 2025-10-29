@@ -9,13 +9,23 @@ import Password from "../pages/AuthPages/Password.tsx";
 import FormElements from "../pages/Forms/FormElements.tsx";
 import CreatePassword from "../pages/AuthPages/CreatePassword.tsx";
 import Courses from "../pages/Courses/Courses.tsx";
+import Modules from "../pages/Modules/Modules.tsx";
+import AddModule from "../pages/Modules/AddModule.tsx";
+import AddLesson from "../pages/Lessons/AddLesson.tsx";
+import Lessons from "../pages/Lessons/Lessons.tsx";
 
 
 export const authProtectedRoutes = [
     {index: true, element: <Home/>, path: '/'}, // index route
-    {path: "/roles/update/:id", element: <AddCourse/>}, // oddiy route
-    {path: "/courses/add", element: <AddCourse/>}, // oddiy route
-    {path: "/courses", element: <Courses/>}, // oddiy route
+    {path: "/courses/update/:id", element: <AddCourse/>},
+    {path: "/courses/add", element: <AddCourse/>},
+    {path: "/courses", element: <Courses/>},
+    {path: "/modules/update/:id", element: <AddModule/>},
+    {path: "/modules/add", element: <AddModule/>},
+    {path: "/modules", element: <Modules/>},
+    {path: "/lessons/update/:courseId/:id", element: <AddLesson/>},
+    {path: "/lessons/add", element: <AddLesson/>},
+    {path: "/lessons", element: <Lessons/>},
 
     // Others Page
     {path: "/profile", element: <UserProfiles/>},

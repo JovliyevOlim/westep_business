@@ -6,30 +6,36 @@ import Input from "../../components/form/input/InputField.tsx";
 import ComponentCard from "../../components/common/ComponentCard.tsx";
 import {useParams} from "react-router";
 import {useAddCourse, useGetCourseById, useUpdateCourse} from "../../api/courses/useCourse.ts";
-import {useEffect, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import {useFormik} from "formik";
 import Button from "../../components/ui/button/Button.tsx";
 import {Course} from "../../types/types.ts";
 import {useUser} from "../../api/auth/useAuth.ts";
+import CommonFileInput, {CommonFileInputRef} from "../../components/form/input/CommonFileInput.tsx";
 
 export default function AddCourse() {
 
     const {id} = useParams<{ id: string }>();
-    const {mutateAsync, isPending: isAdding} = useAddCourse();
+    const fileRef = useRef<CommonFileInputRef>(null);
+
+    const {mutateAsync: addCourse, isPending: isAdding} = useAddCourse();
     const {data: user} = useUser();
     const {mutateAsync: updateCourse, isPending: isUpdating} = useUpdateCourse();
     const {data} = useGetCourseById(id);
 
-    const [initialValues, setInitialValues] = useState<Pick<Course, "name" | "description">>({
+    const [initialValues, setInitialValues] = useState<Pick<Course, "name" | "description" | "attachmentId">>({
         name: "",
-        description: ""
+        description: "",
+        attachmentId: ""
     });
+
 
     useEffect(() => {
         if (data) {
             setInitialValues({
                 name: data.name,
                 description: data.description,
+                attachmentId: data.attachmentId
             })
         }
     }, [data])
@@ -42,17 +48,24 @@ export default function AddCourse() {
             name: Yup.string()
                 .required("Nomini kiriting!"),
         }),
-        onSubmit: async (values) => {
-            console.log(values);
-            if (id) {
-                await updateCourse({...values, id, businessId: user.businessId});
-            } else {
-                await mutateAsync({...values, businessId: user.businessId});
+        onSubmit: () => {
+            if (fileRef.current) {
+                fileRef.current.saveFile()
             }
         },
     });
 
-    console.log(formik);
+
+    const handleSubmit = async (fileId?: string | null) => {
+        if (fileId) {
+            if (id) {
+                await updateCourse({...formik.values, id, businessId: user.businessId, attachmentId: fileId});
+            } else {
+                await addCourse({...formik.values, businessId: user.businessId, attachmentId: fileId});
+            }
+        }
+    }
+
 
     return (
         <div>
@@ -76,6 +89,12 @@ export default function AddCourse() {
                         <div>
                             <Label htmlFor="description">Tavsif</Label>
                             <Input type="text" formik={formik} name={'description'} placeholder={'Tavsif'}/>
+                        </div>
+                        <div>
+                            <CommonFileInput attachmentId={formik.values?.attachmentId as string} ref={fileRef}
+                                             accept="image/png, image/jpeg, image/jpg, image/webp"
+                                             maxSizeMB={20}
+                                             text='Rasm yuklash' handleSubmit={handleSubmit}/>
                         </div>
                     </div>
                     <div className={'mt-3 flex gap-6 justify-end'}>

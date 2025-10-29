@@ -1,4 +1,4 @@
-// src/api/courseApi.ts
+// src/api/filesApi.ts
 import apiClient from "../apiClient";
 import {getItem, setItem} from "../../utils/utils.ts";
 import {AxiosError} from "axios";

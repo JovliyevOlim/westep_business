@@ -7,9 +7,10 @@ interface Props {
     id: string;
     deleteFunction: (id: string) => Promise<void>; // async function
     isPending: boolean;
+    path: string;
 }
 
-function Actions({id, deleteFunction, isPending}: Props) {
+function Actions({id, deleteFunction, isPending, path}: Props) {
     const [deleteModal, setDeleteModal] = useState(false);
 
     const handleDelete = () => {
@@ -19,9 +20,8 @@ function Actions({id, deleteFunction, isPending}: Props) {
     return (
         <>
             <div className="flex items-center gap-3 z-9999999">
-                {/* Edit button */}
                 <Link
-                    to={`/roles/update/${id}`}
+                    to={`${path}${id}`}
                     className="flex items-center text-green-600 hover:text-green-800"
                 >
                     <PencilIcon className='text-2xl'/>
@@ -37,12 +37,12 @@ function Actions({id, deleteFunction, isPending}: Props) {
             </div>
 
             {/*{deleteModal && (*/}
-                <DeleteModal
-                    isPending={isPending}
-                    setOpen={setDeleteModal}
-                    open={deleteModal}
-                    deleteFunction={() => deleteFunction(id)}
-                />
+            <DeleteModal
+                isPending={isPending}
+                setOpen={setDeleteModal}
+                open={deleteModal}
+                deleteFunction={() => deleteFunction(id)}
+            />
             {/*)}*/}
         </>
     );

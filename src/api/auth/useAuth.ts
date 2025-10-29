@@ -1,4 +1,4 @@
-// src/hooks/useCourse.ts
+// src/hooks/useFile.ts
 import {useQuery, useMutation, useQueryClient} from "@tanstack/react-query";
 import {checkPhoneNumber, getCurrentUser, login, logout, register} from "./authApi.ts";
 import {useNavigate} from "react-router";
@@ -9,7 +9,6 @@ export const useUser = () =>
         queryKey: ["currentUser"],
         queryFn: async () => {
             const token = getItem<string>('accessToken');
-            console.log(token, 'token');
             if (!token) throw new Error("No token");
             return await getCurrentUser();
         },
