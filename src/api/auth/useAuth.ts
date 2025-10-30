@@ -1,8 +1,8 @@
-// src/hooks/useFile.ts
 import {useQuery, useMutation, useQueryClient} from "@tanstack/react-query";
 import {checkPhoneNumber, getCurrentUser, login, logout, register} from "./authApi.ts";
 import {useNavigate} from "react-router";
 import {getItem} from "../../utils/utils.ts";
+import {useToast} from "../../hooks/useToast.tsx";
 
 export const useUser = () =>
     useQuery({
@@ -21,16 +21,14 @@ export const useUser = () =>
 
 export const useLogin = () => {
     const navigate = useNavigate();
-    const qc = useQueryClient();
+    const toast = useToast();
     return useMutation({
         mutationFn: login,
         onSuccess: async () => {
-            const user = await getCurrentUser();
-            qc.setQueryData(["currentUser"], user);
-            navigate("/");
+            navigate("/")
         },
-        onError: (error) => {
-            alert(error);
+        onError: (error: Error) => {
+            toast.error(error.message);
         },
     });
 };
@@ -51,6 +49,7 @@ export const useRegister = () => {
 
 export const useCheckPhoneNumber = () => {
         const navigate = useNavigate();
+        const toast = useToast();
         return useMutation({
             mutationFn: checkPhoneNumber,
             onSuccess: (_, body: { phone: string }) => {
@@ -58,6 +57,7 @@ export const useCheckPhoneNumber = () => {
             },
             onError: (_, body: { phone: string }) => {
                 navigate("/register", {state: {phone: body.phone}});
+                toast.warning("Ro'yxatdan o'ting!", "Siz saytda yo'qsiz");
             },
         });
     }

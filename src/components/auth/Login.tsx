@@ -29,7 +29,6 @@ export default function LoginForm() {
                     onSubmit={(e) => {
                         e.preventDefault();
                         formik.handleSubmit();
-                        return false;
                     }}
                     className="bg-transparent"
                 >

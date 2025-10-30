@@ -15,10 +15,9 @@ export const login = async (body: { phone: string; password: string }) => {
         });
         setItem<string>("accessToken", data?.accessToken)
         setItem<string>("refreshToken", data?.refreshToken)
-    } catch (error) {
-        console.log(error);
-        const err = error as AxiosError<{ message: string }>;
-        const message = err.response?.data?.message;
+        return data
+    } catch (error:any) {
+        const message = "Parol notog'ri kiritildi";
         throw new Error(message);
     }
 };

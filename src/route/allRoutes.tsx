@@ -13,6 +13,8 @@ import Modules from "../pages/Modules/Modules.tsx";
 import AddModule from "../pages/Modules/AddModule.tsx";
 import AddLesson from "../pages/Lessons/AddLesson.tsx";
 import Lessons from "../pages/Lessons/Lessons.tsx";
+import Users from "../pages/Users/Users.tsx";
+import AddUsers from "../pages/Users/AddUsers.tsx";
 
 
 export const authProtectedRoutes = [
@@ -26,6 +28,9 @@ export const authProtectedRoutes = [
     {path: "/lessons/update/:courseId/:id", element: <AddLesson/>},
     {path: "/lessons/add", element: <AddLesson/>},
     {path: "/lessons", element: <Lessons/>},
+    {path: "/users/update/:id", element: <AddUsers/>},
+    {path: "/users/add", element: <AddUsers/>},
+    {path: "/users", element: <Users/>},
 
     // Others Page
     {path: "/profile", element: <UserProfiles/>},
@@ -40,6 +45,7 @@ export const authProtectedRoutes = [
     //
     // // UI Elements
     // {path: "/alerts", element: <Alerts/>},
+
     // {path: "/avatars", element: <Avatars/>},
     // {path: "/badge", element: <Badges/>},
     // {path: "/buttons", element: <Buttons/>},
