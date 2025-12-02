@@ -6,7 +6,6 @@ import {ColumnDef} from "@tanstack/react-table";
 import Actions from "../../components/tables/Actions/Actions.tsx";
 import PageBreadcrumb from "../../components/common/PageBreadCrumb.tsx";
 import {Course} from "../../types/types.ts";
-import Image from "../../components/ui/images/Image.tsx";
 
 export default function Courses() {
     const {data, isPending, isError, error} = useGetCourses()
@@ -19,7 +18,6 @@ export default function Courses() {
     const columns: ColumnDef<Course>[] = [
         {
             accessorKey: 'attachmentId', header: 'Rasm',
-            cell: ({row}) => <Image id={row.original?.attachmentId}/>,
         },
         {accessorKey: 'name', header: 'Nomi'},
         {accessorKey: 'description', header: 'Tavsif'},

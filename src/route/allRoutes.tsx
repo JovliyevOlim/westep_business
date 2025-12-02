@@ -1,6 +1,5 @@
 import SignIn from "../pages/AuthPages/SignIn";
 import NotFound from "../pages/OtherPage/NotFound";
-import Home from "../pages/Dashboard/Home.tsx";
 import UserProfiles from "../pages/UserProfiles.tsx";
 import AddCourse from "../pages/Courses/AddCourse.tsx";
 import Logout from "../pages/AuthPages/Logout.tsx";
@@ -11,26 +10,30 @@ import CreatePassword from "../pages/AuthPages/CreatePassword.tsx";
 import Courses from "../pages/Courses/Courses.tsx";
 import Modules from "../pages/Modules/Modules.tsx";
 import AddModule from "../pages/Modules/AddModule.tsx";
-import AddLesson from "../pages/Lessons/AddLesson.tsx";
-import Lessons from "../pages/Lessons/Lessons.tsx";
 import Users from "../pages/Users/Users.tsx";
 import AddUsers from "../pages/Users/AddUsers.tsx";
+import MainPage from "../pages/MainPage";
+import CourseDetails from "../pages/CourseDetails/CourseDetails.tsx";
+import AddLesson from "../components/courseDetails/lessonDetails/AddLesson.tsx";
 
 
 export const authProtectedRoutes = [
-    {index: true, element: <Home/>, path: '/'}, // index route
+    {index: true, element: <MainPage/>, path: '/'}, // index route
     {path: "/courses/update/:id", element: <AddCourse/>},
     {path: "/courses/add", element: <AddCourse/>},
+    {path: "/courses/details/:id/*", element: <CourseDetails/>},
+    {path: "/courses/addLesson/:id", element: <AddLesson/>},
+    {path: "/courses/updateLesson/:id/lesson/:lessonId", element: <AddLesson/>},
     {path: "/courses", element: <Courses/>},
     {path: "/modules/update/:id", element: <AddModule/>},
     {path: "/modules/add", element: <AddModule/>},
     {path: "/modules", element: <Modules/>},
-    {path: "/lessons/update/:courseId/:id", element: <AddLesson/>},
-    {path: "/lessons/add", element: <AddLesson/>},
-    {path: "/lessons", element: <Lessons/>},
+    // {path: "/courses/update/:courseId/:id", element: <AddLesson/>},
+    // {path: "/courses/add", element: <AddLesson/>},
     {path: "/users/update/:id", element: <AddUsers/>},
     {path: "/users/add", element: <AddUsers/>},
     {path: "/users", element: <Users/>},
+
 
     // Others Page
     {path: "/profile", element: <UserProfiles/>},

@@ -34,7 +34,7 @@ export const useAddCourse = () => {
         onSuccess: async () => {
             const roles = await getAllCourses();
             qc.setQueryData(["courses"], roles);
-            navigate("/courses");
+            navigate("/");
         },
         onError: (error) => {
             alert(error);
@@ -50,7 +50,7 @@ export const useUpdateCourse = () => {
         onSuccess: async () => {
             const roles = await getAllCourses();
             qc.setQueryData(["courses"], roles);
-            navigate("/courses");
+            navigate("/");
         },
         onError: (error) => {
             alert(error);
@@ -66,7 +66,7 @@ export const useDeleteCourse = () => {
         onSuccess: async () => {
             const roles = await getAllCourses();
             qc.setQueryData(["courses"], roles);
-            navigate("/courses");
+            navigate("/");
         },
         onError: (error) => {
             alert(error);

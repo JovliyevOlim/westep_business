@@ -27,12 +27,13 @@ export default function AddLesson() {
     const {mutateAsync: updateLesson, isPending: isUpdating} = useUpdateLesson();
     const {data} = useGetLessonById(id);
 
-    const [initialValues, setInitialValues] = useState<Pick<Lesson, "name" | "description" | "moduleId" | "orderIndex" | "estimatedDuration">>({
+    const [initialValues, setInitialValues] = useState<Omit<Lesson, "id"|"createdAt">>({
         name: "",
         description: "",
         moduleId: "",
         orderIndex: null,
-        estimatedDuration: null
+        estimatedDuration: null,
+        videoUrl:'',
     });
 
 
@@ -59,6 +60,8 @@ export default function AddLesson() {
                 .required("Kurs tanlang!"),
             orderIndex: Yup.number().required("Dars navbatini tanlang!"),
             estimatedDuration: Yup.number().required("Dars davomiyligini kiriting"),
+            videoUrl:Yup.string()
+                .required("Vedio link kiriting!"),
         }),
         onSubmit: async () => {
             if (id) {
@@ -124,6 +127,11 @@ export default function AddLesson() {
                                     {formik?.errors.moduleId as string}
                                 </p>
                             )}
+                        </div>
+                        <div>
+                            <Label htmlFor="youtubeUrl">Vedio link</Label>
+                            <Input type="text" formik={formik} name={'videoUrl'}
+                                   placeholder={'link'}/>
                         </div>
                     </div>
                     <div className={'mt-3 flex gap-6 justify-end'}>

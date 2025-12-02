@@ -21,7 +21,7 @@ function CommonButton({
                           className = "",
                       }: ButtonProps) {
     const baseStyle =
-        "flex items-center justify-center gap-2 w-full h-[54px] rounded-full font-medium transition-all disabled:opacity-60 disabled:cursor-not-allowed";
+        "flex items-center justify-center gap-2 w-full h-[48px] md:h-[54px] rounded-full font-medium transition-all disabled:opacity-60 disabled:cursor-not-allowed";
 
     const variants: Record<string, string> = {
         primary: "bg-brand-500 text-white hover:bg-brand-700",

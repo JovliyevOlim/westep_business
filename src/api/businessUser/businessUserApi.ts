@@ -1,12 +1,21 @@
 import apiClient from "../apiClient.ts";
 import {AxiosError} from "axios";
-import {Course} from "../../types/types.ts";
 
-type addCourse = Pick<Course, "name" | "description" | "businessId" | "id" | "attachmentId">
+interface Data {
+    businessId: string,
+    ownerId: string,
+    teacherPhone: string
+    assistantPhone: string
+}
 
-export const addBusinessTeacher = async (body: Omit<addCourse, "id">) => {
+export const addBusinessTeacher = async (body: Omit<Data, "assistantPhone">) => {
     try {
-        await apiClient.post("/business/assistant/add", body);
+        await apiClient.post("/business/teacher/add/" + body.businessId, {}, {
+            params: {
+                ownerId: body.ownerId,
+                teacherPhone: body.teacherPhone,
+            }
+        });
     } catch (error) {
         const err = error as AxiosError<{ message: string }>;
         const message = err.response?.data?.message;
@@ -14,9 +23,14 @@ export const addBusinessTeacher = async (body: Omit<addCourse, "id">) => {
     }
 };
 
-export const addBusinessAssistant = async (body: Omit<addCourse, "id">) => {
+export const addBusinessAssistant = async (body: Omit<Data, "teacherPhone">) => {
     try {
-        await apiClient.post("/business/teacher/add", body);
+        await apiClient.post("/business/assistant/add/" + body.businessId, {}, {
+            params: {
+                ownerId: body.ownerId,
+                assistantPhone: body.assistantPhone
+            }
+        });
     } catch (error) {
         const err = error as AxiosError<{ message: string }>;
         const message = err.response?.data?.message;

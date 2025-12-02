@@ -3,6 +3,8 @@
 @import "tailwindcss";
 @import "auth.css";
 @import "phoneNumberInput.css";
+@import '@vidstack/react/player/styles/default/theme.css';
+@import '@vidstack/react/player/styles/default/layouts/video.css';
 
 @custom-variant dark (&:is(.dark *));
 
@@ -856,4 +858,31 @@ span.flatpickr-weekday,
 
 .simplebar-scrollbar.simplebar-visible:before {
     @apply opacity-100;
+}
+[data-media-player] {
+    overflow: hidden;
+    background-color: transparent;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+/* Video iframe yoki provider elementi */
+[data-media-player] iframe,
+[data-media-player] .vds-poster {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    background-color: transparent;
+}
+
+/* Overlay controls (icons, buttons) */
+[data-media-player] .vds-video-layout,
+[data-media-player] .vds-controls {
+    padding: 0;
+    background-color: transparent;
+}
+
+/* Optional: hover yoki focus effektlari */
+[data-media-player]:hover {
+    border-radius: 20px;
 }

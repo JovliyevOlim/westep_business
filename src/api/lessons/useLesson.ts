@@ -1,11 +1,10 @@
 import {useQuery, useMutation, useQueryClient} from "@tanstack/react-query";
 import {getLessonsById, getAllLessons, addLessons, updateLessons, deleteLessons} from "./lessonApi.ts";
-import {useNavigate} from "react-router";
 import {getItem} from "../../utils/utils.ts";
 
-export const useGetLessons = (moduleId: string | undefined) =>
+export const useGetLessons = (moduleId: string | undefined, openLesson: boolean) =>
     useQuery({
-        queryKey: ["lessons", moduleId],
+        queryKey: ["courses", moduleId],
         queryFn: async () => {
             const token = getItem<string>('accessToken');
             if (!token) throw new Error("No token");
@@ -14,7 +13,7 @@ export const useGetLessons = (moduleId: string | undefined) =>
             return await getAllLessons(moduleId);
         },
         retry: false,
-        enabled: !!moduleId,
+        enabled: openLesson,
     });
 
 export const useGetLessonById = (id: string | undefined) =>
@@ -25,19 +24,18 @@ export const useGetLessonById = (id: string | undefined) =>
             if (!token) throw new Error("No token");
             return await getLessonsById(id);
         },
-        enabled: !!id,
         retry: false,
+        enabled: !!id
     });
 
 export const useAddLesson = () => {
-    const navigate = useNavigate();
     const qc = useQueryClient();
     return useMutation({
         mutationFn: addLessons,
-        onSuccess: async ({moduleId, courseId}) => {
-            const data = await getAllLessons(moduleId);
-            qc.setQueryData(["lessons"], data);
-            navigate("/lessons", {state: {courseId: courseId, moduleId: moduleId}});
+        onSuccess: async () => {
+            qc.invalidateQueries({
+                queryKey: ["courses"]
+            });
         },
         onError: (error) => {
             alert(error);
@@ -46,14 +44,13 @@ export const useAddLesson = () => {
 };
 
 export const useUpdateLesson = () => {
-    const navigate = useNavigate();
     const qc = useQueryClient();
     return useMutation({
         mutationFn: updateLessons,
-        onSuccess: async ({moduleId, courseId}) => {
-            const data = await getAllLessons(moduleId);
-            qc.setQueryData(["lessons"], data);
-            navigate("/lessons", {state: {courseId: courseId, moduleId: moduleId}});
+        onSuccess: async () => {
+            qc.invalidateQueries({
+                queryKey: ["courses"]
+            });
         },
         onError: (error) => {
             alert(error);
@@ -67,7 +64,7 @@ export const useDeleteLesson = () => {
         mutationFn: deleteLessons,
         onSuccess: async () => {
             qc.invalidateQueries({
-                queryKey: ["lessons"]
+                queryKey: ["courses"]
             });
         },
         onError: (error) => {

@@ -1,8 +1,9 @@
 import apiClient from "../apiClient.ts";
 import {AxiosError} from "axios";
 import {Lesson} from "../../types/types.ts";
+import {getVideoByLessonId} from "../vedio/vedioApi.ts";
 
-type addLesson = Pick<Lesson, "name" | "description" | "moduleId" | "id" | "orderIndex" | "estimatedDuration">
+type addLesson = Pick<Lesson, "name" | "description" | "moduleId" | "id" | "orderIndex" | "estimatedDuration" | "videoUrl">
 
 type CreateLessonBody = Omit<addLesson, "id">;
 export const addLessons = async (payload: { body: CreateLessonBody, courseId?: string }) => {
@@ -50,6 +51,18 @@ export const getAllLessons = async (courseId: string | undefined) => {
 };
 
 export const getLessonsById = async (id: string | undefined) => {
-    const {data} = await apiClient.get("/lesson/" + id);
-    return data;
+    try {
+        const {data} = await apiClient.get("/lesson/" + id);
+        const video = await  getVideoByLessonId(id);
+        const newData = {
+            ...data, vedioUrl: video[0].storagePath
+        }
+
+        console.log("newData", newData);
+        return newData;
+    } catch (error) {
+        const err = error as AxiosError<{ message: string }>;
+        const message = err.response?.data?.message;
+        throw new Error(message);
+    }
 };

@@ -1,32 +1,29 @@
 .auth-back {
-    background-image: url("../assets/back_auth (1).jpg");
+    background-image: url('../assets/back_auth (1).jpg');
     background-size: cover;
     background-position: center 40%;
-    min-height: 100vh;
+    min-height: 100dvh;
     display: grid;
     place-items: center;
     padding: 2rem;
 }
-
-.auth-glass {
+.auth-back .auth-glass {
     width: 95%;
     height: 100%;
     padding: 2rem;
     border-radius: 18px;
-    background: rgba(202, 227, 255, 0.1);
+    background: #CAE3FF1A;
     border: 1px solid rgba(202, 227, 255, 0.1);
     box-shadow: 0 8px 30px rgba(202, 227, 255, 0.5);
     -webkit-backdrop-filter: blur(8px) saturate(120%);
     backdrop-filter: blur(8px) saturate(120%);
-    color: #fff;
     position: relative;
     overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
 }
-
-.auth-glass::before {
+.auth-back .auth-glass::before {
     content: "";
     position: absolute;
     inset: 0;
@@ -36,24 +33,54 @@
     z-index: -1;
     pointer-events: none;
 }
-
-@media (max-width: 425px) {
-    .auth-back {
-        background-position: center;
-        padding: 1rem;
+.auth-back .auth-glass .login_register_h1 {
+    text-align: center;
+    text-transform: capitalize;
+    color: #000000;
+    margin-top: 10px;
+    font-size: 34px;
+    font-weight: 800;
+    line-height: 100%;
+}
+@media (max-width: 768px) {
+    .auth-back .auth-glass .login_register_h1 {
+        font-size: 34px;
     }
-
-    .auth-glass {
+}
+@media (max-width: 425px) {
+    .auth-back .auth-glass .login_register_h1 {
+        font-size: 28px;
+    }
+}
+.auth-back .auth-glass .login_register_title {
+    margin-bottom: 30px;
+    text-align: center;
+    text-transform: capitalize;
+    color: #000000;
+    margin-top: 15px;
+    font-size: 18px;
+    line-height: 100%;
+    font-weight: 400;
+}
+@media (max-width: 768px) {
+    .auth-back {
+        background-repeat: no-repeat, no-repeat;
+        background-size: contain, contain;
+        background-image: linear-gradient(rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3)),
+        url('../assets/back_auth_top.jpg'),
+        url('../assets/back_auth_bottom.jpg');
+        background-position: top center, top center, bottom center;
+        padding: 0rem;
+    }
+    .auth-back .auth-glass {
         width: 100%;
-        height: auto;
-        padding: 1.2rem;
+        padding: 1rem;
         border-radius: 12px;
         box-shadow: 0 4px 15px rgba(202, 227, 255, 0.4);
-        -webkit-backdrop-filter: blur(6px) saturate(110%);
-        backdrop-filter: blur(6px) saturate(110%);
+        -webkit-backdrop-filter: blur(3px) saturate(110%);
+        backdrop-filter: blur(2px) saturate(110%);
     }
-
-    .auth-glass::before {
+    .auth-back .auth-glass::before {
         filter: blur(4px);
         opacity: 0.85;
     }

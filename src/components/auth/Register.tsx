@@ -115,7 +115,7 @@ function Register() {
                     <div className="mt-2 flex items-center justify-between gap-4">
                         <label className="w-1/2">
                             <div
-                                className="border h-[54px] border-gray-400 rounded-full px-4 py-3 flex justify-center items-center gap-3 cursor-pointer hover:bg-gray-50">
+                                className="border h-[48px] md:h-[54px] border-gray-400 rounded-full px-4 py-3 flex justify-center items-center gap-3 cursor-pointer hover:bg-gray-50">
                                 <p className="m-0 text-black">Ayol</p>
                                 <input
                                     type="radio"
@@ -130,7 +130,7 @@ function Register() {
 
                         <label className="w-1/2">
                             <div
-                                className="border  h-[54px] border-gray-400 rounded-full px-4 py-3 flex justify-center items-center gap-3 cursor-pointer hover:bg-gray-50">
+                                className="border  h-[48px] md:h-[54px] border-gray-400 rounded-full px-4 py-3 flex justify-center items-center gap-3 cursor-pointer hover:bg-gray-50">
                                 <p className="m-0 text-black">Erkak</p>
                                 <input
                                     type="radio"

@@ -50,4 +50,5 @@ export interface Lesson extends Common {
     moduleId: string,
     orderIndex: number | null,
     estimatedDuration: number | null,
+    videoUrl?:string,
 }

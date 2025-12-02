@@ -1,6 +1,5 @@
 import {useQuery, useMutation, useQueryClient} from "@tanstack/react-query";
 import {getModulesById, getAllModules, addModules, updateModules, deleteModules} from "./moduleApi.ts";
-import {useNavigate} from "react-router";
 import {getItem} from "../../utils/utils.ts";
 
 export const useGetModules = (courseId: string | undefined) =>
@@ -30,14 +29,13 @@ export const useGetModuleById = (id: string | undefined) =>
     });
 
 export const useAddModule = () => {
-    const navigate = useNavigate();
     const qc = useQueryClient();
     return useMutation({
         mutationFn: addModules,
-        onSuccess: async (id) => {
-            const data = await getAllModules(id);
-            qc.setQueryData(["modules"], data);
-            navigate("/modules", {state: {courseId: id}});
+        onSuccess: async () => {
+            qc.invalidateQueries({
+                queryKey: ["modules"]
+            });
         },
         onError: (error) => {
             alert(error);
@@ -46,14 +44,13 @@ export const useAddModule = () => {
 };
 
 export const useUpdateModule = () => {
-    const navigate = useNavigate();
     const qc = useQueryClient();
     return useMutation({
         mutationFn: updateModules,
-        onSuccess: async (id) => {
-            const data = await getAllModules(id);
-            qc.setQueryData(["modules"], data);
-            navigate("/modules", {state: {courseId: id}});
+        onSuccess: async () => {
+            qc.invalidateQueries({
+                queryKey: ["modules"]
+            });
         },
         onError: (error) => {
             alert(error);
@@ -67,7 +64,7 @@ export const useDeleteModule = () => {
         mutationFn: deleteModules,
         onSuccess: async () => {
             qc.invalidateQueries({
-                queryKey: ["modules"], // yoki ["modules", courseId]
+                queryKey: ["modules"]
             });
         },
         onError: (error) => {

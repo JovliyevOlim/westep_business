@@ -3,10 +3,9 @@ import PageMeta from "../../components/common/PageMeta";
 import CommonTable from "../../components/tables/CommonTable/CommonTable.tsx";
 import {useGetCourses} from "../../api/courses/useCourse.ts";
 import {ColumnDef} from "@tanstack/react-table";
-import Actions from "../../components/tables/Actions/Actions.tsx";
 import PageBreadcrumb from "../../components/common/PageBreadCrumb.tsx";
 import {Course} from "../../types/types.ts";
-import {useDeleteModule, useGetModules} from "../../api/module/useModule.ts";
+import {useGetModules} from "../../api/module/useModule.ts";
 import {useState} from "react";
 import Select from "../../components/form/Select.tsx";
 import {getSelectOptions} from "../../utils/utils.ts";
@@ -16,15 +15,11 @@ import Label from "../../components/form/Label.tsx";
 export default function Modules() {
     const location = useLocation();
     const {data: courses} = useGetCourses()
-    const {mutate, isPending: isDeletePending} = useDeleteModule()
 
     const [courseId, setCourseId] = useState<string>(location?.state?.courseId);
     const {data, isPending, isError, error} = useGetModules(courseId)
 
 
-    const handleDelete = async (id: string) => {
-        await mutate({id, courseId})
-    }
 
     const columns: ColumnDef<Course>[] = [
         {accessorKey: 'name', header: 'Nomi'},
@@ -33,9 +28,6 @@ export default function Modules() {
         {
             id: 'actions',
             header: '',
-            cell: ({row}) => <Actions path={'/modules/update/'} isPending={isDeletePending} key={row.original.id}
-                                      deleteFunction={handleDelete}
-                                      id={row.original.id}/>,
         },
     ]
 

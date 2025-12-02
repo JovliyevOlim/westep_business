@@ -1,5 +1,5 @@
-import {useQuery, useMutation, useQueryClient} from "@tanstack/react-query";
-import {addBusinessTeacher, getUsersById} from "./businessUserApi.ts";
+import {useQuery, useMutation} from "@tanstack/react-query";
+import {addBusinessTeacher, getUsersById, addBusinessAssistant, deleteBusinessAssistant} from "./businessUserApi.ts";
 import {useNavigate} from "react-router";
 import {getItem} from "../../utils/utils.ts";
 
@@ -17,13 +17,10 @@ export const useGetUsers = (businessId: string) =>
 
 export const useAddBusinessTeacher = () => {
     const navigate = useNavigate();
-    const qc = useQueryClient();
     return useMutation({
         mutationFn: addBusinessTeacher,
         onSuccess: async () => {
-            // const roles = await getUsersById(data.businessId);
-            qc.setQueryData(["courses"]);
-            navigate("/courses");
+            navigate("/users");
         },
         onError: (error) => {
             alert(error);
@@ -31,35 +28,29 @@ export const useAddBusinessTeacher = () => {
     });
 };
 
-// export const useUpdateCourse = () => {
-//     const navigate = useNavigate();
-//     const qc = useQueryClient();
-//     return useMutation({
-//         mutationFn: updateCourse,
-//         onSuccess: async () => {
-//             const roles = await getUsersById(data.businessId);
-//             qc.setQueryData(["courses"], roles);
-//             navigate("/courses");
-//         },
-//         onError: (error) => {
-//             alert(error);
-//         },
-//     });
-// };
-//
-// export const useDeleteCourse = () => {
-//     const navigate = useNavigate();
-//     const qc = useQueryClient();
-//     return useMutation({
-//         mutationFn: deleteCourse,
-//         onSuccess: async () => {
-//             const roles = await getAllCourses();
-//             qc.setQueryData(["courses"], roles);
-//             navigate("/courses");
-//         },
-//         onError: (error) => {
-//             alert(error);
-//         },
-//     });
-// };
+export const useAddBusinessAssistant = () => {
+    const navigate = useNavigate();
+    return useMutation({
+        mutationFn: addBusinessAssistant,
+        onSuccess: async () => {
+            navigate("/users");
+        },
+        onError: (error) => {
+            alert(error);
+        },
+    });
+};
+
+export const useDeleteAssistant = () => {
+    const navigate = useNavigate();
+    return useMutation({
+        mutationFn: deleteBusinessAssistant,
+        onSuccess: async () => {
+            navigate("/courses");
+        },
+        onError: (error) => {
+            alert(error);
+        },
+    });
+};
 

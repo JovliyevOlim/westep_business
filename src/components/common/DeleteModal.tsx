@@ -48,12 +48,13 @@ function DeleteModal({open, setOpen, deleteFunction, isPending}: Props) {
                 {/*    felis risus nisi non. Quisque eu ut tempor curabitur.*/}
                 {/*</p>*/}
 
-                <div className="flex items-center justify-center w-full gap-3 mt-7">
+                <div className="flex items-center justify-center w-full  gap-3 mt-7">
                     <Button
                         isPending={isPending}
                         type="button"
                         variant={'danger'}
                         onClick={deleteFunction}
+                        className={'rounded-xl'}
                     >
                         Ha
                     </Button>

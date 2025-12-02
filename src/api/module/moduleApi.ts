@@ -26,10 +26,11 @@ export const updateModules = async (body: addModule) => {
     }
 };
 
-export const deleteModules = async ({id, courseId}: { id: string, courseId?: string }) => {
+export const deleteModules = async (id:string) => {
+    console.log('deleteModules', id);
     try {
         await apiClient.delete("/module/" + id);
-        return courseId;
+        return id;
     } catch (error) {
         const err = error as AxiosError<{ message: string }>;
         const message = err.response?.data?.message;

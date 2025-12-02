@@ -46,7 +46,7 @@ const InputField = <T extends Record<string, any>>({
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     placeholder={placeholder}
-                    className={`w-full h-[54px] rounded-full border border-gray-400 bg-transparent text-[16px] md:text-[18px] px-4 md:px-10 py-3 text-lg text-gray-900 placeholder-gray-500 focus:outline-none  focus:border-brand-500`}
+                    className={`w-full h-[48px] md:h-[54px] rounded-full border border-gray-400 bg-transparent text-[16px] md:text-[18px] px-4 md:px-10 py-3 text-lg text-gray-900 placeholder-gray-500 focus:outline-none  focus:border-brand-500`}
                     {...rest}
                 />
 

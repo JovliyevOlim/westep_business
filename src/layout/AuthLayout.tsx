@@ -7,7 +7,7 @@ const AuthLayout: React.FC<{ children: ReactNode }> = ({children}) => {
             <div className='auth-glass'>
                 <div className='w-full md:w-4/5 lg:w-3/5 mx-auto'>
                     <div className='flex justify-center'>
-                        <img src={logo} alt="logo"/>
+                        <img src={logo} width={220} alt="logo"/>
                     </div>
                     {children}
                 </div>

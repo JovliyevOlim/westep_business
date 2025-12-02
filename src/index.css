@@ -389,7 +389,6 @@ layer(base);
 .stocks-slider-outer .swiper-button-prev svg {
   @apply !h-auto !w-auto;
 }
-
 .flatpickr-wrapper {
   @apply w-full;
 }
@@ -445,8 +444,8 @@ layer(base);
   font-weight: 500;
 }
 .flatpickr-month
-  .flatpickr-current-month
-  .flatpickr-monthDropdown-months:focus {
+.flatpickr-current-month
+.flatpickr-monthDropdown-months:focus {
   outline: none !important;
   border: 0 !important;
 }
@@ -540,6 +539,7 @@ span.flatpickr-weekday,
 .flatpickr-calendar.static {
   @apply right-0;
 }
+
 
 .fc .fc-view-harness {
   @apply max-w-full overflow-x-auto custom-scrollbar;
