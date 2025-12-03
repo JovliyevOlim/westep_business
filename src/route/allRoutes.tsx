@@ -1,4 +1,6 @@
 import SignIn from "../pages/AuthPages/SignIn";
+import VerifyCode from "../pages/AuthPages/VerifyCode.tsx";
+import Success from "../pages/AuthPages/Success";
 import NotFound from "../pages/OtherPage/NotFound";
 import UserProfiles from "../pages/UserProfiles.tsx";
 import AddCourse from "../pages/Courses/AddCourse.tsx";
@@ -7,6 +9,7 @@ import SignUp from "../pages/AuthPages/SignUp.tsx";
 import Password from "../pages/AuthPages/Password.tsx";
 import FormElements from "../pages/Forms/FormElements.tsx";
 import CreatePassword from "../pages/AuthPages/CreatePassword.tsx";
+import ResetPassword from "../pages/AuthPages/ResetPassword.tsx";
 import Courses from "../pages/Courses/Courses.tsx";
 import Modules from "../pages/Modules/Modules.tsx";
 import AddModule from "../pages/Modules/AddModule.tsx";
@@ -15,6 +18,7 @@ import AddUsers from "../pages/Users/AddUsers.tsx";
 import MainPage from "../pages/MainPage";
 import CourseDetails from "../pages/CourseDetails/CourseDetails.tsx";
 import AddLesson from "../components/courseDetails/lessonDetails/AddLesson.tsx";
+import ForgotPassword from "../pages/AuthPages/ForgotPassword.tsx";
 
 
 export const authProtectedRoutes = [
@@ -67,5 +71,9 @@ export const publicRoutes = [
     {path: "/logout", element: <Logout/>},
     {path: "/password", element: <Password/>},
     {path: "/create-password", element: <CreatePassword/>},
+    {path: "/reset-password", element: <ResetPassword/>},
+    {path: "/forgot-password", element: <ForgotPassword/>},
+    {path: "/verify-code", element: <VerifyCode/>},
+    {path: "/success", element: <Success/>},
     {path: "*", element: <NotFound/>}
 ]

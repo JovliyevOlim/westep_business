@@ -56,3 +56,44 @@ export const logout = async () => {
     localStorage.removeItem("accessToken");
     localStorage.removeItem("refreshToken");
 };
+
+
+export const sendOtpCode = async (body: { phoneNumber: string, type: string }) => {
+    try {
+        await apiClient.post("/sms/send", {
+            phone: body.phoneNumber,
+            type: body.type,
+        });
+    } catch (error) {
+        const err = error as AxiosError<{ message: string }>;
+        const message = err.response?.data?.message;
+        throw new Error(message);
+    }
+};
+export const verifyCode = async (body: { phoneNumber: string, code: string, type: string }) => {
+    try {
+        await apiClient.post("/sms/verify", {
+            phone: body.phoneNumber,
+            code: body.code,
+            type: body.type,
+        });
+    } catch (error) {
+        const err = error as AxiosError<{ message: string }>;
+        const message = err.response?.data?.message;
+        throw new Error(message);
+    }
+};
+export const resetPassword = async (body: { phoneNumber: string, password: string }) => {
+    try {
+        await apiClient.post("/auth/reset-password",{},{
+            params:{
+                phone: body.phoneNumber,
+                newPassword: body.password,
+            }
+        });
+    } catch (error) {
+        const err = error as AxiosError<{ message: string }>;
+        const message = err.response?.data?.message;
+        throw new Error(message);
+    }
+};

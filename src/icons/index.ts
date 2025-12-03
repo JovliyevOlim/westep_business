@@ -76,6 +76,8 @@ import {ReactComponent as Search} from "./search.svg?react";
 import {ReactComponent as Shop} from "./shop.svg?react";
 import {ReactComponent as Message} from "./message.svg?react";
 import {ReactComponent as Profile} from "./profile.svg?react";
+import {ReactComponent as SuccessIcon} from "./success.svg?react";
+import {ReactComponent as FlagUz} from "./flag.svg?react";
 
 export {
     ErrorHexaIcon,
@@ -152,5 +154,5 @@ export {
     Setting,
     Mute,
     Home,
-    Shop,Search,Profile,Message
+    Shop,Search,Profile,Message,SuccessIcon,FlagUz
 };

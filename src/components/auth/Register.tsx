@@ -1,4 +1,4 @@
-import {Link, useLocation, useNavigate} from "react-router";
+import {Link, useNavigate} from "react-router";
 import {useFormik} from "formik";
 import {useState} from "react";
 import * as Yup from "yup";
@@ -9,12 +9,10 @@ import AuthDatePicker from "../form/AuthDatePicker.tsx";
 
 function Register() {
 
-    useRequireState('phone')
+    useRequireState('phoneNumber')
 
-    const location = useLocation();
     const navigate = useNavigate();
 
-    const phone = location.state?.phone;
 
     const [isPending, setIsPending] = useState<boolean>(false);
 
@@ -36,9 +34,15 @@ function Register() {
         onSubmit: (values) => {
             setIsPending(true);
             setTimeout(() => {
-                navigate('/create-password', {state: {...values, phone: phone, text: 'Parol yaratish'}})
+                navigate('/create-password')
+                const oldData = JSON.parse(sessionStorage.getItem('form') as string) || {};
+                sessionStorage.setItem('form', JSON.stringify({
+                    ...oldData,
+                    ...values,
+                    text: 'Parol yaratish'
+                }));
                 setIsPending(false)
-            }, 1000)
+            }, 500)
         },
     });
 
@@ -150,6 +154,7 @@ function Register() {
                             children={"Davom etish"}
                             variant="primary"
                             isPending={isPending}
+                            disabled={!(formik.isValid && formik.dirty)}
                         />
                     </div>
                 </form>

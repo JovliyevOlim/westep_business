@@ -2,12 +2,11 @@ import {useFormik} from "formik";
 import * as Yup from "yup";
 import PhoneNumberInput from "../../components/form/PhoneNumberInput.tsx";
 import CommonButton from "../ui/button/AuthButton.tsx";
-import {useCheckPhoneNumber} from "../../api/auth/useAuth.ts";
-import logo from "../../assets/logo.svg";
+import {useNavigate} from "react-router";
 
-export default function LoginForm() {
-    const {mutateAsync, isPending} = useCheckPhoneNumber();
+export default function ForgotPasswordForm() {
 
+    const navigate = useNavigate();
 
     const formik = useFormik({
         initialValues: {
@@ -20,15 +19,12 @@ export default function LoginForm() {
         }),
         onSubmit: async (values) => {
             sessionStorage.setItem("form", JSON.stringify({phoneNumber: values.phone}));
-            await mutateAsync(values);
+            navigate("/reset-password");
         },
     });
 
     return (
         <>
-            <div className='flex justify-center'>
-                <img src={logo} width={220} alt="logo"/>
-            </div>
             <section className="flex items-center justify-center w-full">
                 <div className="w-full max-w-lg animate-fadeIn">
                     <form
@@ -39,7 +35,7 @@ export default function LoginForm() {
                         className="bg-transparent"
                     >
                         <p className="text-2xl font-semibold text-gray-900 text-center mb-8">
-                            Business
+                            Parolni tiklash
                         </p>
 
                         <div className="space-y-6">
@@ -49,9 +45,9 @@ export default function LoginForm() {
                         <div className="mt-8 w-full">
                             <CommonButton
                                 type="submit"
-                                children={"Kirish"}
+                                children={"Davom etish"}
                                 variant="primary"
-                                isPending={isPending}
+                                isPending={false}
                                 disabled={!(formik.isValid && formik.dirty)}
                             />
                         </div>

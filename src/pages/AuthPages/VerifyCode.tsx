@@ -1,11 +1,11 @@
 import AuthLayout from "../../layout/AuthLayout.tsx";
-import Register from "../../components/auth/Register.tsx";
+import VerifyCodeForm from "../../components/auth/VerifyCodeForm.tsx";
 
-export default function SignUp() {
+export default function VerifyCode() {
     return (
         <>
             <AuthLayout>
-                <Register/>
+                <VerifyCodeForm />
             </AuthLayout>
         </>
     );

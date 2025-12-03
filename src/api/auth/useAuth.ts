@@ -1,5 +1,14 @@
 import {useQuery, useMutation, useQueryClient} from "@tanstack/react-query";
-import {checkPhoneNumber, getCurrentUser, login, logout, register} from "./authApi.ts";
+import {
+    checkPhoneNumber,
+    getCurrentUser,
+    login,
+    logout,
+    register,
+    resetPassword,
+    sendOtpCode,
+    verifyCode
+} from "./authApi.ts";
 import {useNavigate} from "react-router";
 import {getItem} from "../../utils/utils.ts";
 import {useToast} from "../../hooks/useToast.tsx";
@@ -38,7 +47,8 @@ export const useRegister = () => {
     return useMutation({
         mutationFn: register,
         onSuccess: () => {
-            navigate("/login");
+            navigate("/success");
+            sessionStorage.removeItem("form");
         },
         onError: (error) => {
             alert(error.message);
@@ -70,6 +80,61 @@ export const useLogout = () => {
         mutationFn: logout,
         onSuccess: () => {
             qc.removeQueries({queryKey: ["currentUser"]});
+        },
+    });
+};
+
+
+export const useOtpPhoneNumber = (type: string) => {
+    sessionStorage.setItem("otpType", JSON.stringify(type));
+    const navigate = useNavigate();
+    return useMutation({
+        mutationFn: sendOtpCode,
+        onSuccess: () => {
+            navigate("/verify-code");
+        },
+        onError: (error) => {
+            return error
+        },
+    });
+};
+
+
+export const useVerifyCode = () => {
+    const {mutate} = useRegister();
+    const {mutate: resetPassword} = useResetPassword();
+    const otpType = JSON.parse(sessionStorage.getItem('otpType') as string);
+    return useMutation({
+        mutationFn: verifyCode,
+        onSuccess: () => {
+            const form = JSON.parse(sessionStorage.getItem("form") as string);
+            if (otpType === "REGISTER") {
+                mutate({
+                    ...form,
+                    phone: form.phoneNumber,
+                })
+            } else {
+                resetPassword({
+                    password: form.password,
+                    phoneNumber: form.phoneNumber,
+                });
+            }
+        },
+        onError: (error) => {
+            return error
+        },
+    });
+};
+
+export const useResetPassword = () => {
+    const navigate = useNavigate();
+    return useMutation({
+        mutationFn: resetPassword,
+        onSuccess: () => {
+            navigate("/login");
+        },
+        onError: (error) => {
+            return error
         },
     });
 };

@@ -1,5 +1,6 @@
 import PhoneInput from "react-phone-number-input";
 import { FormikProps } from "formik";
+import {FlagUz} from "../../icons";
 
 interface IPhoneNumberInputProps<T> {
     label?: string;
@@ -31,8 +32,14 @@ const PhoneNumberInput = <T extends Record<string, any>>({
                 onChange={(e) => {
                     formik.setFieldValue(name as string, e?.replace("+", ""));
                 }}
+                maxLength={17}
                 international
-                countryCallingCodeEditable={false}
+                countryCallingCodeEditable={true}
+                countrySelectComponent={() => (
+                    <span style={{pointerEvents: 'none', display: 'flex', alignItems: 'center'}}>
+      <FlagUz width={24} height={24}/>
+    </span>
+                )}
                 className="w-full rounded-full border border-gray-400 bg-transparent px-5 py-3 text-lg text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
 

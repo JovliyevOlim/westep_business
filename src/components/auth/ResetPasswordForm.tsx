@@ -6,11 +6,11 @@ import InputField from "../form/input/AuthInput.tsx";
 import {useOtpPhoneNumber} from "../../api/auth/useAuth.ts";
 
 
-function PasswordForm() {
+function ResetPasswordForm() {
     useRequireState('phoneNumber')
 
     const form = JSON.parse(sessionStorage.getItem('form') as string);
-    const {mutate, isPending} = useOtpPhoneNumber('REGISTER')
+    const {mutate, isPending} = useOtpPhoneNumber('RESET_PASSWORD')
 
     const formik = useFormik({
         initialValues: {
@@ -32,7 +32,7 @@ function PasswordForm() {
             sessionStorage.setItem('form', JSON.stringify({
                 ...form, password: values.password,
             }));
-            mutate({phoneNumber: form.phoneNumber, type: 'REGISTER'})
+            mutate({phoneNumber: form.phoneNumber, type: 'RESET_PASSWORD'})
         },
     });
     return (
@@ -47,7 +47,7 @@ function PasswordForm() {
                     className="bg-transparent"
                 >
                     <p className="text-2xl text-gray-900 font-semibold text-center mb-8">
-                        Parol yaratish
+                        Yangi Parol o'rnatish
                     </p>
                     <div className="grid grid-cols-1 mt-2 gap-3">
                         <InputField
@@ -75,4 +75,4 @@ function PasswordForm() {
     );
 }
 
-export default PasswordForm;
+export default ResetPasswordForm;

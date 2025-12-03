@@ -1,11 +1,11 @@
 import AuthLayout from "../../layout/AuthLayout";
-import CreatePasswordForm from "../../components/auth/CreatePasswordForm.tsx";
+import ResetPasswordForm from "../../components/auth/ResetPasswordForm.tsx";
 
 export default function CreatePassword() {
     return (
         <>
             <AuthLayout>
-                <CreatePasswordForm />
+                <ResetPasswordForm />
             </AuthLayout>
         </>
     );

@@ -1,5 +1,5 @@
 import {useLogin} from "../../api/auth/useAuth.ts";
-import {useLocation} from "react-router";
+import {Link} from "react-router";
 import {useFormik} from "formik";
 import {useRequireState} from "../../hooks/useRequireState.ts";
 import * as Yup from "yup";
@@ -7,10 +7,9 @@ import CommonButton from "../ui/button/AuthButton.tsx";
 import InputField from "../form/input/AuthInput.tsx";
 
 function PasswordForm() {
-    useRequireState('phone')
+    useRequireState('phoneNumber')
 
-    const location = useLocation();
-    const phone = location.state?.phone;
+    const form = JSON.parse(sessionStorage.getItem('form') as string)
     const {mutateAsync, isPending} = useLogin();
 
 
@@ -21,11 +20,11 @@ function PasswordForm() {
         validationSchema: Yup.object().shape({
             password: Yup.string()
                 .required("Parolni kiriting!")
-            // .min(6, "Parol kamida 6 ta belgidan iborat bo‘lishi kerak!"),
+            .min(6, "Parol kamida 6 ta belgidan iborat bo‘lishi kerak!"),
         }),
         onSubmit: async (values) => {
             await mutateAsync({
-                phone: phone,
+                phone: form.phoneNumber,
                 password: values.password
             })
         },
@@ -59,9 +58,13 @@ function PasswordForm() {
                             children={"Kirish"}
                             variant="primary"
                             isPending={isPending}
+                            disabled={!(formik.isValid && formik.dirty)}
+
                         />
                     </div>
                 </form>
+                <p className={'text-center text-gray-900 mt-2'}><Link
+                    className={"text-gray-800"} to="/forgot-password">Parolni unutdingizmi?</Link></p>
             </div>
         </section>
     );
