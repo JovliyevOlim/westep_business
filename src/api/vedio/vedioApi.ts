@@ -11,3 +11,18 @@ export const getVideoByLessonId = async (lessonId: string | undefined) => {
         throw new Error(message);
     }
 };
+
+export const getVideoInfoByUrl = async (videolink: string | undefined) => {
+    try {
+        const {data} = await apiClient.get("/videos/youtube/info/", {
+            params: {
+                youtubeUrl: videolink,
+            }
+        });
+        return data;
+    } catch (error) {
+        const err = error as AxiosError<{ message: string }>;
+        const message = err.response?.data?.message;
+        throw new Error(message);
+    }
+};

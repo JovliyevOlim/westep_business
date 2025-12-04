@@ -2,7 +2,14 @@ import {useEffect, useState} from "react";
 import {useGetFileById} from "../../../api/file/useFile.ts";
 import {EditIcon, More, TrashBinIcon} from "../../../icons";
 
-function Image({id, openDeleteModal}: { id: string | null, openDeleteModal: () => void }) {
+
+interface Props {
+    id: string | null,
+    openDeleteModal: () => void,
+    setOpenEdit: () => void,
+}
+
+function Image({id, openDeleteModal, setOpenEdit}: Props) {
 
     const [open, setOpen] = useState(false);
 
@@ -59,7 +66,7 @@ function Image({id, openDeleteModal}: { id: string | null, openDeleteModal: () =
         ${open ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"}
       `}
                 >
-                    <EditIcon width={18} height={18} className="text-black/70"/>
+                    <EditIcon onClick={setOpenEdit} width={18} height={18} className="text-black/70"/>
                     <TrashBinIcon onClick={openDeleteModal} width={18} height={18} className="text-black/70"/>
                 </div>
             </div>

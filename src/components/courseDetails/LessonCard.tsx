@@ -45,7 +45,7 @@ function LessonCard({lesson, courseId}: { lesson: Lesson, courseId: string }) {
                         <TrashBinIcon onClick={(e)=>{
                             e.stopPropagation()
                             openDeleteModal()
-                        }} width={16} height={16} className='text-gray-400'/>
+                        }} width={16} height={16} className='text-gray-400 cursor-pointer'/>
                     </div>
                 </div>
             </div>

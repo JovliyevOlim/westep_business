@@ -4,7 +4,7 @@ import ModuleCard from "./ModuleCard.tsx";
 import {Module} from "../../types/types.ts";
 import AddModule from "./AddModule.tsx";
 
-function CourseModulesBar({id}: { id: string|undefined }) {
+function CourseModulesBar({id}: { id: string | undefined }) {
 
 
     const {data} = useGetModules(id)
@@ -33,7 +33,7 @@ function CourseModulesBar({id}: { id: string|undefined }) {
                         <ModuleCard module={item} key={index}/>
                     )
                 }
-                <AddModule courseId={id}/>
+                <AddModule courseId={id} modulesLength={data?.length || 0}/>
             </div>
         </div>
     );

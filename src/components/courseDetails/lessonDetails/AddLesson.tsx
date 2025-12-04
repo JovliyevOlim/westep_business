@@ -18,11 +18,12 @@ function AddLesson() {
 
     const {data} = useGetLessonById(lessonId);
 
-    console.log(data, 'data')
 
-    const {mutateAsync: addLesson, isPending: isAdding} = useAddLesson();
-    const {mutateAsync: updateLesson, isPending: isUpdating} = useUpdateLesson();
+    const {mutateAsync: addLesson, isPending: isAdding, isSuccess: isAddingSucess} = useAddLesson();
+    const {mutateAsync: updateLesson, isPending: isUpdating, isSuccess: isUpdateSuccess} = useUpdateLesson();
 
+
+    console.log('lessonId', location.state.lessonLength);
 
     const [initialValues, setInitialValues] = useState<Omit<Lesson, "id" | "createdAt">>({
         name: "",
@@ -42,7 +43,6 @@ function AddLesson() {
                 .required("Nomini kiriting!"),
             moduleId: Yup.string()
                 .required("Kurs tanlang!"),
-            orderIndex: Yup.number().required("Dars navbatini tanlang!"),
             estimatedDuration: Yup.number().required("Dars davomiyligini kiriting"),
             videoUrl: Yup.string()
                 .required("Vedio link kiriting!"),
@@ -54,7 +54,7 @@ function AddLesson() {
                     navigate(`/courses/details/${id}`);
                 }
             } else {
-                await addLesson({body: {...formik.values}});
+                await addLesson({body: {...formik.values, orderIndex: location.state.lessonLength + 1}});
                 if (isMobile) {
                     navigate(`/courses/details/${id}`);
                 }
@@ -64,6 +64,7 @@ function AddLesson() {
     });
 
 
+    console.log(data)
     useEffect(() => {
         if (data && lessonId) {
             setInitialValues({
@@ -90,6 +91,26 @@ function AddLesson() {
     }, [data, location.pathname])
 
 
+
+
+    useEffect(() => {
+        if (isUpdateSuccess || isAddingSucess) {
+            formik.resetForm();
+            setInitialValues(
+                {
+                    name: "",
+                    description: "",
+                    moduleId: location.state.moduleId,
+                    orderIndex: 0,
+                    estimatedDuration: 0,
+                    videoUrl: '',
+                }
+            )
+            navigate(-1);
+        }
+    }, [isAdding, isUpdating]);
+
+
     return (
         <div className={'p-3'}>
             <div
@@ -112,8 +133,6 @@ function AddLesson() {
                     <Input type="text" formik={formik} name={'name'} label={'Dars nomi'} placeholder={'Dars nomi'}/>
                     <Input type="text" formik={formik} name={'description'} label={'Dars tavsifi'}
                            placeholder={'Tavsif'}/>
-                    <Input type="number" formik={formik} name={'orderIndex'} label={'Dars navbati'}
-                           placeholder={'Navbat'}/>
                     <Input type="number" formik={formik} name={'estimatedDuration'} label={'Dars davomiyligi'}
                            placeholder={'Davomiyligi'}/>
                     <Input type="text" formik={formik} name={'videoUrl'} label={'Dars video link'}

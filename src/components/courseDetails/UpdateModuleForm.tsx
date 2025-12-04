@@ -54,7 +54,6 @@ function UpdateModuleForm({courseId, open, setOpen, module}: propTypes) {
     });
 
 
-    console.log(formik.errors);
 
     return (
         <div onClick={(e) => {

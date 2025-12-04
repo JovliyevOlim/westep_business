@@ -28,8 +28,8 @@ function MainPageStatistic() {
 
             <div className="grid grid-cols-2 gap-4 sm:grid-cols-2 md:grid-cols-2 md:gap-6">
                 {
-                    items.map(item =>
-                        <StatisticCard item={item}/>)
+                    items.map((item,index) =>
+                        <StatisticCard item={item} key={index} />)
                 }
             </div>
             <CourseAddCard/>

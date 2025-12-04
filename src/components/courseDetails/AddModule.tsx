@@ -7,17 +7,17 @@ import * as Yup from "yup";
 import Button from "../ui/button/Button.tsx";
 import NewInput from "../form/NewInput.tsx";
 
-function AddModule({courseId}: { courseId: string | undefined }) {
+function AddModule({courseId, modulesLength}: { courseId: string | undefined, modulesLength:number }) {
 
     const [open, setOpen] = useState(false);
 
+
     const {mutateAsync: addModule, isPending: isAdding} = useAddModule();
 
-    const [initialValues] = useState<Pick<Module, "name" | "description" | "courseId" | "orderIndex">>({
+    const [initialValues] = useState<Pick<Module, "name" | "description" | "courseId">>({
         name: "",
         description: "",
         courseId: courseId || "",
-        orderIndex: 0
     });
 
 
@@ -27,17 +27,15 @@ function AddModule({courseId}: { courseId: string | undefined }) {
         validationSchema: Yup.object().shape({
             name: Yup.string()
                 .required("Nomini kiriting!"),
-            orderIndex: Yup.number().required("Module navbatini tanlang!"),
         }),
         onSubmit: async () => {
-            await addModule({...formik.values});
+            await addModule({...formik.values,orderIndex:modulesLength+1});
             formik.resetForm();
             setOpen(false);
         },
     });
 
 
-    console.log(formik.errors);
 
     return (
         <div className={'border border-blue-200 bg-white rounded-[20px] py-[20px] px-[16px]'}>
@@ -68,8 +66,6 @@ function AddModule({courseId}: { courseId: string | undefined }) {
                         <NewInput type="text" formik={formik} name="name" placeholder="Module nomi"/>
                         <NewInput type="text" className={'text-xs'} formik={formik} name="description"
                                   placeholder="Tavsif"/>
-                        <NewInput type="number" className={'text-xs'} formik={formik} name="orderIndex"
-                                  placeholder="Module navbati"/>
                     </div>
 
                     <div className="mt-3 flex gap-6 justify-end">

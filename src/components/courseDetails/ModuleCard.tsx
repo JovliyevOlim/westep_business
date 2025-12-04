@@ -8,7 +8,6 @@ import UpdateModuleForm from "./UpdateModuleForm.tsx";
 
 function ModuleCard({module}: { module: Module }) {
 
-    console.log(module.id);
     const {mutate, isPending: isDeletePending} = useDeleteModule()
     const [openLesson, setOpenLesson] = useState(false)
     const [openEdit, setOpenEdit] = useState(false)
@@ -28,19 +27,19 @@ function ModuleCard({module}: { module: Module }) {
             <div onClick={() => setOpenLesson(!openLesson)}
                  className={'border border-blue-200 bg-white rounded-[20px] p-[16px]'}>
 
-                <div className={'flex items-center justify-between'}>
-                    <h4 className={'text-sm leading-0 font-normal p-0 m-0'}>{module.name}</h4>
+                <div className={'w-full flex items-center justify-between'}>
+                    <h4 className={'text-sm leading-normal font-normal p-0 m-0  break-all w-[80%]'}>{module.name}</h4>
                     <TrashBinIcon onClick={(e) => {
                         e.stopPropagation()
                         openDeleteModal()
-                    }} width={18} height={18} className='text-gray-400'/>
+                    }} width={18} height={18} className='text-gray-400  cursor-pointer'/>
                 </div>
                 <div className={'flex items-center justify-between mt-[16px]'}>
-                    <h4 className={'text-sm leading-0 font-normal'}>{module.description}</h4>
+                    <h4 className={'text-sm leading-normal font-normal break-all w-[80%]  '}>{module.description}</h4>
                     <EditIcon onClick={(e) => {
                         e.stopPropagation()
                         setOpenEdit(!openEdit)
-                    }} width={18} height={18} className='text-gray-400'/>
+                    }} width={18} height={18} className='text-gray-400 cursor-pointer'/>
                 </div>
                 <div
                     className={`

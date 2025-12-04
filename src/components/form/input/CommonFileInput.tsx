@@ -41,9 +41,18 @@ const CommonFileInput = forwardRef<CommonFileInputRef, Props>(
         const {mutate: addFile, data: fileId} = useAddFile()
         const [error, setError] = useState<string | null>(null);
         const [file, setFile] = useState<File | null>(null);
+        const [selectedFile, setSelectedFile] = useState<File | null>(null)
         const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+        const [editId, setEditId] = useState<string | null | undefined>(null)
         const {data} = useGetFileById(attachmentId)
         const {mutate: fileDelete} = useDeleteFile()
+
+
+        useEffect(() => {
+            if (attachmentId) {
+                setEditId(attachmentId)
+            }
+        }, [attachmentId]);
 
         useEffect(() => {
             if (data) {
@@ -55,26 +64,26 @@ const CommonFileInput = forwardRef<CommonFileInputRef, Props>(
 
 
         const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-            const selectedFile = e.target.files?.[0];
+            const item = e.target.files?.[0];
             setError(null);
-
-            if (!selectedFile) {
-                setFile(null);
+            setFile(null)
+            if (!item) {
+                setSelectedFile(null);
                 setPreviewUrl(null);
                 onChange?.(null);
                 return;
             }
 
-            if (selectedFile.size > maxSizeMB * 1024 * 1024) {
+            if (item.size > maxSizeMB * 1024 * 1024) {
                 setError(`Fayl hajmi ${maxSizeMB}MB dan oshmasligi kerak.`);
                 return;
             }
 
-            setFile(selectedFile);
-            onChange?.(selectedFile);
+            setSelectedFile(item);
+            onChange?.(item);
 
-            if (preview && selectedFile.type.startsWith("image/")) {
-                setPreviewUrl(URL.createObjectURL(selectedFile));
+            if (preview && item.type.startsWith("image/")) {
+                setPreviewUrl(URL.createObjectURL(item));
             } else {
                 setPreviewUrl(null);
             }
@@ -83,18 +92,23 @@ const CommonFileInput = forwardRef<CommonFileInputRef, Props>(
         const handleRemove = () => {
             setFile(null);
             setPreviewUrl(null);
+            setSelectedFile(null)
             onChange?.(null);
         };
 
-        // 🔥 forwardRef orqali ota komponentga funksiya eksport qilamiz
+
         useImperativeHandle(ref, () => ({
-            saveFile() {
-                if (file) {
+            saveFile: async () => {
+                if (selectedFile) {
                     const formData = new FormData();
-                    formData.append("file", file);
-                    addFile(formData)
+                    formData.append("file", selectedFile);
+                    await addFile(formData);
+                } else if (editId) {
+                    if (handleSubmit) {
+                        await handleSubmit(editId);
+                    }
                 } else {
-                    setError('Rasm tanlang!')
+                    setError('Rasm tanlang!');
                 }
             }
         }));
@@ -104,19 +118,22 @@ const CommonFileInput = forwardRef<CommonFileInputRef, Props>(
                 if (fileId) {
                     if (handleSubmit) {
                         await handleSubmit(fileId);
-                    }
-                    if (attachmentId) {
-                        await fileDelete(attachmentId);
+                        if (editId) {
+                            await fileDelete(editId);
+                            setEditId(null)
+                        }
+
                     }
                 }
             };
-
             handleAsync();
         }, [fileId]);
 
+
+        const isFile = file || selectedFile
         return (
             <div className={`${className} `}>
-                {file ?
+                {isFile ?
 
                     <div className="relative w-full h-[180px]">
                         {preview && previewUrl &&
@@ -128,15 +145,16 @@ const CommonFileInput = forwardRef<CommonFileInputRef, Props>(
                                     objectPosition: 'center'
                                 }}
                                 src={previewUrl}
-                                alt={file.name}
+                                alt={previewUrl}
                             />}
-                        {file && (
+                        {isFile && (
                             <TrashBinIcon onClick={handleRemove}
                                           className="text-xl  absolute top-2 right-2 text-red-500"/>
                         )}
                     </div>
                     :
-                    <label className="h-[180px] border-b border-blue-300 w-full cursor-pointer flex justify-center flex-col items-center gap-2"
+                    <label
+                        className="h-[180px] border-b border-blue-300 w-full cursor-pointer flex justify-center flex-col items-center gap-2"
                     >
                         <input
                             type="file"

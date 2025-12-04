@@ -34,7 +34,7 @@ export const useAddCourse = () => {
         onSuccess: async () => {
             const roles = await getAllCourses();
             qc.setQueryData(["courses"], roles);
-            navigate("/");
+            navigate(0);
         },
         onError: (error) => {
             alert(error);

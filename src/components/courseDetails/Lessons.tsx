@@ -21,13 +21,13 @@ function Lessons({id, openLesson, courseId}: { id: string, openLesson: boolean, 
                     )
                 }
             </div>
-            <Link className={'hidden lg:flex'} to={`/courses/details/${courseId}/addLesson`} state={{moduleId: id}}>
+            <Link className={'hidden lg:flex'} to={`/courses/details/${courseId}/addLesson`} state={{moduleId: id,lessonLength:data?.length || 0}}>
                 <div
                     className={'mt-5 flex items-center justify-center gap-2 bg-white text-md border border-blue-600 text-blue-600 w-full p-[7px] rounded-full'}>
                     Dars qo'shish <AddCircle width={24} height={24}/>
                 </div>
             </Link>
-            <Link className={'lg:hidden'} to={`/courses/addLesson/${courseId}`} state={{moduleId: id}}>
+            <Link className={'lg:hidden'} to={`/courses/addLesson/${courseId}`} state={{moduleId: id,lessonLength:data?.length || 0}}>
                 <div
                     className={'mt-5 flex items-center justify-center gap-2 bg-blue-600 text-md text-white w-full p-[7px] rounded-full'}>
                     Dars qo'shish <AddCircle width={24} height={24}/>
