@@ -30,14 +30,19 @@ function CourseCard({course}: { course: Course }) {
             {
                 openEdit ? <UpdateCourse data={course} setOpenEdit={handleOpenEdit}/>
                     :
-                    <div className={'border border-blue-200 rounded-3xl overflow-hidden'}>
-                        <Image id={course.attachmentId} openDeleteModal={openDeleteModal} setOpenEdit={handleOpenEdit} />
-                        <div className={'p-4'}>
-                            <h3 className={'text-md font-medium'}>{course?.name}</h3>
-                            <div className={'flex items-center gap-3 mt-2 justify-start flex-wrap'}>
-                                <p className={'text-xs font-light'}>{course?.description}</p>
+                    <div className={'border border-blue-200 rounded-3xl overflow-hidden h-full flex flex-col'}>
+                        <div className="w-full h-[190px]">
+                            <Image id={course.attachmentId} openDeleteModal={openDeleteModal}
+                                   setOpenEdit={handleOpenEdit}/>
+                        </div>
+                        <div className={'p-4 flex flex-col justify-between flex-1'}>
+                            <div>
+                                <h3 className={'text-md font-medium break-all'}>{course?.name}</h3>
+                                <div className={'flex items-center gap-3 mt-2 justify-start flex-wrap'}>
+                                    <p className={'text-xs font-light break-all'}>{course?.description}</p>
+                                </div>
                             </div>
-                            <Link to={`/courses/details/${course.id}`}>
+                            <Link to={`/courses/details/${course.id}`} className={'w-full'}>
                                 <button
                                     className={'w-full h-[40px] mt-3 bg-blue-50 text-blue-400 border border-blue-400 rounded-full p-1 text-center'}>
                                     Boshlash

@@ -24,11 +24,11 @@ function LessonCard({lesson, courseId}: { lesson: Lesson, courseId: string }) {
 
     return (
         <>
-            <div className={'border border-blue-200 bg-white rounded-[20px] p-[9px] overflow-hidden'}>
+            <div className={'border border-blue-200 bg-white rounded-[20px] p-[9px] py-[6px] overflow-hidden'}>
                 <div className={'flex items-center justify-between'}>
                     <div className={'flex items-center gap-2 justify-start ms-[-14px]'}>
                         <span className={'size-[14px] bg-blue-600 rounded-full'}></span>
-                        <p className={'text-sm leading-0'}>
+                        <p className={'text-sm leading-normal font-normal p-0 m-0  break-all w-[100%]'}>
                             {lesson.name}
                         </p>
                     </div>

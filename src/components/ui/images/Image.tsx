@@ -24,7 +24,7 @@ function Image({id, openDeleteModal, setOpenEdit}: Props) {
     }, [data]);
 
     return (
-        <div className="w-full h-[180px] relative">
+        <div className="w-full h-[190px] relative">
             {
                 previewUrl && <img
                     style={{

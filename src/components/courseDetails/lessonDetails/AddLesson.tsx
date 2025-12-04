@@ -50,14 +50,8 @@ function AddLesson() {
         onSubmit: async () => {
             if (lessonId) {
                 await updateLesson({body: {...formik.values, id: lessonId}});
-                if (isMobile) {
-                    navigate(`/courses/details/${id}`);
-                }
             } else {
                 await addLesson({body: {...formik.values, orderIndex: location.state.lessonLength + 1}});
-                if (isMobile) {
-                    navigate(`/courses/details/${id}`);
-                }
             }
 
         },
@@ -91,8 +85,6 @@ function AddLesson() {
     }, [data, location.pathname])
 
 
-
-
     useEffect(() => {
         if (isUpdateSuccess || isAddingSucess) {
             formik.resetForm();
@@ -106,7 +98,11 @@ function AddLesson() {
                     videoUrl: '',
                 }
             )
-            navigate(-1);
+            if (isMobile) {
+                navigate(`/courses/details/${id}`);
+            } else {
+                navigate(-1);
+            }
         }
     }, [isAdding, isUpdating]);
 

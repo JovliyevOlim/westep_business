@@ -14,7 +14,7 @@ function CourseDetails() {
                 description="Kurs ma'lumotlari"
             />
             <div className={'flex h-full'}>
-                <div className={'w-full lg:w-[330px] shadow bg-white lg:bg-[#F8FBFF] p-3 md:p-5'}>
+                <div className={'w-full lg:w-[330px] overflow-scroll custom-scrollbar shadow bg-white lg:bg-[#F8FBFF] p-3 md:p-5'}>
                     <CourseModulesBar id={params?.id}/>
                 </div>
                 <div

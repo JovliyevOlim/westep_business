@@ -859,6 +859,7 @@ span.flatpickr-weekday,
 .simplebar-scrollbar.simplebar-visible:before {
     @apply opacity-100;
 }
+
 [data-media-player] {
     overflow: hidden;
     background-color: transparent;
@@ -885,4 +886,20 @@ span.flatpickr-weekday,
 /* Optional: hover yoki focus effektlari */
 [data-media-player]:hover {
     border-radius: 20px;
+}
+
+
+.custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+    background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: var(--color-blue-600);
+    border-radius: 10px;
 }
