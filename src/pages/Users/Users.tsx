@@ -251,22 +251,17 @@ export default function Users() {
                                 <h2 className="mt-2 text-2xl font-semibold tracking-tight text-slate-950 dark:text-slate-100">Joriy ro‘yxat</h2>
                             </div>
 
-                            <div className="flex items-center gap-3">
-                                <div className="inline-flex h-12 min-w-12 items-center justify-center rounded-full bg-slate-900 px-4 text-lg font-semibold text-white dark:bg-white dark:text-slate-950">
-                                    {filteredMembers.length}
-                                </div>
-                                <Button
-                                    type="button"
-                                    variant="primary"
-                                    className="rounded-[16px] px-4 py-2.5 text-sm font-medium"
-                                    startIcon={<Plus className="h-4 w-4"/>}
-                                    isPending={isAddingMember}
-                                    disabled={!businessId || !ownerId || isAddingMember}
-                                    onClick={handleOpenAddDialog}
-                                >
-                                    Qo‘shish
-                                </Button>
-                            </div>
+                            <Button
+                                type="button"
+                                variant="primary"
+                                className="rounded-[16px] px-4 py-2.5 text-sm font-medium"
+                                startIcon={<Plus className="h-4 w-4"/>}
+                                isPending={isAddingMember}
+                                disabled={!businessId || !ownerId || isAddingMember}
+                                onClick={handleOpenAddDialog}
+                            >
+                                Qo‘shish
+                            </Button>
                         </div>
 
                         <div className="mt-4 relative">
@@ -418,26 +413,28 @@ export default function Users() {
                             })}
                         </div>
 
-                        <div className="hidden overflow-x-auto rounded-[24px] border border-slate-200 bg-slate-50/70 dark:border-slate-800 dark:bg-slate-900/55 lg:block">
-                            <div className="min-w-[1280px]">
-                                <div className="grid grid-cols-[2fr_2fr_1.2fr_1fr_1.4fr] gap-4 border-b border-slate-200 px-6 py-5 text-sm font-semibold text-slate-700 dark:border-slate-800 dark:text-slate-200">
-                                    <div>A’zo</div>
+                        <div className="hidden overflow-x-auto lg:block">
+                            <div className="min-w-[1280px] rounded-[24px] border border-slate-200 bg-slate-50/70 px-4 pb-6 dark:border-slate-800 dark:bg-slate-900/55">
+                                <div className="grid grid-cols-[2fr_2fr_1.2fr_1fr_1.4fr] gap-4 border-b border-slate-200 px-2 py-5 text-sm font-semibold text-slate-700 dark:border-slate-800 dark:text-slate-200">
+                                    <div className="flex items-center gap-3">
+                                        <span>A’zo</span>
+                                        <span className="inline-flex h-10 min-w-10 items-center justify-center rounded-full bg-slate-900 text-lg font-semibold text-white dark:bg-white dark:text-slate-950">
+                                            {filteredMembers.length}
+                                        </span>
+                                    </div>
                                     <div>Mas'ul kurslar</div>
                                     <div>Telefon</div>
                                     <div>Rol</div>
                                     <div>Amal</div>
                                 </div>
 
-                                <div className="space-y-3 px-4 py-4">
+                                <div className="space-y-2 pt-2">
                                     {filteredMembers.map((member) => {
                                         const assistant = isAssistantRole(member.role);
                                         const visibleCourses = member.assignedCourses.length ? member.assignedCourses.map((course) => course.courseName) : member.courseNames;
 
                                         return (
-                                            <div
-                                                key={member.id}
-                                                className="grid grid-cols-[2fr_2fr_1.2fr_1fr_1.4fr] gap-4 rounded-[22px] border border-slate-200 bg-white/80 px-5 py-5 shadow-sm transition hover:-translate-y-0.5 hover:border-slate-300 hover:bg-white hover:shadow-[0_18px_45px_rgba(15,23,42,0.08)] dark:border-slate-800 dark:bg-slate-900/70 dark:hover:border-slate-700 dark:hover:bg-slate-900"
-                                            >
+                                            <div key={member.id} className="grid w-full grid-cols-[2fr_2fr_1.2fr_1fr_1.4fr] gap-4 rounded-2xl px-2 py-6 text-left transition hover:bg-white/70 dark:hover:bg-white/[0.03]">
                                                 <div className="flex items-center gap-4">
                                                     {member.avatarUrl ? (
                                                         <img src={member.avatarUrl} alt={member.fullName} className="h-14 w-14 shrink-0 rounded-full object-cover" />
@@ -465,9 +462,7 @@ export default function Users() {
                                                     )}
                                                 </div>
 
-                                                <div className="self-center text-base font-semibold text-slate-950 dark:text-slate-100">
-                                                    {member.phone || "Telefon mavjud emas"}
-                                                </div>
+                                                <div className="self-center text-base font-semibold text-slate-950 dark:text-slate-100">{member.phone || "-"}</div>
 
                                                 <div className="self-center">
                                                     <span className={`inline-flex rounded-full px-3 py-2 text-sm font-semibold ${getRoleTone(member.role)}`}>

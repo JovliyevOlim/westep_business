@@ -17,6 +17,7 @@ import {useUser} from "../../api/auth/useAuth.ts";
 import {useGetUsers} from "../../api/businessUser/useBusinessUser.ts";
 import {getCourseStudents} from "../../api/courseStudents/courseStudentsApi.ts";
 import {getCourseTrackingAnalytics} from "../../api/trackingLinks/trackingLinkApi.ts";
+import {useBusinessWalletTransactions} from "../../api/payments/useBusinessWalletTransactions.ts";
 import type {Course, TrackingLinkAnalytics} from "../../types/types.ts";
 
 const emptyAnalytics: TrackingLinkAnalytics = {
@@ -59,6 +60,7 @@ export default function Overview() {
     const businessCoursesQuery = useGetBusinessCourses();
     const inactiveCoursesQuery = useGetInactiveBusinessCourses();
     const membersQuery = useGetUsers(user?.businessId);
+    const walletTransactionsQuery = useBusinessWalletTransactions();
 
     const allCourses = useMemo(() => {
         const uniqueCourses = new Map<string, Course>();
@@ -98,8 +100,18 @@ export default function Overview() {
         businessCoursesQuery.isLoading ||
         inactiveCoursesQuery.isLoading ||
         membersQuery.isLoading ||
+        walletTransactionsQuery.isLoading ||
         studentQueries.some((query) => query.isLoading) ||
         analyticsQueries.some((query) => query.isLoading);
+
+    const paidRevenue = useMemo(
+        () => (walletTransactionsQuery.data || []).reduce((total, transaction) => {
+            const normalized = (transaction.status || "").toUpperCase();
+            const isPaid = normalized.includes("SUCCESS") || normalized.includes("PAID") || normalized.includes("COMPLETED");
+            return total + (isPaid ? transaction.amount : 0);
+        }, 0),
+        [walletTransactionsQuery.data],
+    );
 
     const teamMembers = membersQuery.data || [];
     const teachersCount = teamMembers.filter((member) => member.role === "TEACHER").length;
@@ -194,8 +206,8 @@ export default function Overview() {
         },
         {
             label: "Daromad summasi",
-            value: `${formatMoney(aggregateAnalytics.revenue)} so‘m`,
-            helper: "Tracking analytics bo‘yicha",
+            value: `${formatMoney(paidRevenue)} so‘m`,
+            helper: "To‘langan kurs summalari bo‘yicha",
             icon: PiggyBank,
             tone: "from-violet-500/18 via-fuchsia-400/12 to-white dark:from-violet-500/18 dark:via-fuchsia-500/10 dark:to-slate-950",
             iconTone: "bg-violet-100 text-violet-700 dark:bg-violet-500/10 dark:text-violet-300",

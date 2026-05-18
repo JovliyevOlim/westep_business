@@ -108,7 +108,6 @@ export default function Students() {
                     <BusinessStudentsFilters
                         search={search}
                         onSearchChange={setSearch}
-                        totalCount={filteredStudents.length}
                     />
                 </div>
 

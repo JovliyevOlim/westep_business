@@ -1,7 +1,7 @@
 import type {BusinessStudentOverview} from "../../types/types.ts";
 
 const formatMoney = (value: number) =>
-    `${new Intl.NumberFormat("uz-UZ").format(Math.round(value))} so‘m`;
+    `${Math.round(value).toLocaleString("fr-FR")} so‘m`;
 
 const getInitial = (name: string) => {
     const trimmed = name.trim();
