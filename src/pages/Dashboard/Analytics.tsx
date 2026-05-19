@@ -202,7 +202,7 @@ export default function Analytics() {
         {
             label: "Noyob bosishlar",
             value: formatNumber(aggregateAnalytics.uniqueClicks),
-            helper: "Takrorlanmagan tashriflar",
+            helper: "Bir martalik tashriflar",
             icon: MousePointerClick,
             tone: "from-sky-500/18 via-cyan-400/12 to-white dark:from-sky-500/18 dark:via-cyan-500/10 dark:to-slate-950",
             iconTone: "bg-sky-100 text-sky-700 dark:bg-sky-500/10 dark:text-sky-300",
@@ -210,7 +210,7 @@ export default function Analytics() {
         {
             label: "Lidlar",
             value: formatNumber(aggregateAnalytics.leads),
-            helper: "Ro‘yxatdan o‘tgan qiziqishlar",
+            helper: "Ro‘yxatdan o‘tganlar",
             icon: Sparkles,
             tone: "from-emerald-500/18 via-teal-400/12 to-white dark:from-emerald-500/18 dark:via-teal-500/10 dark:to-slate-950",
             iconTone: "bg-emerald-100 text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-300",
@@ -218,7 +218,7 @@ export default function Analytics() {
         {
             label: "To‘langan summa",
             value: formatMoney(aggregateAnalytics.paidAmount || 0),
-            helper: "Kurs sotuvlaridan tushum",
+            helper: "Pulli xaridlar summasi",
             icon: ArrowUpRight,
             tone: "from-amber-500/18 via-orange-400/12 to-white dark:from-amber-500/18 dark:via-orange-500/10 dark:to-slate-950",
             iconTone: "bg-amber-100 text-amber-700 dark:bg-amber-500/10 dark:text-amber-300",
@@ -226,7 +226,7 @@ export default function Analytics() {
         {
             label: "Sof summa",
             value: formatMoney(aggregateAnalytics.netAmount || 0),
-            helper: "Komissiyadan keyingi natija",
+            helper: "Komissiyadan keyin qolgan summa",
             icon: CheckCircle2,
             tone: "from-violet-500/18 via-fuchsia-400/12 to-white dark:from-violet-500/18 dark:via-fuchsia-500/10 dark:to-slate-950",
             iconTone: "bg-violet-100 text-violet-700 dark:bg-violet-500/10 dark:text-violet-300",
@@ -249,18 +249,18 @@ export default function Analytics() {
         {
             label: "Talabalar oqimi",
             value: studentPortfolio.totalStudents,
-            helper: `${studentPortfolio.studyingCount} o‘qiyotgan, ${studentPortfolio.completedCount} tugallagan`,
+            helper: `${studentPortfolio.studyingCount} faol, ${studentPortfolio.completedCount} tugallagan`,
             icon: GraduationCap,
         },
     ];
 
     const signalBoard = [
-        {label: "Bosishlar", value: formatNumber(aggregateAnalytics.clicks), helper: "Jami trafik"},
+        {label: "Bosishlar", value: formatNumber(aggregateAnalytics.clicks), helper: "Jami kirishlar"},
         {label: "Checkout boshlangan", value: formatNumber(aggregateAnalytics.checkoutStarted), helper: "To‘lovni boshlaganlar"},
-        {label: "To‘langan xaridlar", value: formatNumber(aggregateAnalytics.paidPurchases), helper: "Muvaffaqiyatli sotuvlar"},
-        {label: "Tekin modullar", value: formatNumber(aggregateAnalytics.freeEnrolls || 0), helper: "Bepul enroll holatlari"},
+        {label: "To‘langan xaridlar", value: formatNumber(aggregateAnalytics.paidPurchases), helper: "Muvaffaqiyatli to‘lovlar"},
+        {label: "Tekin modullar", value: formatNumber(aggregateAnalytics.freeEnrolls || 0), helper: "Bepul olinganlar"},
         {label: "Komissiya", value: formatMoney(aggregateAnalytics.appliedFeeAmount || 0), helper: "Platforma komissiyasi"},
-        {label: "Refund summasi", value: formatMoney(aggregateAnalytics.refundedAmount || 0), helper: `${formatNumber(aggregateAnalytics.refunded)} ta refund`},
+        {label: "Qaytarilgan summa", value: formatMoney(aggregateAnalytics.refundedAmount || 0), helper: `${formatNumber(aggregateAnalytics.refunded)} ta qaytarish`},
     ];
 
     const operatingFeed = [
@@ -365,7 +365,7 @@ export default function Analytics() {
                     <div className="rounded-[30px] border border-white/75 bg-white/82 p-6 shadow-[0_24px_60px_rgba(15,23,42,0.06)] backdrop-blur dark:border-slate-800 dark:bg-slate-950/75 dark:shadow-[0_24px_60px_rgba(2,6,23,0.35)]">
                         <div className="flex flex-wrap items-center gap-2">
                             <span className="rounded-full border border-sky-200 bg-sky-50 px-3 py-1 text-[10px] font-black uppercase tracking-[0.28em] text-sky-700 dark:border-sky-500/20 dark:bg-sky-500/10 dark:text-sky-200">
-                                Tahlillar markazi
+                                Tahlillar
                             </span>
                             <span className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-[10px] font-black uppercase tracking-[0.28em] text-slate-500 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-400">
                                 {user?.roleName || "Biznes workspace"}
@@ -373,10 +373,10 @@ export default function Analytics() {
                         </div>
 
                         <h1 className="mt-5 max-w-3xl text-3xl font-black tracking-tight text-slate-950 dark:text-slate-100 md:text-[2.7rem]">
-                            Kurslar, lidlar va sotuv signallari bitta panelda
+                            Kurslar va sotuvlar bo‘yicha umumiy holat
                         </h1>
                         <p className="mt-4 max-w-3xl text-sm font-medium leading-7 text-slate-500 dark:text-slate-300 md:text-base">
-                            Bu sahifa kurs portfeli, jamoa va tracking analytics oqimlarini bir joyga yig‘ib, qaysi tomonda o‘sish va qaysi joyda sustlik borligini tez ko‘rsatadi.
+                            Asosiy ko‘rsatkichlar, talabalar oqimi va sotuv signallari shu yerda jamlangan.
                         </p>
 
                         <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
@@ -401,8 +401,8 @@ export default function Analytics() {
                     <div className="rounded-[30px] border border-blue-100 bg-[linear-gradient(180deg,rgba(239,246,255,0.98),rgba(255,255,255,0.98))] p-5 text-slate-900 shadow-[0_24px_60px_rgba(15,23,42,0.08)] dark:border-slate-800 dark:bg-[linear-gradient(180deg,rgba(15,23,42,0.98),rgba(2,6,23,0.98))] dark:text-slate-100 dark:shadow-[0_24px_60px_rgba(2,6,23,0.45)]">
                         <div className="flex items-center justify-between">
                             <div>
-                                <p className="text-[10px] font-black uppercase tracking-[0.28em] text-blue-500/70 dark:text-slate-500">Operatsion holat</p>
-                                <h2 className="mt-3 text-2xl font-black tracking-tight text-slate-950 dark:text-slate-100">Joriy signal</h2>
+                                <p className="text-[10px] font-black uppercase tracking-[0.28em] text-blue-500/70 dark:text-slate-500">Qisqa holat</p>
+                                <h2 className="mt-3 text-2xl font-black tracking-tight text-slate-950 dark:text-slate-100">Joriy ko‘rinish</h2>
                             </div>
                             <div className="rounded-2xl border border-blue-100 bg-blue-50 p-3 dark:border-slate-700 dark:bg-slate-900">
                                 <Activity className="h-5 w-5 text-blue-600 dark:text-blue-200" />
@@ -425,7 +425,7 @@ export default function Analytics() {
                 <div className="rounded-[32px] border border-white/80 bg-white/88 p-6 shadow-[0_28px_80px_rgba(15,23,42,0.07)] backdrop-blur dark:border-slate-800 dark:bg-slate-950/75 dark:shadow-[0_28px_80px_rgba(2,6,23,0.45)]">
                     <div className="flex items-center justify-between gap-4">
                         <div>
-                            <p className="text-[10px] font-black uppercase tracking-[0.28em] text-slate-400 dark:text-slate-500">Biznes ko‘rinishi</p>
+                            <p className="text-[10px] font-black uppercase tracking-[0.28em] text-slate-400 dark:text-slate-500">Kurslar</p>
                             <h2 className="mt-2 text-2xl font-black tracking-tight text-slate-950 dark:text-slate-100">Portfel holati</h2>
                         </div>
                         <div className="rounded-2xl bg-sky-50 p-3 text-sky-700 dark:bg-sky-500/10 dark:text-sky-200">
@@ -450,7 +450,7 @@ export default function Analytics() {
                 <div className="rounded-[32px] border border-white/80 bg-white/88 p-6 shadow-[0_28px_80px_rgba(15,23,42,0.07)] backdrop-blur dark:border-slate-800 dark:bg-slate-950/75 dark:shadow-[0_28px_80px_rgba(2,6,23,0.45)]">
                     <div className="flex items-center justify-between">
                         <div>
-                            <p className="text-[10px] font-black uppercase tracking-[0.28em] text-slate-400 dark:text-slate-500">Talaba oqimi</p>
+                            <p className="text-[10px] font-black uppercase tracking-[0.28em] text-slate-400 dark:text-slate-500">Talabalar</p>
                             <h2 className="mt-2 text-2xl font-black tracking-tight text-slate-950 dark:text-slate-100">Progress paneli</h2>
                         </div>
                         <div className="rounded-2xl bg-emerald-50 p-3 text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-200">
@@ -491,8 +491,8 @@ export default function Analytics() {
             <section className="rounded-[32px] border border-white/80 bg-white/88 p-6 shadow-[0_28px_80px_rgba(15,23,42,0.07)] backdrop-blur dark:border-slate-800 dark:bg-slate-950/75 dark:shadow-[0_28px_80px_rgba(2,6,23,0.45)]">
                 <div className="flex items-center justify-between gap-4">
                     <div>
-                        <p className="text-[10px] font-black uppercase tracking-[0.28em] text-slate-400 dark:text-slate-500">Savdo signallari</p>
-                        <h2 className="mt-2 text-2xl font-black tracking-tight text-slate-950 dark:text-slate-100">Konversiya paneli</h2>
+                            <p className="text-[10px] font-black uppercase tracking-[0.28em] text-slate-400 dark:text-slate-500">Sotuvlar</p>
+                            <h2 className="mt-2 text-2xl font-black tracking-tight text-slate-950 dark:text-slate-100">Konversiya paneli</h2>
                     </div>
                     <div className="rounded-2xl bg-violet-50 p-3 text-violet-700 dark:bg-violet-500/10 dark:text-violet-200">
                         <ArrowUpRight className="h-5 w-5" />
