@@ -35,12 +35,19 @@ type CourseFormValues = Required<Pick<CoursePayload,
 >> & {
     skillTagIds: string[];
     attachmentId: string;
+    targetAgeGroups: string[];
     level: CourseLevel | "";
     estimatedDurationMinutes: string;
     learningOutcomes: string[];
     requirements: string[];
     subscriptionTier: string;
 };
+
+const ageGroupOptions: Array<{value: string; label: string}> = [
+    {value: "KIDS_5_8", label: "5–8 yosh"},
+    {value: "JUNIOR_9_12", label: "9–12 yosh"},
+    {value: "TEEN_13_17", label: "13–17 yosh"},
+];
 
 const levelOptions: Array<{value: CourseLevel; label: string}> = [
     {value: "BEGINNER", label: "Boshlang‘ich"},
@@ -92,6 +99,7 @@ export default function EditCourse() {
             attachmentId: course?.attachmentId || "",
             trailerVideoUrl: course?.trailerVideoUrl || "",
             level: course?.level || "",
+            targetAgeGroups: course?.targetAgeGroups || [],
             targetAudience: course?.targetAudience || "",
             estimatedDurationMinutes: course?.estimatedDurationMinutes != null
                 ? String(course.estimatedDurationMinutes)
@@ -165,6 +173,7 @@ export default function EditCourse() {
                         attachmentId,
                         trailerVideoUrl: formik.values.trailerVideoUrl.trim(),
                         level: formik.values.level || undefined,
+                        targetAgeGroups: formik.values.targetAgeGroups,
                         targetAudience: formik.values.targetAudience.trim() || undefined,
                         estimatedDurationMinutes: formik.values.estimatedDurationMinutes
                             ? Number(formik.values.estimatedDurationMinutes)
@@ -421,6 +430,32 @@ export default function EditCourse() {
                                             <option key={option.value} value={option.value}>{option.label}</option>
                                         ))}
                                     </select>
+                                </div>
+                                <div className="sm:col-span-2">
+                                    <span className={labelClass}>Yosh guruhlari</span>
+                                    <div className="mt-2 flex flex-wrap gap-2">
+                                        {ageGroupOptions.map((option) => {
+                                            const selected = formik.values.targetAgeGroups.includes(option.value);
+                                            return (
+                                                <button
+                                                    key={option.value}
+                                                    type="button"
+                                                    onClick={() => {
+                                                        const next = selected
+                                                            ? formik.values.targetAgeGroups.filter((v) => v !== option.value)
+                                                            : [...formik.values.targetAgeGroups, option.value];
+                                                        formik.setFieldValue("targetAgeGroups", next);
+                                                    }}
+                                                    className={`h-10 rounded-xl border px-4 text-sm font-medium transition-colors ${selected
+                                                        ? "border-blue-500 bg-blue-50 text-blue-700 dark:border-blue-400 dark:bg-blue-500/10 dark:text-blue-300"
+                                                        : "border-slate-200 bg-slate-50 text-slate-600 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300"}`}
+                                                >
+                                                    {option.label}
+                                                </button>
+                                            );
+                                        })}
+                                    </div>
+                                    <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">Kursni chop etish uchun kamida bittasi tanlanishi shart.</p>
                                 </div>
                                 <div>
                                     <label className={labelClass}>Davomiyligi (daqiqa)</label>

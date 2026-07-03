@@ -191,6 +191,7 @@ export interface Course extends Common {
     languageCode?: string,
     trailerVideoUrl?: string,
     level?: CourseLevel,
+    targetAgeGroups?: string[],
     targetAudience?: string,
     estimatedDurationMinutes?: number | null,
     learningOutcomes?: string[],

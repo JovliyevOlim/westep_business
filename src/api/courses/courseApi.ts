@@ -13,6 +13,7 @@ export type CoursePayload = Pick<Course,
     | "attachmentId"
     | "trailerVideoUrl"
     | "level"
+    | "targetAgeGroups"
     | "targetAudience"
     | "estimatedDurationMinutes"
     | "learningOutcomes"
