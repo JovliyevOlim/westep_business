@@ -6,15 +6,16 @@ import {useAddModule} from "../../api/module/useModule.ts";
 import {Module} from "../../types/types.ts";
 import Button from "../ui/button/Button.tsx";
 import NewInput from "../form/NewInput.tsx";
+import {Switch} from "../ui/switch.tsx";
 
 function AddModule({courseId, modulesLength}: { courseId: string | undefined, modulesLength: number }) {
     const [open, setOpen] = useState(false);
     const {mutateAsync: addModule, isPending: isAdding} = useAddModule();
 
-    const [initialValues] = useState<Pick<Module, "name" | "description" | "courseId" | "price">>({
+    const [initialValues] = useState<Pick<Module, "name" | "description" | "courseId" | "requiresSubscription">>({
         name: "",
         description: "",
-        price: 0,
+        requiresSubscription: true,
         courseId: courseId || "",
     });
 
@@ -23,7 +24,6 @@ function AddModule({courseId, modulesLength}: { courseId: string | undefined, mo
         enableReinitialize: true,
         validationSchema: Yup.object().shape({
             name: Yup.string().required("Nomini kiriting!"),
-            price: Yup.string().required("Narxini kiriting!"),
         }),
         onSubmit: async () => {
             await addModule({...formik.values, orderIndex: modulesLength + 1});
@@ -57,7 +57,6 @@ function AddModule({courseId, modulesLength}: { courseId: string | undefined, mo
                 >
                     <div className="grid grid-cols-1 gap-2">
                         <NewInput type="text" formik={formik} name="name" placeholder="Module nomi"/>
-                        <NewInput type="text" formik={formik} name="price" placeholder="Module narxi"/>
                         <NewInput
                             type="text"
                             className="text-xs"
@@ -65,6 +64,18 @@ function AddModule({courseId, modulesLength}: { courseId: string | undefined, mo
                             name="description"
                             placeholder="Tavsif"
                         />
+                        <div className="flex items-center justify-between rounded-xl border border-slate-200 bg-white px-3 py-2.5">
+                            <div className="pr-3">
+                                <p className="text-sm font-medium text-slate-900">Faqat obuna bilan ochiladi</p>
+                                <p className="mt-0.5 text-[11px] text-slate-500">
+                                    O‘chirilsa modul hammaga bepul ochiq bo‘ladi.
+                                </p>
+                            </div>
+                            <Switch
+                                checked={formik.values.requiresSubscription}
+                                onCheckedChange={(checked) => formik.setFieldValue("requiresSubscription", checked)}
+                            />
+                        </div>
                     </div>
 
                     <div className="mt-3">

@@ -20,6 +20,8 @@ import {
 import {CoursePayload} from "../../api/courses/courseApi.ts";
 import {getItem} from "../../utils/utils.ts";
 import {isUnauthorizedError, parseApiError} from "../../utils/apiError.ts";
+import ChipListInput from "../../components/form/ChipListInput.tsx";
+import type {CourseLevel} from "../../types/types.ts";
 
 type CourseFormValues = Required<Pick<CoursePayload,
     | "name"
@@ -29,10 +31,28 @@ type CourseFormValues = Required<Pick<CoursePayload,
     | "fullDescription"
     | "languageId"
     | "trailerVideoUrl"
+    | "targetAudience"
 >> & {
     skillTagIds: string[];
     attachmentId: string;
+    level: CourseLevel | "";
+    estimatedDurationMinutes: string;
+    learningOutcomes: string[];
+    requirements: string[];
+    subscriptionTier: string;
 };
+
+const levelOptions: Array<{value: CourseLevel; label: string}> = [
+    {value: "BEGINNER", label: "Boshlang‘ich"},
+    {value: "INTERMEDIATE", label: "O‘rta"},
+    {value: "ADVANCED", label: "Yuqori"},
+];
+
+const subscriptionTierOptions: Array<{value: string; label: string}> = [
+    {value: "", label: "Hammaga ochiq (obuna shart emas)"},
+    {value: "1", label: "Basic (1-tier)"},
+    {value: "2", label: "Pro (2-tier)"},
+];
 
 const isYoutubeUrl = (value?: string) => {
     if (!value) return true;
@@ -71,6 +91,16 @@ export default function EditCourse() {
             languageId: course?.languageId || "",
             attachmentId: course?.attachmentId || "",
             trailerVideoUrl: course?.trailerVideoUrl || "",
+            level: course?.level || "",
+            targetAudience: course?.targetAudience || "",
+            estimatedDurationMinutes: course?.estimatedDurationMinutes != null
+                ? String(course.estimatedDurationMinutes)
+                : "",
+            learningOutcomes: course?.learningOutcomes || [],
+            requirements: course?.requirements || [],
+            subscriptionTier: course?.subscriptionTier != null
+                ? String(course.subscriptionTier)
+                : "",
         },
         enableReinitialize: true,
         validationSchema: Yup.object({
@@ -81,6 +111,11 @@ export default function EditCourse() {
             fullDescription: Yup.string().max(5000, "To‘liq tavsif juda uzun"),
             languageId: Yup.string().required("Kurs tilini tanlang"),
             trailerVideoUrl: Yup.string().test("youtube-url", "Faqat YouTube link qabul qilinadi", isYoutubeUrl),
+            estimatedDurationMinutes: Yup.string().test(
+                "positive-int",
+                "Daqiqalar musbat butun son bo‘lishi kerak",
+                (val) => !val || (/^\d+$/.test(val) && Number(val) > 0),
+            ),
         }),
         onSubmit: async () => {
             if (!id) return;
@@ -129,6 +164,16 @@ export default function EditCourse() {
                         languageId: formik.values.languageId,
                         attachmentId,
                         trailerVideoUrl: formik.values.trailerVideoUrl.trim(),
+                        level: formik.values.level || undefined,
+                        targetAudience: formik.values.targetAudience.trim() || undefined,
+                        estimatedDurationMinutes: formik.values.estimatedDurationMinutes
+                            ? Number(formik.values.estimatedDurationMinutes)
+                            : null,
+                        learningOutcomes: formik.values.learningOutcomes,
+                        requirements: formik.values.requirements,
+                        subscriptionTier: formik.values.subscriptionTier
+                            ? Number(formik.values.subscriptionTier)
+                            : null,
                     });
                 } catch (error) {
                     if (isUnauthorizedError(error)) {
@@ -357,6 +402,94 @@ export default function EditCourse() {
                             {formik.touched.trailerVideoUrl && formik.errors.trailerVideoUrl ? (
                                 <p className="mt-2 text-sm font-semibold text-red-500">{formik.errors.trailerVideoUrl}</p>
                             ) : null}
+                        </div>
+
+                        <div className={formSectionClass}>
+                            <div className="grid gap-4 sm:grid-cols-2">
+                                <div>
+                                    <label className={labelClass}>Daraja</label>
+                                    <select
+                                        id="level"
+                                        name="level"
+                                        value={formik.values.level}
+                                        onChange={formik.handleChange}
+                                        onBlur={formik.handleBlur}
+                                        className={selectClass}
+                                    >
+                                        <option value="">Daraja tanlang</option>
+                                        {levelOptions.map((option) => (
+                                            <option key={option.value} value={option.value}>{option.label}</option>
+                                        ))}
+                                    </select>
+                                </div>
+                                <div>
+                                    <label className={labelClass}>Davomiyligi (daqiqa)</label>
+                                    <Input
+                                        id="estimatedDurationMinutes"
+                                        name="estimatedDurationMinutes"
+                                        type="number"
+                                        min={0}
+                                        value={formik.values.estimatedDurationMinutes}
+                                        onChange={formik.handleChange}
+                                        onBlur={formik.handleBlur}
+                                        placeholder="1800"
+                                        className="mt-2 h-12 rounded-xl border-slate-200 bg-slate-50 px-4 text-sm dark:border-slate-800 dark:bg-slate-900"
+                                    />
+                                    {formik.touched.estimatedDurationMinutes && formik.errors.estimatedDurationMinutes ? (
+                                        <p className="mt-2 text-sm font-semibold text-red-500">{formik.errors.estimatedDurationMinutes}</p>
+                                    ) : null}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className={formSectionClass}>
+                            <label className={labelClass}>Kim uchun</label>
+                            <Input
+                                id="targetAudience"
+                                name="targetAudience"
+                                value={formik.values.targetAudience}
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                                placeholder="Masalan: junior backend developerlar"
+                                className="mt-2 h-12 rounded-xl border-slate-200 bg-slate-50 px-4 text-sm dark:border-slate-800 dark:bg-slate-900"
+                            />
+                        </div>
+
+                        <div className={formSectionClass}>
+                            <label className={labelClass}>Obuna darajasi</label>
+                            <select
+                                id="subscriptionTier"
+                                name="subscriptionTier"
+                                value={formik.values.subscriptionTier}
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                                className={selectClass}
+                            >
+                                {subscriptionTierOptions.map((option) => (
+                                    <option key={option.value} value={option.value}>{option.label}</option>
+                                ))}
+                            </select>
+                            <p className="mt-2 text-xs text-slate-500 dark:text-slate-400">
+                                Tanlangan tier va undan yuqori obunaga ega studentlar kursni ko‘ra oladi.
+                            </p>
+                        </div>
+
+                        <div className={formSectionClass}>
+                            <label className={labelClass}>O‘rganadi (learning outcomes)</label>
+                            <ChipListInput
+                                values={formik.values.learningOutcomes}
+                                onChange={(next) => formik.setFieldValue("learningOutcomes", next)}
+                                placeholder="Masalan: REST API yozish"
+                            />
+                        </div>
+
+                        <div className={formSectionClass}>
+                            <label className={labelClass}>Talablar (requirements)</label>
+                            <ChipListInput
+                                values={formik.values.requirements}
+                                onChange={(next) => formik.setFieldValue("requirements", next)}
+                                placeholder="Masalan: Java asoslari"
+                            />
                         </div>
                     </div>
 

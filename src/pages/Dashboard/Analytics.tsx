@@ -3,15 +3,11 @@ import {useQueries} from "@tanstack/react-query";
 import {
     Activity,
     AlertCircle,
-    ArrowUpRight,
     BookOpen,
-    CheckCircle2,
     GraduationCap,
     Layers3,
     LoaderCircle,
-    MousePointerClick,
     RefreshCcw,
-    Sparkles,
     Users,
 } from "lucide-react";
 import PageMeta from "../../components/common/PageMeta";
@@ -19,48 +15,8 @@ import {useUser} from "../../api/auth/useAuth.ts";
 import {useGetBusinessCourses, useGetInactiveBusinessCourses, useGetMyCourses} from "../../api/courses/useCourse.ts";
 import {useGetUsers} from "../../api/businessUser/useBusinessUser.ts";
 import {getCourseStudents} from "../../api/courseStudents/courseStudentsApi.ts";
-import {getCourseTrackingAnalytics} from "../../api/trackingLinks/trackingLinkApi.ts";
 import {parseApiError} from "../../utils/apiError.ts";
-import type {Course, TrackingLinkAnalytics} from "../../types/types.ts";
-
-const emptyAnalytics: TrackingLinkAnalytics = {
-    clicks: 0,
-    uniqueClicks: 0,
-    leads: 0,
-    checkoutStarted: 0,
-    paidPurchases: 0,
-    freeEnrolls: 0,
-    paidAmount: 0,
-    appliedFeeAmount: 0,
-    netAmount: 0,
-    failedOrAbandoned: 0,
-    refunded: 0,
-    refundedAmount: 0,
-    revenue: 0,
-    conversionRate: 0,
-    lastActivityAt: null,
-};
-
-const formatNumber = (value: number) => new Intl.NumberFormat("uz-UZ").format(Math.round(value));
-
-const formatMoney = (value: number) => `${new Intl.NumberFormat("uz-UZ").format(Math.round(value))} so‘m`;
-
-const formatPercent = (value: number) => `${value.toFixed(1)}%`;
-
-const formatDateTime = (value?: string | null) => {
-    if (!value) return "Hali faollik qayd etilmagan";
-
-    const date = new Date(value);
-    if (Number.isNaN(date.getTime())) return value;
-
-    const day = String(date.getDate()).padStart(2, "0");
-    const month = String(date.getMonth() + 1).padStart(2, "0");
-    const year = date.getFullYear();
-    const hours = String(date.getHours()).padStart(2, "0");
-    const minutes = String(date.getMinutes()).padStart(2, "0");
-
-    return `${day}.${month}.${year} ${hours}:${minutes}`;
-};
+import type {Course} from "../../types/types.ts";
 
 const getStudentProgressPercent = (value: number, total: number) =>
     total > 0 ? Math.round((value / total) * 100) : 0;
@@ -95,23 +51,13 @@ export default function Analytics() {
         })),
     });
 
-    const analyticsQueries = useQueries({
-        queries: allCourses.map((course) => ({
-            queryKey: ["analytics-course-summary", course.id],
-            queryFn: () => getCourseTrackingAnalytics(course.id),
-            enabled: !!course.id,
-            staleTime: 1000 * 30,
-        })),
-    });
-
     const isLoading =
         isUserLoading ||
         myCoursesQuery.isLoading ||
         businessCoursesQuery.isLoading ||
         inactiveCoursesQuery.isLoading ||
         membersQuery.isLoading ||
-        studentQueries.some((query) => query.isLoading) ||
-        analyticsQueries.some((query) => query.isLoading);
+        studentQueries.some((query) => query.isLoading);
 
     const queryError =
         myCoursesQuery.error ||
@@ -119,7 +65,6 @@ export default function Analytics() {
         inactiveCoursesQuery.error ||
         membersQuery.error ||
         studentQueries.find((query) => query.error)?.error ||
-        analyticsQueries.find((query) => query.error)?.error ||
         null;
 
     const parsedError = queryError ? parseApiError(queryError, "Tahlillarni yuklab bo‘lmadi.") : null;
@@ -153,41 +98,6 @@ export default function Analytics() {
         };
     }, [studentQueries]);
 
-    const aggregateAnalytics = useMemo(() => {
-        const aggregated = analyticsQueries.reduce<TrackingLinkAnalytics>(
-            (accumulator, query) => {
-                const data = query.data || emptyAnalytics;
-                const accumulatorDate = accumulator.lastActivityAt ? new Date(accumulator.lastActivityAt).getTime() : 0;
-                const nextDate = data.lastActivityAt ? new Date(data.lastActivityAt).getTime() : 0;
-
-                return {
-                    ...accumulator,
-                    clicks: accumulator.clicks + (data.clicks || 0),
-                    uniqueClicks: accumulator.uniqueClicks + (data.uniqueClicks || 0),
-                    leads: accumulator.leads + (data.leads || 0),
-                    checkoutStarted: accumulator.checkoutStarted + (data.checkoutStarted || 0),
-                    paidPurchases: accumulator.paidPurchases + (data.paidPurchases || 0),
-                    freeEnrolls: (accumulator.freeEnrolls || 0) + (data.freeEnrolls || 0),
-                    paidAmount: (accumulator.paidAmount || 0) + (data.paidAmount || 0),
-                    appliedFeeAmount: (accumulator.appliedFeeAmount || 0) + (data.appliedFeeAmount || 0),
-                    netAmount: (accumulator.netAmount || 0) + (data.netAmount || 0),
-                    failedOrAbandoned: accumulator.failedOrAbandoned + (data.failedOrAbandoned || 0),
-                    refunded: accumulator.refunded + (data.refunded || 0),
-                    refundedAmount: (accumulator.refundedAmount || 0) + (data.refundedAmount || 0),
-                    revenue: accumulator.revenue + (data.revenue || 0),
-                    conversionRate: 0,
-                    lastActivityAt: nextDate >= accumulatorDate ? data.lastActivityAt : accumulator.lastActivityAt,
-                };
-            },
-            {...emptyAnalytics},
-        );
-
-        return {
-            ...aggregated,
-            conversionRate: aggregated.clicks > 0 ? (aggregated.paidPurchases / aggregated.clicks) * 100 : 0,
-        };
-    }, [analyticsQueries]);
-
     const totalCourses = allCourses.length;
     const activeCourses = allCourses.filter((course) => course.active).length;
     const inactiveCourses = allCourses.filter((course) => !course.active).length;
@@ -197,41 +107,6 @@ export default function Analytics() {
     const studyingRate = getStudentProgressPercent(studentPortfolio.studyingCount, studentPortfolio.totalStudents);
     const completedRate = getStudentProgressPercent(studentPortfolio.completedCount, studentPortfolio.totalStudents);
     const publishedRate = getStudentProgressPercent(publishedCourses, totalCourses);
-
-    const topMetrics = [
-        {
-            label: "Noyob bosishlar",
-            value: formatNumber(aggregateAnalytics.uniqueClicks),
-            helper: "Bir martalik tashriflar",
-            icon: MousePointerClick,
-            tone: "from-sky-500/18 via-cyan-400/12 to-white dark:from-sky-500/18 dark:via-cyan-500/10 dark:to-slate-950",
-            iconTone: "bg-sky-100 text-sky-700 dark:bg-sky-500/10 dark:text-sky-300",
-        },
-        {
-            label: "Lidlar",
-            value: formatNumber(aggregateAnalytics.leads),
-            helper: "Ro‘yxatdan o‘tganlar",
-            icon: Sparkles,
-            tone: "from-emerald-500/18 via-teal-400/12 to-white dark:from-emerald-500/18 dark:via-teal-500/10 dark:to-slate-950",
-            iconTone: "bg-emerald-100 text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-300",
-        },
-        {
-            label: "To‘langan summa",
-            value: formatMoney(aggregateAnalytics.paidAmount || 0),
-            helper: "Pulli xaridlar summasi",
-            icon: ArrowUpRight,
-            tone: "from-amber-500/18 via-orange-400/12 to-white dark:from-amber-500/18 dark:via-orange-500/10 dark:to-slate-950",
-            iconTone: "bg-amber-100 text-amber-700 dark:bg-amber-500/10 dark:text-amber-300",
-        },
-        {
-            label: "Sof summa",
-            value: formatMoney(aggregateAnalytics.netAmount || 0),
-            helper: "Komissiyadan keyin qolgan summa",
-            icon: CheckCircle2,
-            tone: "from-violet-500/18 via-fuchsia-400/12 to-white dark:from-violet-500/18 dark:via-fuchsia-500/10 dark:to-slate-950",
-            iconTone: "bg-violet-100 text-violet-700 dark:bg-violet-500/10 dark:text-violet-300",
-        },
-    ];
 
     const portfolioMetrics = [
         {
@@ -254,24 +129,7 @@ export default function Analytics() {
         },
     ];
 
-    const signalBoard = [
-        {label: "Bosishlar", value: formatNumber(aggregateAnalytics.clicks), helper: "Jami kirishlar"},
-        {label: "Checkout boshlangan", value: formatNumber(aggregateAnalytics.checkoutStarted), helper: "To‘lovni boshlaganlar"},
-        {label: "To‘langan xaridlar", value: formatNumber(aggregateAnalytics.paidPurchases), helper: "Muvaffaqiyatli to‘lovlar"},
-        {label: "Tekin modullar", value: formatNumber(aggregateAnalytics.freeEnrolls || 0), helper: "Bepul olinganlar"},
-        {label: "Komissiya", value: formatMoney(aggregateAnalytics.appliedFeeAmount || 0), helper: "Platforma komissiyasi"},
-        {label: "Qaytarilgan summa", value: formatMoney(aggregateAnalytics.refundedAmount || 0), helper: `${formatNumber(aggregateAnalytics.refunded)} ta qaytarish`},
-    ];
-
     const operatingFeed = [
-        {
-            title: "So‘nggi faollik",
-            description: formatDateTime(aggregateAnalytics.lastActivityAt),
-        },
-        {
-            title: "Konversiya darajasi",
-            description: formatPercent(aggregateAnalytics.conversionRate),
-        },
         {
             title: "Nashrdagi kurslar ulushi",
             description: `${publishedRate}% (${publishedCourses}/${totalCourses || 0})`,
@@ -325,7 +183,6 @@ export default function Analytics() {
                                 inactiveCoursesQuery.refetch(),
                                 membersQuery.refetch(),
                                 ...studentQueries.map((query) => query.refetch()),
-                                ...analyticsQueries.map((query) => query.refetch()),
                             ]);
                         }}
                         className="mt-6 inline-flex h-11 items-center gap-2 rounded-full bg-slate-900 px-5 text-sm font-semibold text-white transition hover:bg-slate-800 dark:bg-white dark:text-slate-950 dark:hover:bg-slate-200"
@@ -373,29 +230,11 @@ export default function Analytics() {
                         </div>
 
                         <h1 className="mt-5 max-w-3xl text-3xl font-black tracking-tight text-slate-950 dark:text-slate-100 md:text-[2.7rem]">
-                            Kurslar va sotuvlar bo‘yicha umumiy holat
+                            Kurslar va talabalar bo‘yicha umumiy holat
                         </h1>
                         <p className="mt-4 max-w-3xl text-sm font-medium leading-7 text-slate-500 dark:text-slate-300 md:text-base">
-                            Asosiy ko‘rsatkichlar, talabalar oqimi va sotuv signallari shu yerda jamlangan.
+                            Portfel ko‘rsatkichlari va talabalar oqimi shu yerda jamlangan.
                         </p>
-
-                        <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-                            {topMetrics.map((card) => (
-                                <article
-                                    key={card.label}
-                                    className={`overflow-hidden rounded-[24px] border border-white/70 bg-gradient-to-br ${card.tone} p-4 shadow-[0_14px_32px_rgba(15,23,42,0.07)] backdrop-blur-xl dark:border-slate-800`}
-                                >
-                                    <div className={`flex h-12 w-12 items-center justify-center rounded-[16px] shadow-sm ${card.iconTone}`}>
-                                        <card.icon className="h-5 w-5" />
-                                    </div>
-                                    <div className="mt-4">
-                                        <p className="text-2xl font-black tracking-tight text-slate-950 dark:text-slate-100">{card.value}</p>
-                                        <p className="mt-1.5 text-sm font-semibold leading-5 text-slate-900 dark:text-slate-100">{card.label}</p>
-                                        <p className="mt-1 text-xs font-medium text-slate-500 dark:text-slate-400">{card.helper}</p>
-                                    </div>
-                                </article>
-                            ))}
-                        </div>
                     </div>
 
                     <div className="rounded-[30px] border border-blue-100 bg-[linear-gradient(180deg,rgba(239,246,255,0.98),rgba(255,255,255,0.98))] p-5 text-slate-900 shadow-[0_24px_60px_rgba(15,23,42,0.08)] dark:border-slate-800 dark:bg-[linear-gradient(180deg,rgba(15,23,42,0.98),rgba(2,6,23,0.98))] dark:text-slate-100 dark:shadow-[0_24px_60px_rgba(2,6,23,0.45)]">
@@ -488,27 +327,6 @@ export default function Analytics() {
                 </div>
             </section>
 
-            <section className="rounded-[32px] border border-white/80 bg-white/88 p-6 shadow-[0_28px_80px_rgba(15,23,42,0.07)] backdrop-blur dark:border-slate-800 dark:bg-slate-950/75 dark:shadow-[0_28px_80px_rgba(2,6,23,0.45)]">
-                <div className="flex items-center justify-between gap-4">
-                    <div>
-                            <p className="text-[10px] font-black uppercase tracking-[0.28em] text-slate-400 dark:text-slate-500">Sotuvlar</p>
-                            <h2 className="mt-2 text-2xl font-black tracking-tight text-slate-950 dark:text-slate-100">Konversiya paneli</h2>
-                    </div>
-                    <div className="rounded-2xl bg-violet-50 p-3 text-violet-700 dark:bg-violet-500/10 dark:text-violet-200">
-                        <ArrowUpRight className="h-5 w-5" />
-                    </div>
-                </div>
-
-                <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-                    {signalBoard.map((item) => (
-                        <div key={item.label} className="rounded-[24px] border border-slate-200 bg-slate-50/80 p-5 dark:border-slate-800 dark:bg-slate-900/60">
-                            <p className="text-[11px] font-black uppercase tracking-[0.18em] text-slate-400 dark:text-slate-500">{item.label}</p>
-                            <div className="mt-3 text-3xl font-black tracking-tight text-slate-950 dark:text-slate-100">{item.value}</div>
-                            <p className="mt-2 text-sm font-medium leading-6 text-slate-500 dark:text-slate-400">{item.helper}</p>
-                        </div>
-                    ))}
-                </div>
-            </section>
         </div>
     );
 }

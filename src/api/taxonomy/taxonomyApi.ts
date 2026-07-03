@@ -111,7 +111,7 @@ export const getTaxonomySkillTags = async () => {
 
 export const getCourseLanguages = async () => {
     try {
-        const {data} = await apiClient.get("/taxonomy/course-languages");
+        const {data} = await apiClient.get("/taxonomy/app-languages");
         return normalizeList(data);
     } catch (error) {
         throw parseApiError(error, "Kurs tillari yuklanmadi.");

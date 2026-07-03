@@ -9,7 +9,7 @@ const AppSidebar: React.FC = () => {
     const {isExpanded, isMobileOpen, toggleMobileSidebar, toggleSidebar} = useSidebar();
     const location = useLocation();
     const {data: user} = useUser();
-    const dashboardNavItems = getDashboardNavItems(user?.roleName);
+    const dashboardNavItems = getDashboardNavItems(user?.roleName, user?.permissionsList);
 
     return (
         <aside

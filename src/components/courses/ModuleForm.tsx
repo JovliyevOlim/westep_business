@@ -17,7 +17,7 @@ interface ModuleFormProps {
 
 type ModuleFormValues = {
     name: string;
-    price: number;
+    requiresSubscription: boolean;
     active: boolean;
 };
 
@@ -30,19 +30,18 @@ export default function ModuleForm({courseId, initialData, suggestedOrderIndex =
     const formik = useFormik<ModuleFormValues>({
         initialValues: {
             name: initialData?.name || "",
-            price: initialData?.price || 0,
+            requiresSubscription: initialData?.requiresSubscription ?? true,
             active: initialData?.active ?? false,
         },
         enableReinitialize: true,
         validationSchema: Yup.object({
             name: Yup.string().trim().required("Modul nomini kiriting"),
-            price: Yup.number().min(0, "Narx 0 dan kichik bo'lmasligi kerak").required("Narxni kiriting"),
         }),
         onSubmit: async (values) => {
             const payload = {
                 name: values.name.trim(),
                 description: initialData?.description?.trim() || "",
-                price: Number(values.price) || 0,
+                requiresSubscription: values.requiresSubscription,
                 courseId,
                 orderIndex: initialData?.orderIndex ?? suggestedOrderIndex,
                 active: values.active,
@@ -81,14 +80,18 @@ export default function ModuleForm({courseId, initialData, suggestedOrderIndex =
                     />
                 </div>
 
-                <Input
-                    type="number"
-                    formik={formik}
-                    name="price"
-                    placeholder="0"
-                    label="Narx (UZS)"
-                    className="rounded-2xl border-gray-300 bg-white dark:bg-slate-950"
-                />
+                <div className="flex items-center justify-between rounded-2xl border border-slate-200 bg-white px-4 py-3 dark:border-slate-800 dark:bg-slate-950">
+                    <div>
+                        <p className="text-sm font-medium text-slate-900 dark:text-slate-100">Faqat obuna bilan ochiladi</p>
+                        <p className="text-xs text-slate-500 dark:text-slate-400">
+                            Yoqilgan bo‘lsa modul faqat active obunaga ega studentlarga ochiq. O‘chirilgan bo‘lsa hammaga bepul.
+                        </p>
+                    </div>
+                    <Switch
+                        checked={formik.values.requiresSubscription}
+                        onCheckedChange={(checked) => formik.setFieldValue("requiresSubscription", checked)}
+                    />
+                </div>
 
                 {isEditing ? (
                     <div className="flex items-center justify-between rounded-2xl border border-slate-200 bg-white px-4 py-3 dark:border-slate-800 dark:bg-slate-950">

@@ -1,5 +1,5 @@
 import apiClient from "../apiClient.ts";
-import {Course} from "../../types/types.ts";
+import {Course, CourseStatusHistoryItem} from "../../types/types.ts";
 import {parseApiError} from "../../utils/apiError.ts";
 
 export type CoursePayload = Pick<Course,
@@ -12,6 +12,12 @@ export type CoursePayload = Pick<Course,
     | "languageId"
     | "attachmentId"
     | "trailerVideoUrl"
+    | "level"
+    | "targetAudience"
+    | "estimatedDurationMinutes"
+    | "learningOutcomes"
+    | "requirements"
+    | "subscriptionTier"
 > & {
     id?: string;
     businessId?: string;
@@ -66,6 +72,8 @@ const normalizeCourse = (value: unknown): Course | null => {
         createdBy: value.createdBy || "",
         createdByFullName: value.createdByFullName || "",
         skillTagIds: value.skillTagIds || [],
+        learningOutcomes: value.learningOutcomes || [],
+        requirements: value.requirements || [],
     } as Course;
 };
 
@@ -170,5 +178,28 @@ export const getCourseById = async (id: string | undefined) => {
         return normalizeCourse(data) || normalizeCourse((data as {data?: unknown})?.data) || data;
     } catch (error) {
         throw parseApiError(error, "Kurs ma'lumotlari yuklanmadi.");
+    }
+};
+
+export const submitCourseForReview = async (id: string, note?: string) => {
+    try {
+        const {data} = await apiClient.post(`/course/${id}/submit-review`, note ? {note} : {});
+        return normalizeCourse(data) || normalizeCourse((data as {data?: unknown})?.data) || data;
+    } catch (error) {
+        throw parseApiError(error, "Kursni moderatsiyaga jo'natib bo'lmadi.");
+    }
+};
+
+export const getCourseStatusHistory = async (id: string) => {
+    try {
+        const {data} = await apiClient.get(`/course/${id}/status-history`);
+        if (Array.isArray(data)) return data as CourseStatusHistoryItem[];
+        const inner = (data as {data?: unknown; items?: unknown; content?: unknown});
+        if (Array.isArray(inner.items)) return inner.items as CourseStatusHistoryItem[];
+        if (Array.isArray(inner.content)) return inner.content as CourseStatusHistoryItem[];
+        if (Array.isArray(inner.data)) return inner.data as CourseStatusHistoryItem[];
+        return [] as CourseStatusHistoryItem[];
+    } catch (error) {
+        throw parseApiError(error, "Status tarixi yuklanmadi.");
     }
 };

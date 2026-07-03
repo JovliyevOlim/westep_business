@@ -26,6 +26,7 @@ import {Button} from "../../ui/button.tsx";
 import {ScrollArea} from "../../ui/scroll-area.tsx";
 import {Select, SelectContent, SelectItem, SelectTrigger} from "../../ui/select.tsx";
 import VideoPlayer from "./VedioPlayerComponent.tsx";
+import VideoUploader from "./VideoUploader.tsx";
 
 type LessonMaterialFormState = {
     title: string;
@@ -808,6 +809,16 @@ export default function AddLesson({lessonId: propLessonId, courseId: propCourseI
                                                 <VideoPlayer videoUrl={formik.values.videoUrl ?? ""} />
                                             </div>
                                         </div>
+
+                                        {lessonId ? (
+                                            <div className="mx-auto max-w-3xl">
+                                                <VideoUploader lessonId={lessonId} lessonTitle={formik.values.name} />
+                                            </div>
+                                        ) : (
+                                            <div className="mx-auto max-w-3xl rounded-2xl border border-dashed border-slate-200 bg-slate-50 px-4 py-3 text-xs text-slate-500 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-400">
+                                                MinIO orqali video yuklash uchun avval darsni saqlang.
+                                            </div>
+                                        )}
                                     </div>
                                 </>
                             ) : null}

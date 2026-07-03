@@ -16,40 +16,11 @@ import {useGetBusinessCourses, useGetInactiveBusinessCourses, useGetMyCourses} f
 import {useUser} from "../../api/auth/useAuth.ts";
 import {useGetUsers} from "../../api/businessUser/useBusinessUser.ts";
 import {getCourseStudents} from "../../api/courseStudents/courseStudentsApi.ts";
-import {getCourseTrackingAnalytics} from "../../api/trackingLinks/trackingLinkApi.ts";
 import {useBusinessWalletTransactions} from "../../api/payments/useBusinessWalletTransactions.ts";
-import type {Course, TrackingLinkAnalytics} from "../../types/types.ts";
-
-const emptyAnalytics: TrackingLinkAnalytics = {
-    clicks: 0,
-    uniqueClicks: 0,
-    leads: 0,
-    checkoutStarted: 0,
-    paidPurchases: 0,
-    failedOrAbandoned: 0,
-    refunded: 0,
-    revenue: 0,
-    conversionRate: 0,
-    lastActivityAt: null,
-};
+import type {Course} from "../../types/types.ts";
 
 const formatMoney = (value: number) =>
     new Intl.NumberFormat("uz-UZ").format(Math.round(value));
-
-const formatDateTime = (value?: string | null) => {
-    if (!value) return "Hali faollik yo‘q";
-
-    const date = new Date(value);
-    if (Number.isNaN(date.getTime())) return value;
-
-    const day = String(date.getDate()).padStart(2, "0");
-    const month = String(date.getMonth() + 1).padStart(2, "0");
-    const year = date.getFullYear();
-    const hours = String(date.getHours()).padStart(2, "0");
-    const minutes = String(date.getMinutes()).padStart(2, "0");
-
-    return `${day}.${month}.${year} ${hours}:${minutes}`;
-};
 
 const getStudentProgressPercent = (value: number, total: number) =>
     total > 0 ? Math.round((value / total) * 100) : 0;
@@ -85,15 +56,6 @@ export default function Overview() {
         })),
     });
 
-    const analyticsQueries = useQueries({
-        queries: allCourses.map((course) => ({
-            queryKey: ["dashboard-course-analytics", course.id],
-            queryFn: () => getCourseTrackingAnalytics(course.id),
-            enabled: !!course.id,
-            staleTime: 1000 * 30,
-        })),
-    });
-
     const isLoading =
         isUserLoading ||
         myCoursesQuery.isLoading ||
@@ -101,8 +63,7 @@ export default function Overview() {
         inactiveCoursesQuery.isLoading ||
         membersQuery.isLoading ||
         walletTransactionsQuery.isLoading ||
-        studentQueries.some((query) => query.isLoading) ||
-        analyticsQueries.some((query) => query.isLoading);
+        studentQueries.some((query) => query.isLoading);
 
     const paidRevenue = useMemo(
         () => (walletTransactionsQuery.data || []).reduce((total, transaction) => {
@@ -142,30 +103,6 @@ export default function Overview() {
             completedCount,
         };
     }, [studentQueries]);
-
-    const aggregateAnalytics = useMemo(() => {
-        return analyticsQueries.reduce(
-            (accumulator, query) => {
-                const data = query.data || emptyAnalytics;
-                const accumulatorDate = accumulator.lastActivityAt ? new Date(accumulator.lastActivityAt).getTime() : 0;
-                const nextDate = data.lastActivityAt ? new Date(data.lastActivityAt).getTime() : 0;
-
-                return {
-                    clicks: accumulator.clicks + (data.clicks || 0),
-                    uniqueClicks: accumulator.uniqueClicks + (data.uniqueClicks || 0),
-                    leads: accumulator.leads + (data.leads || 0),
-                    checkoutStarted: accumulator.checkoutStarted + (data.checkoutStarted || 0),
-                    paidPurchases: accumulator.paidPurchases + (data.paidPurchases || 0),
-                    failedOrAbandoned: accumulator.failedOrAbandoned + (data.failedOrAbandoned || 0),
-                    refunded: accumulator.refunded + (data.refunded || 0),
-                    revenue: accumulator.revenue + (data.revenue || 0),
-                    conversionRate: accumulator.conversionRate + (data.conversionRate || 0),
-                    lastActivityAt: nextDate >= accumulatorDate ? data.lastActivityAt : accumulator.lastActivityAt,
-                };
-            },
-            {...emptyAnalytics},
-        );
-    }, [analyticsQueries]);
 
     const totalCourses = allCourses.length;
     const activeCourses = allCourses.filter((course) => course.active).length;
@@ -266,20 +203,20 @@ export default function Overview() {
 
     const summaryRows = [
         {
-            label: "So‘nggi faollik",
-            value: formatDateTime(aggregateAnalytics.lastActivityAt),
+            label: "Jami kurslar",
+            value: String(totalCourses),
         },
         {
-            label: "Unique clicklar",
-            value: String(aggregateAnalytics.uniqueClicks),
+            label: "Nashrdagi kurslar",
+            value: String(publishedCourses),
         },
         {
-            label: "To‘lovli xaridlar",
-            value: String(aggregateAnalytics.paidPurchases),
+            label: "Tugallagan studentlar",
+            value: String(studentPortfolio.completedCount),
         },
         {
-            label: "Checkout boshlangan",
-            value: String(aggregateAnalytics.checkoutStarted),
+            label: "Faol xodimlar",
+            value: String(staffCount),
         },
     ];
 

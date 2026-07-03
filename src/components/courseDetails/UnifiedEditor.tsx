@@ -2,7 +2,6 @@ import React from "react";
 import {useParams} from "react-router-dom";
 import {DollarSign, FolderKanban, FileText} from "lucide-react";
 import AddLesson from "./lessonDetails/AddLesson";
-import TrackingLinksSection from "./TrackingLinksSection";
 import HomeworkReviewSection from "./HomeworkReviewSection";
 import DiscussionSection from "./DiscussionSection";
 import QuizAnalyticsSection from "./QuizAnalyticsSection";
@@ -13,7 +12,6 @@ type SessionType =
     | "module"
     | "course"
     | "pricing"
-    | "analytics"
     | "students"
     | "homework"
     | "discussions"
@@ -107,7 +105,6 @@ const UnifiedEditor: React.FC<UnifiedEditorProps> = ({
                     onBack={onBack}
                 />
             )}
-            {session.type === "analytics" && courseId && <TrackingLinksSection courseId={courseId}/>}
             {session.type === "students" && courseId && <CourseStudentsSection courseId={courseId}/>}
             {session.type === "homework" && courseId && <HomeworkReviewSection courseId={courseId} initialStudentId={focusedStudentId}/>}
             {session.type === "discussions" && courseId && <DiscussionSection courseId={courseId} initialStudentId={focusedStudentId}/>}

@@ -1,10 +1,11 @@
 import type {ReactNode} from "react";
-import {LayoutDashboard, BookOpen, Users, BarChart3, Settings, MessageCircle, Wallet} from "lucide-react";
-import {isCourseManagerRole, isLessonQuizManagerRole, isStudentRole} from "../api/auth/useAuth.ts";
+import {LayoutDashboard, BookOpen, Users, BarChart3, Settings, MessageCircle, Wallet, Briefcase} from "lucide-react";
+import {hasPermission, isCourseManagerRole, isLessonQuizManagerRole, isStudentRole} from "../api/auth/useAuth.ts";
 
 type DashboardNavIcon =
     | "overview"
     | "courses"
+    | "professions"
     | "students"
     | "team"
     | "teachers"
@@ -20,6 +21,7 @@ export type DashboardNavItem = {
     icon: DashboardNavIcon;
     badge?: string;
     description: string;
+    requiredPermission?: string;
 };
 
 const managerDashboardNavItems: DashboardNavItem[] = [
@@ -34,6 +36,13 @@ const managerDashboardNavItems: DashboardNavItem[] = [
         path: "/courses",
         icon: "courses",
         description: "Chop etilgan va tayyorlanayotgan ta'lim dasturlarini boshqaring.",
+    },
+    {
+        label: "Kasblar",
+        path: "/professions",
+        icon: "professions",
+        description: "Kasb katalogi, tarjimalar, kurslar va tartibni boshqaring.",
+        requiredPermission: "PROFESSION_MANAGE",
     },
     {
         label: "Jamoa",
@@ -67,7 +76,7 @@ const managerDashboardNavItems: DashboardNavItem[] = [
     },
 ];
 
-export const getDashboardNavItems = (roleName?: string): DashboardNavItem[] => {
+export const getDashboardNavItems = (roleName?: string, permissionsList?: string[]): DashboardNavItem[] => {
     if (isStudentRole(roleName)) {
         return [
             {
@@ -90,7 +99,9 @@ export const getDashboardNavItems = (roleName?: string): DashboardNavItem[] => {
         ];
     }
 
-    return managerDashboardNavItems;
+    return managerDashboardNavItems.filter((item) =>
+        item.requiredPermission ? hasPermission(permissionsList, item.requiredPermission) : true,
+    );
 };
 
 type DashboardPageMeta = {
@@ -112,6 +123,13 @@ export const getDashboardPageMeta = (pathname: string): DashboardPageMeta => {
         return {
             title: "Kurslar",
             description: "Chop etilgan va tayyorlanayotgan ta'lim dasturlarini boshqaring.",
+        };
+    }
+
+    if (pathname.startsWith("/professions")) {
+        return {
+            title: "Kasblar",
+            description: "Kasb katalogi, tarjimalar, kurslar va tartibni boshqaring.",
         };
     }
 
@@ -185,6 +203,10 @@ export const renderDashboardIcon = (
         case "courses":
             return (
                 <BookOpen className={className}/>
+            );
+        case "professions":
+            return (
+                <Briefcase className={className}/>
             );
         case "students":
             return (

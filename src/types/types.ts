@@ -106,11 +106,73 @@ export interface BusinessWalletTransaction {
     createdAt?: string;
 }
 
+export type CourseLevel = "BEGINNER" | "INTERMEDIATE" | "ADVANCED";
+
+export type VideoUploadStatus = "PENDING" | "UPLOADED" | "PROCESSING" | "READY" | "FAILED";
+
+export interface VideoUploadInitRequest {
+    lessonId: string;
+    filename: string;
+    fileSize: number;
+    contentType: string;
+    title?: string;
+    description?: string;
+}
+
+export interface VideoUploadInitResponse {
+    videoId: string;
+    uploadUrl: string;
+    method?: string;
+    headers?: Record<string, string>;
+    expiresAt?: string;
+}
+
+export interface VideoUploadConfirmResponse {
+    videoId: string;
+    uploadStatus: VideoUploadStatus;
+}
+
+export interface VideoResponse {
+    id: string;
+    lessonId?: string;
+    title?: string;
+    description?: string;
+    duration?: number | null;
+    uploadStatus: VideoUploadStatus;
+    thumbnailUrl?: string;
+    createdAt?: string;
+    updatedAt?: string;
+}
+
+export interface VideoPlaybackResponse {
+    videoUrl: string;
+    thumbnailUrl?: string;
+    duration?: number | null;
+    expiresAt?: string;
+}
+
+export type CourseStatus =
+    | "DRAFT"
+    | "SUBMITTED"
+    | "APPROVED"
+    | "REJECTED"
+    | "PUBLISHED"
+    | "ARCHIVED";
+
+export interface CourseStatusHistoryItem {
+    id?: string;
+    fromStatus?: CourseStatus | string;
+    toStatus: CourseStatus | string;
+    note?: string;
+    changedBy?: string;
+    changedByFullName?: string;
+    changedAt?: string;
+}
+
 export interface Course extends Common {
     name: string,
     description: string,
     fullDescription?: string,
-    price?: number,
     isPublished: boolean,
     published?: boolean,
     status?: string,
@@ -128,8 +190,60 @@ export interface Course extends Common {
     languageName?: string,
     languageCode?: string,
     trailerVideoUrl?: string,
+    level?: CourseLevel,
+    targetAudience?: string,
+    estimatedDurationMinutes?: number | null,
+    learningOutcomes?: string[],
+    requirements?: string[],
+    subscriptionTier?: number | null,
     createdBy?: string,
     createdByFullName?: string,
+}
+
+export type ProfessionDemandTone = "HIGH" | "MEDIUM" | "LOW";
+export type SupportedLanguage = "uz" | "ru" | "en";
+
+export interface ProfessionTranslation {
+    languageCode: SupportedLanguage;
+    title: string;
+    tagline: string;
+    description: string;
+    demandLabel: string;
+    durationLabel: string;
+    levelLabel: string;
+    skills: string[];
+    roles: string[];
+}
+
+export interface ProfessionCourseLink {
+    id: string;
+    name: string;
+}
+
+export interface Profession {
+    id: string;
+    slug: string;
+    emoji: string;
+    fieldKey: string;
+    fieldLabel: string;
+    gradFrom: string;
+    gradTo: string;
+    demand: string;
+    demandTone: ProfessionDemandTone;
+    duration: string;
+    level: string;
+    displayOrder: number;
+    active: boolean;
+    deleted?: boolean;
+    translations: ProfessionTranslation[];
+    courses: ProfessionCourseLink[];
+    createdAt?: string;
+    updatedAt?: string;
+}
+
+export interface ProfessionField {
+    key: string;
+    label: string;
 }
 
 export interface TaxonomyOption {
@@ -145,7 +259,8 @@ export interface Module extends Common {
     description?: string,
     courseId: string
     orderIndex: number | null,
-    price: number,
+    requiresSubscription: boolean,
+    unlocked?: boolean,
     lessonCount: number,
     active?: boolean,
 }
@@ -163,65 +278,6 @@ export interface Lesson extends Common {
     videoUrl?: string,
     active?: boolean,
 }
-
-export type TrackingOwnerType = "TEACHER" | "BUSINESS_OWNER";
-export type TrackingSourceType = "BUSINESS_LINK" | "WESTEP_LANDING" | "WESTEP_ADS" | "TEACHER_LINK";
-
-export interface TrackingLinkAnalytics {
-    clicks: number;
-    uniqueClicks: number;
-    leads: number;
-    checkoutStarted: number;
-    paidPurchases: number;
-    freeEnrolls?: number;
-    paidAmount?: number;
-    appliedFeeAmount?: number;
-    netAmount?: number;
-    failedOrAbandoned: number;
-    refunded: number;
-    refundedAmount?: number;
-    revenue: number;
-    conversionRate: number;
-    lastActivityAt?: string | null;
-}
-
-export interface TrackingLink extends Common {
-    courseId?: string;
-    name: string;
-    code: string;
-    trackingUrl?: string;
-    landingUrlWithRef?: string;
-    studentUrlWithRef?: string;
-    courseUrlWithRef?: string;
-    isActive: boolean;
-    expiresAt?: string | null;
-    ownerType: TrackingOwnerType;
-    ownerId: string;
-    sourceType?: TrackingSourceType;
-    destinationUrl?: string;
-    utmSource?: string | null;
-    utmMedium?: string | null;
-    utmCampaign?: string | null;
-    updatedAt?: string;
-}
-
-export interface TrackingLinkPayload {
-    courseId: string;
-    name: string;
-    ownerType: TrackingOwnerType;
-    ownerId: string;
-    sourceType: TrackingSourceType;
-}
-
-export type TrackingLinkResponse = TrackingLink;
-export type TrackingLinkCreateRequest = TrackingLinkPayload;
-export type TrackingLinkUpdateRequest = Partial<{
-    name: string;
-    isActive: boolean;
-    sourceType: TrackingSourceType;
-}>;
-export type TrackingLinkAnalyticsResponse = TrackingLinkAnalytics;
-export type CourseTrackingAnalyticsResponse = TrackingLinkAnalytics;
 
 export interface NotificationItem extends Common {
     title: string;

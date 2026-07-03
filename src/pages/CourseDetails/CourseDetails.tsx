@@ -3,27 +3,30 @@ import {useNavigate, useParams, useSearchParams} from "react-router-dom";
 import {
     ArrowLeft,
     BarChart3,
+    History,
     LoaderCircle,
     MessageSquare,
+    Send,
     TrendingUp,
     Users,
 } from "lucide-react";
 import PageMeta from "../../components/common/PageMeta.tsx";
 import {Switch} from "../../components/ui/switch.tsx";
-import {useGetCourseById, usePatchCourseActive} from "../../api/courses/useCourse.ts";
-import {showSuccessToast} from "../../utils/toast.tsx";
+import {useGetCourseById, usePatchCourseActive, useSubmitCourseForReview} from "../../api/courses/useCourse.ts";
+import {showErrorToast, showSuccessToast} from "../../utils/toast.tsx";
 import CourseModulesBar from "../../components/courseDetails/CourseModulesBar.tsx";
 import UnifiedEditor from "../../components/courseDetails/UnifiedEditor.tsx";
 import {useGetModules} from "../../api/module/useModule.ts";
 import {isCourseManagerRole, useUser} from "../../api/auth/useAuth.ts";
 import {useCourseDiscussionUnreadCount} from "../../api/discussionInbox/useDiscussionInbox.ts";
+import CourseStatusBadge from "../../components/courses/CourseStatusBadge.tsx";
+import CourseStatusHistoryModal from "../../components/courses/CourseStatusHistoryModal.tsx";
 
 type SessionType =
     | "lesson"
     | "module"
     | "course"
     | "pricing"
-    | "analytics"
     | "students"
     | "homework"
     | "discussions"
@@ -47,11 +50,6 @@ const getSessionMeta = (type: SessionType) => {
             return {
                 title: "Modul",
                 description: "Modul ma'lumotlari va darslar tartibi.",
-            };
-        case "analytics":
-            return {
-                title: "Tahlillar",
-                description: "Tracking linklar va kurs tahlillari.",
             };
         case "students":
             return {
@@ -103,6 +101,21 @@ const CourseDetails = () => {
     const {data: course, isLoading: isCourseLoading} = useGetCourseById(courseId);
     const {data: modules = []} = useGetModules(courseId);
     const {mutateAsync: toggleCourseActive, isPending: isPatchingActive} = usePatchCourseActive();
+    const {mutateAsync: submitForReview, isPending: isSubmittingForReview} = useSubmitCourseForReview();
+    const [historyOpen, setHistoryOpen] = useState(false);
+
+    const courseStatus = (course?.status || "").toUpperCase();
+    const canSubmitForReview = canManageCourse && (courseStatus === "DRAFT" || courseStatus === "REJECTED");
+
+    const handleSubmitForReview = async () => {
+        if (!course?.id) return;
+        try {
+            await submitForReview({id: course.id});
+            showSuccessToast("Kurs moderatsiyaga jo'natildi");
+        } catch (error) {
+            showErrorToast(error, "Kursni moderatsiyaga jo'natib bo'lmadi");
+        }
+    };
 
     const [activeSession, setActiveSession] = useState<ActiveSession>({
         type: canManageCourse ? "none" : "quizzes",
@@ -126,7 +139,7 @@ const CourseDetails = () => {
         const requestedView = searchParams.get("view");
         if (!requestedView || !courseId) return;
 
-        const allowedViews: SessionType[] = ["students", "homework", "discussions", "quizzes", "analytics", "none"];
+        const allowedViews: SessionType[] = ["students", "homework", "discussions", "quizzes", "none"];
         if (!allowedViews.includes(requestedView as SessionType)) return;
 
         setActiveSession({
@@ -145,7 +158,6 @@ const CourseDetails = () => {
         ? [
             {id: "none", label: "Kontent", icon: TrendingUp},
             {id: "students", label: "O‘quvchilar", icon: Users},
-            {id: "analytics", label: "Tahlillar", icon: TrendingUp},
             {id: "homework", label: "Vazifalar", icon: BarChart3},
             {id: "discussions", label: "Muhokamalar", icon: MessageSquare},
             {id: "quizzes", label: "Testlar", icon: BarChart3},
@@ -233,7 +245,10 @@ const CourseDetails = () => {
                         </button>
                         <div>
                             <p className="text-sm text-slate-500 dark:text-slate-400">Kurs kontenti</p>
-                            <h1 className="text-2xl font-semibold text-slate-950 dark:text-slate-100">{course?.name || "Kurs"}</h1>
+                            <div className="mt-0.5 flex flex-wrap items-center gap-2">
+                                <h1 className="text-2xl font-semibold text-slate-950 dark:text-slate-100">{course?.name || "Kurs"}</h1>
+                                {course?.status ? <CourseStatusBadge status={course.status} /> : null}
+                            </div>
                             <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">Modullar markazda turadi. Darsni tanlasangiz ichki ma'lumotlari o‘ng panelda ochiladi.</p>
                         </div>
                     </div>
@@ -241,6 +256,33 @@ const CourseDetails = () => {
                         <div className="rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-600 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300">
                             {modules.length} modul · {totalLessons} dars
                         </div>
+                        {canManageCourse ? (
+                            <div className="flex flex-wrap gap-2">
+                                {canSubmitForReview ? (
+                                    <button
+                                        type="button"
+                                        onClick={handleSubmitForReview}
+                                        disabled={isSubmittingForReview}
+                                        className="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-3 py-2 text-xs font-semibold text-white shadow-sm hover:bg-blue-700 disabled:opacity-60"
+                                    >
+                                        {isSubmittingForReview ? (
+                                            <LoaderCircle className="h-3.5 w-3.5 animate-spin" />
+                                        ) : (
+                                            <Send className="h-3.5 w-3.5" />
+                                        )}
+                                        Moderatsiyaga jo‘natish
+                                    </button>
+                                ) : null}
+                                <button
+                                    type="button"
+                                    onClick={() => setHistoryOpen(true)}
+                                    className="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-300 dark:hover:bg-slate-900"
+                                >
+                                    <History className="h-3.5 w-3.5" />
+                                    Status tarixi
+                                </button>
+                            </div>
+                        ) : null}
                         {canManageCourse ? (
                             <div className="flex items-center justify-between gap-3 rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 dark:border-slate-800 dark:bg-slate-900">
                                 <div>
@@ -330,6 +372,12 @@ const CourseDetails = () => {
                     ) : null}
                 </div>
             )}
+
+            <CourseStatusHistoryModal
+                open={historyOpen}
+                onClose={() => setHistoryOpen(false)}
+                courseId={courseId}
+            />
         </div>
     );
 };

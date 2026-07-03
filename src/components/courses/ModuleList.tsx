@@ -1,5 +1,5 @@
 import {useState} from "react";
-import {FolderKanban, Layers3, LoaderCircle, Pencil, Plus, Trash2} from "lucide-react";
+import {FolderKanban, Lock, LoaderCircle, Pencil, Plus, Trash2, Unlock} from "lucide-react";
 import {Module} from "../../types/types.ts";
 import {useDeleteModule, useGetModules} from "../../api/module/useModule.ts";
 import {Button} from "../ui/button.tsx";
@@ -101,10 +101,17 @@ export default function ModuleList({courseId}: ModuleListProps) {
                                         </span>
                                     </div>
                                     <h4 className="mt-4 text-lg font-black tracking-tight text-slate-950">{module.name}</h4>
-                                    <div className="mt-4 inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-2 text-xs font-black text-slate-600">
-                                        <Layers3 className="h-3.5 w-3.5"/>
-                                        {module.price?.toLocaleString()} UZS
-                                    </div>
+                                    {module.requiresSubscription ? (
+                                        <div className="mt-4 inline-flex items-center gap-2 rounded-full border border-blue-200 bg-blue-50 px-3 py-2 text-xs font-black uppercase tracking-[0.18em] text-blue-700">
+                                            <Lock className="h-3.5 w-3.5"/>
+                                            Obuna
+                                        </div>
+                                    ) : (
+                                        <div className="mt-4 inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-2 text-xs font-black uppercase tracking-[0.18em] text-emerald-700">
+                                            <Unlock className="h-3.5 w-3.5"/>
+                                            Bepul
+                                        </div>
+                                    )}
                                 </div>
 
                                 <div className="flex items-center gap-2">

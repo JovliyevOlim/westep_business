@@ -7,12 +7,12 @@ function Lessons({id, openLesson, courseId, activeSession, onSelectionChange}: {
     openLesson: boolean, 
     courseId: string,
     activeSession: {
-        type: "lesson" | "module" | "course" | "pricing" | "analytics" | "students" | "homework" | "discussions" | "quizzes" | "none",
+        type: "lesson" | "module" | "course" | "pricing" | "students" | "homework" | "discussions" | "quizzes" | "none",
         id: string | null,
         moduleId?: string | null
     },
     onSelectionChange: (
-        type: "lesson" | "module" | "course" | "pricing" | "analytics" | "students" | "homework" | "discussions" | "quizzes" | "none",
+        type: "lesson" | "module" | "course" | "pricing" | "students" | "homework" | "discussions" | "quizzes" | "none",
         id: string | null,
         meta?: { moduleId?: string | null }
     ) => void

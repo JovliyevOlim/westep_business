@@ -1,5 +1,5 @@
 import {useState} from "react";
-import {ChevronDown, Plus, Trash2, Edit3} from "lucide-react";
+import {ChevronDown, Lock, Plus, Trash2, Edit3, Unlock} from "lucide-react";
 import {Module} from "../../types/types.ts";
 import {useDeleteModule, useUpdateModule} from "../../api/module/useModule.ts";
 import {useAddLesson} from "../../api/lessons/useLesson.ts";
@@ -18,12 +18,12 @@ interface ModuleItemProps {
     isExpanded: boolean;
     onToggle: () => void;
     activeSession: {
-        type: "lesson" | "module" | "course" | "pricing" | "analytics" | "students" | "homework" | "discussions" | "quizzes" | "none";
+        type: "lesson" | "module" | "course" | "pricing" | "students" | "homework" | "discussions" | "quizzes" | "none";
         id: string | null;
         moduleId?: string | null;
     };
     onSelectionChange: (
-        type: "lesson" | "module" | "course" | "pricing" | "analytics" | "students" | "homework" | "discussions" | "quizzes" | "none",
+        type: "lesson" | "module" | "course" | "pricing" | "students" | "homework" | "discussions" | "quizzes" | "none",
         id: string | null,
         meta?: { moduleId?: string | null }
     ) => void;
@@ -124,12 +124,17 @@ function ModuleCard({module, onToggle, isExpanded, activeSession, onSelectionCha
                         </div>
 
                         <div className="mt-2 flex flex-wrap items-center gap-2">
-                            <div className="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-slate-50 px-3 py-1.5 dark:border-slate-700 dark:bg-slate-900">
-                                <span className="text-[11px] font-semibold text-slate-500 dark:text-slate-400">Narxi</span>
-                                <span className="text-sm font-bold text-slate-900 dark:text-slate-100">
-                                    {module?.price ? module.price.toLocaleString("ru-RU") : "0"}
-                                </span>
-                            </div>
+                            {module.requiresSubscription ? (
+                                <div className="inline-flex items-center gap-1.5 rounded-xl border border-slate-200 bg-slate-50 px-3 py-1.5 dark:border-slate-700 dark:bg-slate-900">
+                                    <Lock className="h-3.5 w-3.5 text-slate-500 dark:text-slate-400"/>
+                                    <span className="text-[11px] font-semibold text-slate-600 dark:text-slate-300">Obuna</span>
+                                </div>
+                            ) : (
+                                <div className="inline-flex items-center gap-1.5 rounded-xl border border-emerald-200 bg-emerald-50 px-3 py-1.5 dark:border-emerald-500/30 dark:bg-emerald-500/10">
+                                    <Unlock className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-300"/>
+                                    <span className="text-[11px] font-semibold text-emerald-700 dark:text-emerald-200">Bepul</span>
+                                </div>
+                            )}
                             <div className={`inline-flex items-center gap-2 rounded-xl border px-3 py-1.5 ${
                                 activeSession.type === 'module' && activeSession.id === module.id
                                     ? "border-blue-200 bg-blue-50 dark:border-blue-500/30 dark:bg-blue-500/10"

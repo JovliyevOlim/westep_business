@@ -12,6 +12,7 @@ import {baseUrlImage} from "../../api/apiClient.ts";
 import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger} from "../ui/dropdown-menu.tsx";
 import {Switch} from "../ui/switch.tsx";
 import {showSuccessToast} from "../../utils/toast.tsx";
+import CourseStatusBadge from "./CourseStatusBadge.tsx";
 
 type CourseSource = "my" | "business" | "inactive";
 
@@ -39,10 +40,6 @@ function CourseCard({
         showSuccessToast(checked ? "Kurs active qilindi" : "Kurs non-active qilindi");
     };
 
-    const formattedPrice = typeof course.price === "number"
-        ? `${course.price.toLocaleString("ru-RU")} so‘m`
-        : null;
-
     return (
         <>
             <article className="rounded-2xl border border-slate-200 bg-white p-3 shadow-sm transition hover:border-blue-200 hover:shadow-md dark:border-slate-800 dark:bg-slate-950 dark:hover:border-blue-500/40">
@@ -68,10 +65,10 @@ function CourseCard({
                                 <h3 className="line-clamp-1 text-base font-semibold text-slate-950 dark:text-slate-100">
                                     {course.name}
                                 </h3>
-                                {formattedPrice ? (
-                                    <p className="mt-1 text-sm font-semibold text-slate-700 dark:text-slate-300">
-                                        {formattedPrice}
-                                    </p>
+                                {course.status ? (
+                                    <div className="mt-1.5">
+                                        <CourseStatusBadge status={course.status} />
+                                    </div>
                                 ) : null}
                                 <p className="mt-1 line-clamp-2 text-sm leading-5 text-slate-500 dark:text-slate-400">
                                     {course.description || "Tavsif kiritilmagan."}

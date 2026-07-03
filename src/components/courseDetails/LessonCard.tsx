@@ -13,7 +13,7 @@ interface LessonCardProps {
     courseId: string;
     onSelect: (lessonId: string, moduleId: string) => void;
     activeSession: {
-        type: "lesson" | "module" | "course" | "pricing" | "analytics" | "students" | "homework" | "discussions" | "quizzes" | "none";
+        type: "lesson" | "module" | "course" | "pricing" | "students" | "homework" | "discussions" | "quizzes" | "none";
         id: string | null;
         moduleId?: string | null;
     };

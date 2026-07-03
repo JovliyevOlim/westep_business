@@ -2,7 +2,7 @@ import apiClient from "../apiClient.ts";
 import {AxiosError} from "axios";
 import {Module} from "../../types/types.ts";
 
-type addModule = Pick<Module, "name" | "description" | "courseId" | "id" | "orderIndex" | "price" | "active">
+type addModule = Pick<Module, "name" | "description" | "courseId" | "id" | "orderIndex" | "requiresSubscription" | "active">
 
 export const addModules = async (body: Omit<addModule, "id">) => {
     try {

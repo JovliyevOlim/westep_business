@@ -19,6 +19,11 @@ import type {BusinessType} from "../../types/types.ts";
 
 export const normalizeRoleName = (roleName?: string) => (roleName || "").toUpperCase();
 
+export const normalizePermission = (permission?: string) => (permission || "").trim().toUpperCase();
+
+export const hasPermission = (permissionsList: string[] | undefined, permission: string) =>
+    permissionsList?.some((item) => normalizePermission(item) === normalizePermission(permission)) || false;
+
 export const isBusinessAdminRole = (roleName?: string) =>
     normalizeRoleName(roleName).includes("BUSINESS_ADMIN");
 
@@ -49,9 +54,11 @@ const resolveLoginRedirect = (roleName?: string) =>
 const completeLoginFlow = async ({
     navigate,
     toast,
+    queryClient,
 }: {
     navigate: ReturnType<typeof useNavigate>;
     toast: ReturnType<typeof useToast>;
+    queryClient: ReturnType<typeof useQueryClient>;
 }) => {
     try {
         const user = await getCurrentUser();
@@ -59,11 +66,15 @@ const completeLoginFlow = async ({
         if (!isWorkspaceUserRole(user?.roleName)) {
             removeItem("accessToken");
             removeItem("refreshToken");
+            queryClient.removeQueries({queryKey: ["currentUser"]});
             toast.error("Bu panelga ruxsat berilgan rol bilan kiring.");
             navigate("/login", {replace: true});
             return;
         }
 
+        // Keshda eski "No token" error holati qolib ketmasligi uchun userni shu yerda yozib qo'yamiz,
+        // aks holda AuthProtected mount bo'lganda isError=true bo'lib login sahifasiga qaytarib yuboradi.
+        queryClient.setQueryData(["currentUser"], user);
         navigate(resolveLoginRedirect(user?.roleName), {replace: true});
     } catch (error) {
         removeItem("accessToken");
@@ -91,10 +102,11 @@ export const useUser = () =>
 export const useLogin = () => {
     const navigate = useNavigate();
     const toast = useToast();
+    const queryClient = useQueryClient();
     return useMutation({
         mutationFn: login,
         onSuccess: async () => {
-            await completeLoginFlow({navigate, toast});
+            await completeLoginFlow({navigate, toast, queryClient});
         },
         onError: (error: Error) => {
             if (error instanceof DeviceLimitExceededError) {
@@ -131,6 +143,7 @@ export const useDeviceAwareLogin = () => {
 export const useRegister = () => {
     const navigate = useNavigate();
     const toast = useToast();
+    const queryClient = useQueryClient();
     return useMutation({
         mutationFn: register,
         onSuccess: async (_, body: BusinessType) => {
@@ -145,7 +158,7 @@ export const useRegister = () => {
                 });
 
                 sessionStorage.removeItem("form");
-                await completeLoginFlow({navigate, toast});
+                await completeLoginFlow({navigate, toast, queryClient});
             } catch (error) {
                 sessionStorage.removeItem("form");
                 showErrorToast(error, "Ro'yxatdan o'tildi, lekin avtomatik kirish amalga oshmadi");

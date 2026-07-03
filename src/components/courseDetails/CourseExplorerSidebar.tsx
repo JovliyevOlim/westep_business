@@ -8,7 +8,6 @@ type SessionType =
     | "module"
     | "course"
     | "pricing"
-    | "analytics"
     | "students"
     | "homework"
     | "discussions"

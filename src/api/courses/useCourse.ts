@@ -1,5 +1,16 @@
 import {useQuery, useMutation, useQueryClient} from "@tanstack/react-query";
-import {getMyCourses, getBusinessCourses, getInactiveBusinessCourses, addCourses, updateCourse, deleteCourse, getCourseById, patchCourseActive} from "./courseApi.ts";
+import {
+    addCourses,
+    deleteCourse,
+    getBusinessCourses,
+    getCourseById,
+    getCourseStatusHistory,
+    getInactiveBusinessCourses,
+    getMyCourses,
+    patchCourseActive,
+    submitCourseForReview,
+    updateCourse,
+} from "./courseApi.ts";
 import {useNavigate} from "react-router-dom";
 import {getItem} from "../../utils/utils.ts";
 import {showErrorToast} from "../../utils/toast.tsx";
@@ -174,6 +185,36 @@ export const usePatchCourseActive = () => {
         },
     });
 };
+
+const courseStatusHistoryKey = (id: string | undefined) => [...coursesKey, "status-history", id] as const;
+
+export const useSubmitCourseForReview = () => {
+    const qc = useQueryClient();
+    return useMutation({
+        mutationFn: ({id, note}: {id: string; note?: string}) => submitCourseForReview(id, note),
+        onSuccess: async (_data, variables) => {
+            await qc.invalidateQueries({queryKey: coursesKey});
+            await qc.invalidateQueries({queryKey: courseDetailKey(variables.id)});
+            await qc.invalidateQueries({queryKey: courseStatusHistoryKey(variables.id)});
+        },
+        onError: (error) => {
+            showErrorToast(error, "Kursni moderatsiyaga jo'natib bo'lmadi");
+        },
+    });
+};
+
+export const useCourseStatusHistory = (id: string | undefined, enabled = true) =>
+    useQuery({
+        queryKey: courseStatusHistoryKey(id),
+        queryFn: async () => {
+            const token = getItem<string>("accessToken");
+            if (!token) throw new Error("No token");
+            if (!id) throw new Error("No id");
+            return await getCourseStatusHistory(id);
+        },
+        enabled: Boolean(id) && enabled,
+        retry: false,
+    });
 
 export const useDeleteCourse = () => {
     const navigate = useNavigate();
