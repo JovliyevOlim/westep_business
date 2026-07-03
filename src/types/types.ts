@@ -234,6 +234,7 @@ export interface Profession {
     duration: string;
     level: string;
     displayOrder: number;
+    recommendedFromAge?: number | null;
     active: boolean;
     deleted?: boolean;
     translations: ProfessionTranslation[];

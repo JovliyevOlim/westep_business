@@ -215,6 +215,7 @@ export default function ProfessionEditor() {
             duration: uz.durationLabel,
             level: uz.levelLabel,
             displayOrder: draft.displayOrder,
+            recommendedFromAge: draft.recommendedFromAge,
             translations,
         };
 
@@ -558,6 +559,29 @@ export default function ProfessionEditor() {
                                         }
                                         className="h-11 rounded-2xl border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-950"
                                     />
+                                </div>
+
+                                <div className="space-y-2">
+                                    <label className="text-sm font-semibold text-slate-900 dark:text-slate-100">
+                                        Tavsiya yoshi (nechchi yoshdan)
+                                    </label>
+                                    <Input
+                                        type="number"
+                                        min={5}
+                                        max={17}
+                                        placeholder="Masalan: 9"
+                                        value={draft.recommendedFromAge ?? ""}
+                                        onChange={(event) =>
+                                            setDraft((current) => ({
+                                                ...current,
+                                                recommendedFromAge: event.target.value ? Number(event.target.value) : null,
+                                            }))
+                                        }
+                                        className="h-11 rounded-2xl border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-950"
+                                    />
+                                    <p className="text-xs text-slate-500 dark:text-slate-400">
+                                        Bo'sh qolsa — barcha yoshlarga tavsiya qilinadi.
+                                    </p>
                                 </div>
 
                                 <div className="flex items-center justify-between rounded-2xl border border-slate-200 bg-white px-4 py-3 dark:border-slate-800 dark:bg-slate-950">

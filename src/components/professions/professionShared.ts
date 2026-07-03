@@ -32,6 +32,7 @@ export type ProfessionDraft = {
     gradTo: string;
     demandTone: ProfessionDemandTone;
     displayOrder: number;
+    recommendedFromAge: number | null;
     active: boolean;
     translations: Record<SupportedLanguage, ProfessionTranslation>;
     courseIds: string[];
@@ -109,6 +110,7 @@ export const createEmptyDraft = (fields: FieldOption[], nextOrder: number): Prof
     gradTo: "#14B8A6",
     demandTone: defaultTone,
     displayOrder: nextOrder,
+    recommendedFromAge: null,
     active: true,
     translations: {
         uz: createTranslationDraft("uz"),
@@ -128,6 +130,7 @@ export const cloneDraft = (profession: Profession): ProfessionDraft => ({
     gradTo: profession.gradTo,
     demandTone: profession.demandTone,
     displayOrder: profession.displayOrder,
+    recommendedFromAge: profession.recommendedFromAge ?? null,
     active: profession.active,
     translations: {
         uz: profession.translations.find((item) => item.languageCode === "uz") || createTranslationDraft("uz"),
