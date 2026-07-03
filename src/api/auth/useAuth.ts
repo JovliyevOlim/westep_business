@@ -5,7 +5,6 @@ import {
     getCurrentUser,
     login,
     logout,
-    register,
     resetPassword,
     sendOtpCode,
     verifyCode
@@ -15,7 +14,6 @@ import {getItem, removeItem} from "../../utils/utils.ts";
 import {useToast} from "../../hooks/useToast.tsx";
 import {showErrorToast} from "../../utils/toast.tsx";
 import {getCurrentDeviceMeta} from "../../utils/device.ts";
-import type {BusinessType} from "../../types/types.ts";
 
 export const normalizeRoleName = (roleName?: string) => (roleName || "").toUpperCase();
 
@@ -140,38 +138,6 @@ export const useDeviceAwareLogin = () => {
     };
 };
 
-export const useRegister = () => {
-    const navigate = useNavigate();
-    const toast = useToast();
-    const queryClient = useQueryClient();
-    return useMutation({
-        mutationFn: register,
-        onSuccess: async (_, body: BusinessType) => {
-            try {
-                const deviceMeta = getCurrentDeviceMeta();
-
-                await login({
-                    phone: body.phone,
-                    password: body.password,
-                    deviceId: deviceMeta.deviceId,
-                    deviceName: deviceMeta.deviceName,
-                });
-
-                sessionStorage.removeItem("form");
-                await completeLoginFlow({navigate, toast, queryClient});
-            } catch (error) {
-                sessionStorage.removeItem("form");
-                showErrorToast(error, "Ro'yxatdan o'tildi, lekin avtomatik kirish amalga oshmadi");
-                navigate("/login", {replace: true});
-            }
-        },
-        onError: (error) => {
-            showErrorToast(error, "Ro'yxatdan o'tib bo'lmadi");
-        }
-    });
-};
-
-
 export const useCheckPhoneNumber = () => {
         const navigate = useNavigate();
         const toast = useToast();
@@ -180,9 +146,8 @@ export const useCheckPhoneNumber = () => {
             onSuccess: (_, body: { phone: string }) => {
                 navigate("/password", {state: {phone: body.phone}});
             },
-            onError: (_, body: { phone: string }) => {
-                navigate("/register", {state: {phone: body.phone}});
-                toast.warning("Ro'yxatdan o'ting!", "Siz saytda yo'qsiz");
+            onError: () => {
+                toast.warning("Kirish rad etildi", "Bu telefon raqami tizimda ro'yxatdan o'tmagan");
             },
         });
     }
@@ -216,24 +181,15 @@ export const useOtpPhoneNumber = (type: string) => {
 
 
 export const useVerifyCode = () => {
-    const {mutate} = useRegister();
     const {mutate: resetPassword} = useResetPassword();
-    const otpType = JSON.parse(sessionStorage.getItem('otpType') as string);
     return useMutation({
         mutationFn: verifyCode,
         onSuccess: () => {
             const form = JSON.parse(sessionStorage.getItem("form") as string);
-            if (otpType === "REGISTER") {
-                mutate({
-                    ...form,
-                    phone: form.phoneNumber,
-                })
-            } else {
-                resetPassword({
-                    password: form.password,
-                    phoneNumber: form.phoneNumber,
-                });
-            }
+            resetPassword({
+                password: form.password,
+                phoneNumber: form.phoneNumber,
+            });
         },
         onError: (error) => {
             showErrorToast(error, "Kod tasdiqlanmadi");

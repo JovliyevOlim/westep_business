@@ -1,7 +1,7 @@
 // src/api/filesApi.ts
 import apiClient from "../apiClient";
 import {getItem, setItem} from "../../utils/utils.ts";
-import type {ApiErrorResponse, BusinessType, DeviceLimitExceededDetails} from "../../types/types.ts";
+import type {ApiErrorResponse, DeviceLimitExceededDetails} from "../../types/types.ts";
 import {ApiRequestError, parseApiError} from "../../utils/apiError.ts";
 
 const asRecord = (value: unknown): Record<string, unknown> | null =>
@@ -122,15 +122,6 @@ export const login = async (body: LoginPayload) => {
             }
         }
         throw normalizeLoginError(error);
-    }
-};
-
-export const register = async (body: BusinessType) => {
-    try {
-        const response = await apiClient.post("/business/register", body);
-        return response;
-    } catch (error) {
-        throw parseApiError(error, "Ro'yxatdan o'tib bo'lmadi.");
     }
 };
 

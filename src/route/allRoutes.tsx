@@ -5,7 +5,6 @@ import NotFound from "../pages/OtherPage/NotFound";
 import UserProfiles from "../pages/UserProfiles.tsx";
 import AddCourse from "../pages/Courses/AddCourse.tsx";
 import Logout from "../pages/AuthPages/Logout.tsx";
-import SignUp from "../pages/AuthPages/SignUp.tsx";
 import Password from "../pages/AuthPages/Password.tsx";
 import FormElements from "../pages/Forms/FormElements.tsx";
 import CreatePassword from "../pages/AuthPages/CreatePassword.tsx";
@@ -67,7 +66,6 @@ export const authProtectedRoutes = [
 
 export const publicRoutes = [
     {path: "/login", element: <SignIn/>},
-    {path: "/register", element: <SignUp/>},
     {path: "/logout", element: <Logout/>},
     {path: "/password", element: <Password/>},
     {path: "/create-password", element: <CreatePassword/>},
